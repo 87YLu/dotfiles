@@ -1,5 +1,11 @@
 # dotfiles
 
+## how to use
+
+`git clone https://github.com/87YLu/dotfiles.git`
+
+`ln -s ~/dotfiles/nvim ~/.config/nvim`
+
 ## nvim
 
 ### Prerequisites
