@@ -18,7 +18,7 @@ local terms = require('toggleterm.terminal').Terminal
 local lazygit = terms:new({
   cmd = 'lazygit',
   dir = 'git_dir',
-  direction = 'float',
+  direction = 'tab',
   hidden = false,
 })
 
