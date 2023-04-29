@@ -99,7 +99,8 @@ plugin_keys.nvimtree_keys = function(api, bufnr)
   nvimtree_keyset('n', 'x', api.fs.cut, { desc = 'cut' })
   nvimtree_keyset('n', 'c', api.fs.copy.node, { desc = 'copy' })
   nvimtree_keyset('n', 'p', api.fs.paste, { desc = 'paste' })
-  nvimtree_keyset('n', 's', api.node.run.system, { desc = 'run System' })
+  nvimtree_keyset('n', 's', api.node.run.system, { desc = 'run system' })
+  nvimtree_keyset('n', 'g', api.fs.copy.absolute_path, { desc = 'copy absolute path' })
 end
 -- plugin nvim-tree end
 
