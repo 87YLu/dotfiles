@@ -19,7 +19,7 @@ local lazygit = terms:new({
   cmd = 'lazygit',
   dir = 'git_dir',
   direction = 'float',
-  hidden = true,
+  hidden = false,
 })
 
 function _G.lazygit_toggle()
