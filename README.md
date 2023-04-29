@@ -6,9 +6,11 @@
 
 `ln -s ~/dotfiles/nvim ~/.config/nvim`
 
-## nvim
+`ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml`
 
-### Prerequisites
+## Prerequisites
+
+### nvim
 
 | dependence | download             |
 | ---------- | -------------------- |
@@ -16,3 +18,8 @@
 | wget       | brew install wget    |
 | fd-find    | npm i fd-find -g     |
 
+### lazygit
+
+| dependence                                       | download               |
+| ------------------------------------------------ | ---------------------- |
+| [git-delta](https://github.com/dandavison/delta) | brew install git-delta |
