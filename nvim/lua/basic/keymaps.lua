@@ -159,20 +159,20 @@ coc_keyset({ 'x', 'o' }, 'af', '<Plug>(coc-funcobj-a)')
 coc_keyset({ 'x', 'o' }, 'ic', '<Plug>(coc-classobj-i)')
 coc_keyset({ 'x', 'o' }, 'ac', '<Plug>(coc-classobj-a)')
 
-local coc_keyset = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = true
-  opts.nowait = true
-  opts.expr = true
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
+-- local coc_keyset = function(mode, lhs, rhs, opts)
+--   opts = opts or {}
+--   opts.silent = true
+--   opts.nowait = true
+--   opts.expr = true
+--   vim.keymap.set(mode, lhs, rhs, opts)
+-- end
 
-coc_keyset('n', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
-coc_keyset('n', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
-coc_keyset('i', '<C-f>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"')
-coc_keyset('i', '<C-b>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"')
-coc_keyset('v', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
-coc_keyset('v', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
+-- coc_keyset('n', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
+-- coc_keyset('n', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
+-- coc_keyset('i', '<C-f>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"')
+-- coc_keyset('i', '<C-b>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"')
+-- coc_keyset('v', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
+-- coc_keyset('v', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
 -- plugin coc end
 
 -- plugin about git start
