@@ -23,3 +23,8 @@
 | dependence                                       | download               |
 | ------------------------------------------------ | ---------------------- |
 | [git-delta](https://github.com/dandavison/delta) | brew install git-delta |
+
+## plugins backup
+
+- lazy ~/.local/share/nvim
+- coc ~/.config
