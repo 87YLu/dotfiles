@@ -26,7 +26,7 @@ function _G.lazygit_toggle()
   lazygit:toggle()
 end
 
-local filetype, filepath, cmd
+local cmd
 local code_runner = terms:new({
   cmd = function()
     if cmd == nil then
@@ -34,7 +34,7 @@ local code_runner = terms:new({
       return ''
     end
 
-    return cmd .. ' ' .. filepath
+    return cmd
   end,
   direction = 'float',
   hidden = true,
@@ -42,13 +42,16 @@ local code_runner = terms:new({
 })
 
 function _G.code_runner_toggle()
-  filetype = vim.o.filetype
-  filepath = vim.api.nvim_buf_get_name(0)
+  local filetype = vim.o.filetype
+  local filepath = vim.api.nvim_buf_get_name(0)
+  local filename = vim.fn.fnamemodify(filepath, ':t')
+  local dirpath = vim.fn.fnamemodify(filepath, ':h')
+
   cmd = ({
-    javascript = 'node',
-    typescript = 'ts-node',
-    lua = 'lua',
-    rust = 'rustc',
+    javascript = 'node ' .. filepath,
+    typescript = 'ts-node ' .. filepath,
+    lua = 'lua ' .. filepath,
+    rust = 'cd ' .. dirpath .. '&& rustc ' .. filename .. '&& ' .. dirpath .. '/' .. string.sub(filename, 0, -4),
   })[filetype]
   code_runner:toggle()
 end
