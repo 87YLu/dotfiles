@@ -30,5 +30,6 @@
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
-  "diagnostic.hintSign": "󰌶"
+  "diagnostic.hintSign": "󰌶",
+  "diagnostic.displayByAle": true
 }

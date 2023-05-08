@@ -48,10 +48,25 @@ vim.api.nvim_exec(
   true
 )
 
--- 禁用 linter
-vim.g.ale_linters_explicit = 1
-
 vim.g.ale_fix_on_save = 1
+
+vim.g.ale_disable_lsp = 1
+
+vim.g.ale_use_neovim_diagnostics_api = 1
+
+vim.g.ale_echo_cursor = 0
+
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  update_in_insert = false,
+})
+
+local signs = { Error = '', Warn = '', Hint = '󰌶', Info = '' }
+for type, icon in pairs(signs) do
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 vim.g.ale_fixers = {
   javascript = 'prettier',
