@@ -79,6 +79,7 @@ vim.g.ale_fixers = {
   json = 'prettier',
   yaml = 'prettier',
   lua = 'stylua',
+  rust = 'rustfmt',
   ['*'] = { 'remove_trailing_lines', 'trim_whitespace' },
 }
 
