@@ -43,3 +43,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
   pattern = '',
   command = 'set fo-=c fo-=r fo-=o',
 })
+
+-- fix code fold
+-- https://github.com/nvim-telescope/telescope.nvim/issues/699
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  command = 'normal zR',
+})
