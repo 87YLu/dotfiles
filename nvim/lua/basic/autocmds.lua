@@ -48,5 +48,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- https://github.com/nvim-telescope/telescope.nvim/issues/699
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = '*',
+  command = 'normal zx',
+})
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
   command = 'normal zR',
 })
