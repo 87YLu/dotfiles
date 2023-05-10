@@ -21,6 +21,12 @@ local plugins = {
     lazy = true,
   },
   {
+    'goolord/alpha-nvim',
+    config = function()
+      require('ui.alpha')
+    end,
+  },
+  {
     'akinsho/bufferline.nvim',
     dependencies = 'moll/vim-bbye',
     config = function()
@@ -31,14 +37,6 @@ local plugins = {
     'folke/tokyonight.nvim',
     config = function()
       require('ui.colorscheme')
-    end,
-  },
-  {
-    'glepnir/dashboard-nvim',
-    event = 'VimEnter',
-    lazy = true,
-    config = function()
-      require('ui.dashboard')
     end,
   },
   {
@@ -64,9 +62,10 @@ local plugins = {
     end,
   },
   -- enhance
+  { 'nvim-lua/plenary.nvim' },
+  { 'nvim-telescope/telescope-ui-select.nvim' },
   {
     'sindrets/diffview.nvim',
-    dependencies = 'nvim-lua/plenary.nvim',
     config = function()
       require('enhance.diffview')
     end,
@@ -91,8 +90,13 @@ local plugins = {
     end,
   },
   {
+    'Shatur/neovim-session-manager',
+    config = function()
+      require('enhance.session-manager')
+    end,
+  },
+  {
     'nvim-telescope/telescope.nvim',
-    dependencies = 'nvim-lua/plenary.nvim',
     config = function()
       require('enhance.telescope')
     end,
