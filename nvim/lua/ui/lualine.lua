@@ -9,17 +9,19 @@ end
 lualine.setup({
   options = {
     theme = 'tokyonight',
-    component_separators = { left = '|', right = '|' },
-    -- https://github.com/ryanoasis/powerline-extra-symbols
-    section_separators = { left = ' ', right = '' },
+    component_separators = '|',
+    section_separators = { left = '', right = '' },
   },
   extensions = { 'nvim-tree', 'toggleterm' },
   sections = {
-    lualine_c = {
-      'filename',
+    lualine_a = {
+      { 'mode', separator = { left = '' }, right_padding = 2 },
     },
-    lualine_x = {
-      'filesize',
+    lualine_b = { 'branch', 'filename' },
+    lualine_c = { 'diagnostics' },
+    lualine_x = {},
+    lualine_y = {
+      'filetype',
       {
         'fileformat',
         symbols = {
@@ -29,7 +31,10 @@ lualine.setup({
         },
       },
       'encoding',
-      'filetype',
+      'progress',
+    },
+    lualine_z = {
+      { 'location', separator = { right = '' }, left_padding = 2 },
     },
   },
 })
