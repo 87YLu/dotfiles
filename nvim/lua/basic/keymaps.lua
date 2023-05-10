@@ -118,6 +118,10 @@ plugin_keys.telescope_keys = {
 }
 -- plugin telescope end
 
+-- plugin session manager start
+keyset('n', '<leader>p', ':SessionManager load_session<CR>', { desc = 'load session' })
+-- plugin session manager end
+
 -- plugin coc start
 -- tab/cr 选中代码
 local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }

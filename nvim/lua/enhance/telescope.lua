@@ -14,3 +14,5 @@ telescope.setup({
     mappings = require('basic.keymaps').telescope_keys,
   },
 })
+
+telescope.load_extension('ui-select')

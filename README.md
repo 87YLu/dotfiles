@@ -20,6 +20,10 @@ Unzip the files under *nvim/plugins-backup* first
 
 ## Prerequisites
 
+### nerd font
+
+https://www.nerdfonts.com/font-downloads
+
 ### nvim
 
 | dependence | download             |

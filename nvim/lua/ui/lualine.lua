@@ -1,5 +1,4 @@
 -- https://github.com/nvim-lualine/lualine.nvim
--- https://www.nerdfonts.com/font-downloads
 local status_ok, lualine = pcall(require, 'lualine')
 
 if not status_ok then
