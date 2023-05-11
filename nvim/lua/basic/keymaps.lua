@@ -157,11 +157,11 @@ end
 coc_keyset('n', '<space>o', ':<C-u>CocList outline<cr>', { desc = 'find symbol of current document' })
 coc_keyset('n', '<space>s', ':<C-u>CocList -I symbols<cr>', { desc = 'search workspace symbols' })
 coc_keyset('n', '<leader>qf', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
-coc_keyset('n', '<leader>cl', '<Plug>(coc-codelens-action)')
-coc_keyset({ 'x', 'o' }, 'if', '<Plug>(coc-funcobj-i)')
-coc_keyset({ 'x', 'o' }, 'af', '<Plug>(coc-funcobj-a)')
-coc_keyset({ 'x', 'o' }, 'ic', '<Plug>(coc-classobj-i)')
-coc_keyset({ 'x', 'o' }, 'ac', '<Plug>(coc-classobj-a)')
+-- coc_keyset('n', '<leader>cl', '<Plug>(coc-codelens-action)')
+-- coc_keyset({ 'x', 'o' }, 'if', '<Plug>(coc-funcobj-i)')
+-- coc_keyset({ 'x', 'o' }, 'af', '<Plug>(coc-funcobj-a)')
+-- coc_keyset({ 'x', 'o' }, 'ic', '<Plug>(coc-classobj-i)')
+-- coc_keyset({ 'x', 'o' }, 'ac', '<Plug>(coc-classobj-a)')
 
 -- local coc_keyset = function(mode, lhs, rhs, opts)
 --   opts = opts or {}
