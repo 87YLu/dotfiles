@@ -47,10 +47,12 @@ keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', ':q<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
+keyset('n', '<leader><leader>', ':w<CR>', { desc = 'save' })
 
--- insert 模式下，跳到行首行尾
+-- insert 模式设置
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
+keyset({ 'i', 'n', 'v' }, '<C-/>', ':CommentToggle<CR>', { desc = 'toggle comment' })
 
 -- plugin toggleterm start
 keyset('n', '<leader>t', ':ToggleTerm<CR>', { desc = 'open terminal horizontally' })

@@ -77,6 +77,12 @@ local plugins = {
     end,
   },
   {
+    'terrortylor/nvim-comment',
+    config = function()
+      require('enhance.nvim-comment')
+    end,
+  },
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
