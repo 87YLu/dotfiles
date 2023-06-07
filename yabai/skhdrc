@@ -1,0 +1,56 @@
+# start or stop yabai
+shift + alt - y: yabai --stop-service || yabai --start-service
+
+# focus window
+cmd - h : yabai -m window --focus west
+cmd - j : yabai -m window --focus south
+cmd - k : yabai -m window --focus north
+cmd - l : yabai -m window --focus east
+
+# swap window
+shift + alt - h : yabai -m window --swap west
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - l : yabai -m window --swap east
+
+# increase window size
+shift + alt - left : yabai -m window --resize left:-20:0
+shift + alt - down : yabai -m window --resize bottom:0:20
+shift + alt - up : yabai -m window --resize top:0:-20
+shift + alt - right : yabai -m window --resize right:20:0
+
+# decrease window size
+shift + cmd - left : yabai -m window --resize left:20:0
+shift + cmd - down : yabai -m window --resize bottom:0:-20
+shift + cmd - up : yabai -m window --resize top:0:20
+shift + cmd - right : yabai -m window --resize right:-20:0
+
+# toggle float
+alt - t : ~/dotfiles/yabai/sh/float.sh
+
+# toggle fullscreen
+ctrl + alt - return : yabai -m window --toggle zoom-fullscreen
+
+# balance size of windows
+shift + alt - 0 : yabai -m space --balance
+
+# toggle window border
+shift - space : yabai -m window --toggle border
+
+# toggle window split type
+alt - e : yabai -m window --toggle split
+
+# mirror tree y-axis
+alt - y : yabai -m space --mirror y-axis
+
+# focus monitor
+ctrl + alt - 1 : yabai -m display --focus 1
+ctrl + alt - 2 : yabai -m display --focus 2
+ctrl + alt - 3 : yabai -m display --focus 3
+
+# close window
+alt - x : yabai -m window --close && ~/dotfiles/yabai/sh/close_window.sh
+
+# stack
+alt - s : ~/dotfiles/yabai/sh/stack.sh
+alt - d : yabai -m window --focus stack.next || yabai -m window --focus stack.first
