@@ -22,8 +22,7 @@ $ ln -s ~/dotfiles/nvim/plugins-backup/coc ~/.config/coc
 [yabai](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition)
 
 ```sh
-$ shasum -a 256 $(which yabai) # get yabai sh
-$ which yabai # get yabai location
+$ shasum -a 256 $(which yabai) # get yabai sh and location
 $ sudo nvim /etc/sudoers
 
 # <user> ALL=(root) NOPASSWD: sha256:<hash> <yabai> --load-sa
@@ -41,6 +40,17 @@ $ cd /tmp && mkdir yabai-tiling-floating-toggle
 ```sh
 # start yabai
 $ yabai --start-service && skhd --start-service
+```
+
+sketchybar
+
+```sh
+$ ln -s ~/dotfiles/sketchybar ~/.config/sketchybar
+```
+
+```sh
+# start sketchybar
+$ brew services start sketchybar
 ```
 
 ## Prerequisites
