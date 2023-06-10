@@ -11,3 +11,11 @@ nvim_comment.setup({
   comment_empty = false,
   comment_empty_trim_whitespace = true,
 })
+
+-- vim.cmd([[
+--   augroup set-commentstring-ag
+--     autocmd!
+--     autocmd BufEnter *.sh, *.toml :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+--     autocmd BufFilePost *.sh, *.toml :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+--   augroup END
+-- ]])
