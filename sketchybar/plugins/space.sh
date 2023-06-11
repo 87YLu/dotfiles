@@ -13,7 +13,7 @@ for i in "${!SPACE_ICONS[@]}"; do
         icon=${SPACE_ICONS[i]}
         icon.padding_left=15
         icon.padding_right=15
-        icon.highlight_color=0xffE48FA8
+        icon.highlight_color=0xffb379f6
         background.drawing=on
         label.drawing=off
         click_script="yabai -m space --focus $sid"
