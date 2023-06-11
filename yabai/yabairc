@@ -21,14 +21,15 @@ yabai -m config mouse_drop_action swap
 
 # general space settings
 gap=6
+top_gap=4
 yabai -m config layout bsp
-yabai -m config top_padding ${gap}
-yabai -m config bottom_padding ${gap}
-yabai -m config left_padding ${gap}
-yabai -m config right_padding ${gap}
-yabai -m config window_gap ${gap}
+yabai -m config top_padding $top_gap
+yabai -m config bottom_padding $gap
+yabai -m config left_padding $gap
+yabai -m config right_padding $gap
+yabai -m config window_gap $gap
 
-ignore_app="^(访达|Finder|微信|系统设置)$"
-yabai -m rule --add app="${ignore_app}" manage=off
+ignore_app="^(访达|微信|系统设置)$"
+yabai -m rule --add app="$ignore_app" manage=off
 
 echo "yabai configuration loaded.."
