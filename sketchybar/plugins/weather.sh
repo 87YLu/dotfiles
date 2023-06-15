@@ -2,30 +2,26 @@
 
 source "$HOME/.config/sketchybar/plugins/weather_token.sh"
 
-LOCATION="$(curl ipinfo.io | jq '.city' | tr -d '"')"
-
-TRANSLATE_SIGN=$(echo -n $TRANSLATE_APPID$LOCATION$TRANSLATE_SALT$TRANSLATE_KEY | openssl dgst -md5)
-
-CITY_JSON=$(curl -s "$TRANSLATE_API?q=$LOCATION&from=en&to=zh&appid=$TRANSLATE_APPID&salt=$TRANSLATE_SALT&sign=$TRANSLATE_SIGN")
+LOCATION="$(shortcuts run "Get Location" -i - | tee)"
 
 WEATHER_JSON=$(curl -s "$WEATHER_API/current.json?key=$WEATHER_TOKEN&q=$LOCATION&lang=zh")
 
-CITY=$(echo $CITY_JSON | jq '.trans_result[0].dst' | tr -d '"')
+CITY=$(echo $WEATHER_JSON | jq '.location.name' | tr -d '"')
 
 # Fallback if empty
 if [ -z $WEATHER_JSON ]; then
 
-    sketchybar --set $NAME label=$CITY
+    sketchybar --set $NAME label=Guangzhou
     sketchybar --set $NAME.moon icon=
 
     return
 fi
 
-MOON_JSON=$(curl -s "$WEATHER_API/astronomy.json?key=$WEATHER_TOKEN&q=$LOCATION")
-
 TEMPERATURE=$(echo $WEATHER_JSON | jq '.current.temp_c' | tr -d '"')
 
 WEATHER_DESCRIPTION=$(echo $WEATHER_JSON | jq '.current.condition.text' | tr -d '"')
+
+MOON_JSON=$(curl -s "$WEATHER_API/astronomy.json?key=$WEATHER_TOKEN&q=$LOCATION")
 
 MOON_PHASE=$(echo $MOON_JSON | jq '.astronomy.astro.moon_phase' | tr -d '"')
 
