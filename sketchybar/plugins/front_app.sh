@@ -1,6 +1,9 @@
 #!/bin/bash
 
 case $INFO in
+"Acrobat Pro DC")
+    ICON=
+    ;;
 "App Store")
     ICON=
     ;;
@@ -16,17 +19,35 @@ case $INFO in
 "Downie 4")
     ICON=󱑢
     ;;
+"FaceTime通话")
+    ICON=󰺙
+    ;;
 "Google Chrome")
     ICON=
     ;;
 "iTerm2")
     ICON=
     ;;
+"Permute 3")
+    ICON=󰚩
+    ;;
+"Photoshop CC")
+    ICON=
+    ;;
 "Safari浏览器")
     ICON=
     ;;
+"Sigil")
+    ICON=󰰡
+    ;;
+"Sublime Text")
+    ICON=󱞏
+    ;;
 "Typora")
-    ICON=󰬛
+    ICON=󰰤
+    ;;
+"MarginNote 3")
+    ICON=󰺿
     ;;
 "Microsoft Outlook")
     ICON=󰴢
@@ -42,6 +63,9 @@ case $INFO in
     ;;
 "飞书")
     ICON=󱗆
+    ;;
+"活动监视器")
+    ICON=
     ;;
 "图书")
     ICON=󱓷

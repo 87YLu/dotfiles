@@ -2,7 +2,7 @@
 
 ## how to use
 
-nvim and lazygit
+### nvim and lazygit
 
 ```sh
 $ git clone https://github.com/87YLu/dotfiles.git
@@ -19,7 +19,7 @@ $ ln -s ~/dotfiles/nvim/plugins-backup/lazy ~/.local/share/nvim/lazy
 $ ln -s ~/dotfiles/nvim/plugins-backup/coc ~/.config/coc
 ```
 
-[yabai](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition)
+### [yabai](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition)
 
 ```sh
 $ shasum -a 256 $(which yabai) # get yabai sh and location
@@ -42,11 +42,13 @@ $ cd /tmp && mkdir yabai-tiling-floating-toggle
 $ yabai --start-service && skhd --start-service
 ```
 
-sketchybar
+### sketchybar
 
 ```sh
 $ ln -s ~/dotfiles/sketchybar ~/.config/sketchybar
 ```
+
+download [location shortcut](https://www.icloud.com/shortcuts/4f44860d1cde4598a46583faa68f29ed)
 
 ```sh
 # start sketchybar
