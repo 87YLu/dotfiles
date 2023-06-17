@@ -4,4 +4,4 @@ nvim/plugins-backup/lazy
 
 nvim/plugins-backup/coc
 
-sketchybar/plugins/weather_token.sh
+sketchybar/json/weather_api.json

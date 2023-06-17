@@ -82,3 +82,7 @@ https://www.nerdfonts.com/font-downloads
 | ---------- | -------------------------------------- |
 | jq         | brew install jq                        |
 | skhd       | brew install koekeishiya/formulae/skhd |
+
+### sketchybar
+
+weather api https://www.weatherapi.com/my/
