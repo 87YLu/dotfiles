@@ -8,6 +8,7 @@ vim.g.coc_global_extensions = {
   'coc-rust-analyzer',
   'coc-eslint',
   'coc-sumneko-lua',
+  'coc-sh',
 }
 
 vim.opt.backup = false

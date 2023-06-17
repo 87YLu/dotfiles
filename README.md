@@ -68,6 +68,7 @@ https://www.nerdfonts.com/font-downloads
 | ripgrep    | brew install ripgrep |
 | wget       | brew install wget    |
 | fd-find    | npm i fd-find -g     |
+| shfmt      | brew install shfmt   |
 
 ### lazygit
 
