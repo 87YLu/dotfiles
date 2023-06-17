@@ -2,86 +2,86 @@
 
 case $INFO in
 "Acrobat Pro DC")
-    ICON=
-    ;;
+	ICON=
+	;;
 "App Store")
-    ICON=
-    ;;
+	ICON=
+	;;
 "CleanMyMac X")
-    ICON=󰇄
-    ;;
+	ICON=󰇄
+	;;
 "Code")
-    ICON=󰨞
-    ;;
+	ICON=󰨞
+	;;
 "Dash")
-    ICON=󰯴
-    ;;
+	ICON=󰯴
+	;;
 "Downie 4")
-    ICON=󱑢
-    ;;
+	ICON=󱑢
+	;;
 "FaceTime通话")
-    ICON=󰺙
-    ;;
+	ICON=󰺙
+	;;
 "Google Chrome")
-    ICON=
-    ;;
+	ICON=
+	;;
 "iTerm2")
-    ICON=
-    ;;
+	ICON=
+	;;
 "Permute 3")
-    ICON=󰚩
-    ;;
+	ICON=󰚩
+	;;
 "Photoshop CC")
-    ICON=
-    ;;
+	ICON=
+	;;
 "Safari浏览器")
-    ICON=
-    ;;
+	ICON=
+	;;
 "Sigil")
-    ICON=󰰡
-    ;;
+	ICON=󰰡
+	;;
 "Sublime Text")
-    ICON=󱞏
-    ;;
+	ICON=󱞏
+	;;
 "Typora")
-    ICON=󰰤
-    ;;
+	ICON=󰰤
+	;;
 "MarginNote 3")
-    ICON=󰺿
-    ;;
+	ICON=󰺿
+	;;
 "Microsoft Outlook")
-    ICON=󰴢
-    ;;
+	ICON=󰴢
+	;;
 "Movist Pro")
-    ICON=󰎁
-    ;;
+	ICON=󰎁
+	;;
 "哔哩哔哩")
-    ICON=󰯮
-    ;;
+	ICON=󰯮
+	;;
 "访达")
-    ICON=󰀶
-    ;;
+	ICON=󰀶
+	;;
 "飞书")
-    ICON=󱗆
-    ;;
+	ICON=󱗆
+	;;
 "活动监视器")
-    ICON=
-    ;;
+	ICON=
+	;;
 "图书")
-    ICON=󱓷
-    ;;
+	ICON=󱓷
+	;;
 "网易云音乐")
-    ICON=
-    ;;
+	ICON=
+	;;
 "微信")
-    ICON=
-    ;;
+	ICON=
+	;;
 "系统设置")
-    ICON=
-    ;;
+	ICON=
+	;;
 *)
-    ICON=
-    ;;
+	ICON=
+	;;
 esac
 
 sketchybar --set $NAME icon=$ICON
