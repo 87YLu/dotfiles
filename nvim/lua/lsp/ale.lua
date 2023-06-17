@@ -80,6 +80,7 @@ vim.g.ale_fixers = {
   yaml = 'prettier',
   lua = 'stylua',
   rust = 'rustfmt',
+  sh = 'shfmt',
   ['*'] = { 'remove_trailing_lines', 'trim_whitespace' },
 }
 
