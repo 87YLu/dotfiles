@@ -48,7 +48,7 @@ $ yabai --start-service && skhd --start-service
 $ ln -s ~/dotfiles/sketchybar ~/.config/sketchybar
 ```
 
-download [location shortcut](https://www.icloud.com/shortcuts/4f44860d1cde4598a46583faa68f29ed)
+download [location shortcut](https://www.icloud.com/shortcuts/bcc1b0e264d94c5db61cd82ac2b4ac39)
 
 ```sh
 # start sketchybar

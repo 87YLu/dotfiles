@@ -1,6 +1,8 @@
 #!/bin/bash
 
-ICON=$(cat -s $HOME/.config/sketchybar/json/icon.json | jq '.["'"$INFO"'"]' | tr -d '"')
+sketchybar --set $NAME.name label="$INFO"
+
+ICON=$(cat $HOME/.config/sketchybar/json/icon.json | jq '.["'"$INFO"'"]' | tr -d '"')
 
 if [ $ICON == null ]; then
 	ICON=$(cat $HOME/.config/sketchybar/json/icon.json | jq '.["*"]' | tr -d '"')
@@ -8,4 +10,3 @@ if [ $ICON == null ]; then
 fi
 
 sketchybar --set $NAME icon=$ICON
-sketchybar --set $NAME.name label="$INFO"

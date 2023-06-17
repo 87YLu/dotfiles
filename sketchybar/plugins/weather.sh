@@ -6,15 +6,25 @@ WEATHER_TOKEN=$(cat -s $HOME/.config/sketchybar/json/weather_api.json | jq .toke
 
 LOCATION=$(shortcuts run "Get Location" -i - | tee)
 
-if [ $LOCATION == null ]; then
-	LOCATION="23.13,113.27" # Guangzhou
+BACK_LOCATION=Guangzhou
+
+if [ $LOCATION == "" ]; then
+	LOCATION=$BACK_LOCATION
 fi
 
 WEATHER_JSON=$(curl -s "$WEATHER_API/current.json?key=$WEATHER_TOKEN&q=$LOCATION&lang=zh")
 
 CITY=$(echo $WEATHER_JSON | jq .location.name | tr -d '"')
 
-CITY_ZH=$(cat $HOME/.config/sketchybar/json/location.json | jq .$CITY | tr -d '"')
+if [ $CITY == null ]; then
+	CITY_ZH=$(cat $HOME/.config/sketchybar/json/location.json | jq .$BACK_LOCATION | tr -d '"')
+else
+	CITY_ZH=$(cat $HOME/.config/sketchybar/json/location.json | jq .$CITY | tr -d '"')
+
+	if [ $CITY_ZH == null ]; then
+		CITY_ZH=$CITY
+	fi
+fi
 
 TEMPERATURE=$(echo $WEATHER_JSON | jq .current.temp_c | tr -d '"')
 
