@@ -55,6 +55,19 @@ download [location shortcut](https://www.icloud.com/shortcuts/4f44860d1cde4598a4
 $ brew services start sketchybar
 ```
 
+### hammerspoon
+
+```sh
+$ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
+```
+
+### [stackline](https://github.com/AdamWagner/stackline)
+
+1. Ensure Hammerspoon is running
+2. Open the hammerspoon console via the menu bar
+3. Type `hs.ipc.cliInstall("/opt/homebrew"`) and hit return
+4. Type `hs -c 'stackline.config:toggle("appearance.showIcons")'` in the terminal and hit return
+
 ## Prerequisites
 
 ### nerd font
