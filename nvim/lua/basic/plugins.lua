@@ -77,6 +77,13 @@ local plugins = {
     end,
   },
   {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('enhance.nvim-autopairs')
+    end,
+  },
+  {
     'terrortylor/nvim-comment',
     config = function()
       require('enhance.nvim-comment')
@@ -85,6 +92,9 @@ local plugins = {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    dependencies = {
+      'HiPhish/nvim-ts-rainbow2',
+    },
     config = function()
       require('enhance.nvim-treesitter')
     end,
