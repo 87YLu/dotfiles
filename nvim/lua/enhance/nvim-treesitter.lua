@@ -39,6 +39,10 @@ treesitter.setup({
       scope_incremental = '<TAB>',
     },
   },
+  rainbow = {
+    enable = true,
+    disable = { 'jsx' },
+  },
 })
 
 -- 开启 Folding 模块
