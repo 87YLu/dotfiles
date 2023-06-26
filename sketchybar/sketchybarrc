@@ -4,6 +4,14 @@ FONT_FACE="FiraCode Nerd Font"
 
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 
+SPACE_TYPE=$(yabai -m query --spaces --space | jq .type | tr -d '"')
+
+if [[ $SPACE_TYPE = 'float' ]]; then
+	ICON=󰉪
+else
+	ICON=
+fi
+
 sketchybar --bar \
 	height=32 \
 	color=0xcc1a1a26 \
@@ -32,7 +40,7 @@ sketchybar --default \
 # left - left
 sketchybar --add item space left \
 	--set space \
-	icon= \
+	icon="$ICON" \
 	background.color=0x00ffffff \
 	icon.color=0xffffffff \
 	background.padding_right=4 \

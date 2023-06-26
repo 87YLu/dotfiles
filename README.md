@@ -34,12 +34,12 @@ $ sudo yabai --load-sa
 ```sh
 $ ln -s ~/dotfiles/yabai/yabairc ~/.yabairc
 $ ln -s ~/dotfiles/yabai/skhdrc ~/.skhdrc
-$ cd /tmp && mkdir yabai-tiling-floating-toggle
 ```
 
 ```sh
 # start yabai
 $ yabai --start-service && skhd --start-service
+$ sudo yabai --load-sa
 ```
 
 ### sketchybar
@@ -47,8 +47,6 @@ $ yabai --start-service && skhd --start-service
 ```sh
 $ ln -s ~/dotfiles/sketchybar ~/.config/sketchybar
 ```
-
-download [location shortcut](https://www.icloud.com/shortcuts/bcc1b0e264d94c5db61cd82ac2b4ac39)
 
 ```sh
 # start sketchybar
@@ -98,4 +96,6 @@ https://www.nerdfonts.com/font-downloads
 
 ### sketchybar
 
-weather api https://www.weatherapi.com/my/
+weather api https://dev.qweather.com/
+
+download [location shortcut](https://www.icloud.com/shortcuts/30dc2bd916c54153b65805e6c9193527)

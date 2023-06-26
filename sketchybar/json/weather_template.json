@@ -1,0 +1,14 @@
+{
+  "apiKey": "",
+  "geoApi": "https://geoapi.qweather.com/v2/city/lookup",
+  "weatherApi": "https://devapi.qweather.com/v7/weather/now",
+  "moonApi": "https://devapi.qweather.com/v7/weather/3d",
+  "新月": "",
+  "蛾眉月": "",
+  "上弦月": "",
+  "盈凸月": "",
+  "满月": "",
+  "亏凸月": "",
+  "下弦月": "",
+  "残月": ""
+}

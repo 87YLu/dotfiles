@@ -4,4 +4,6 @@ nvim/plugins-backup/lazy
 
 nvim/plugins-backup/coc
 
-sketchybar/json/weather_api.json
+sketchybar/json/weather.json
+
+yabai/tmp/yabai-tiling-floating-toggle

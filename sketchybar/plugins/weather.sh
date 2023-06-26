@@ -1,65 +1,32 @@
 #!/bin/bash
 
-WEATHER_API=$(cat -s $HOME/.config/sketchybar/json/weather_api.json | jq .api | tr -d '"')
+WEATHER_API=$(cat -s $HOME/.config/sketchybar/json/weather.json | jq .weatherApi | tr -d '"')
 
-WEATHER_TOKEN=$(cat -s $HOME/.config/sketchybar/json/weather_api.json | jq .token | tr -d '"')
+GEO_API=$(cat -s $HOME/.config/sketchybar/json/weather.json | jq .geoApi | tr -d '"')
+
+MOON_API=$(cat -s $HOME/.config/sketchybar/json/weather.json | jq .moonApi | tr -d '"')
+
+API_KEY=$(cat -s $HOME/.config/sketchybar/json/weather.json | jq .apiKey | tr -d '"')
 
 LOCATION=$(shortcuts run "Get Location" -i - | tee)
 
-BACK_LOCATION=Guangzhou
-
 if [ $LOCATION == "" ]; then
-	LOCATION=$BACK_LOCATION
+	LOCATION="113.17,23.8" # guangzhou
 fi
 
-WEATHER_JSON=$(curl -s "$WEATHER_API/current.json?key=$WEATHER_TOKEN&q=$LOCATION&lang=zh")
+SEARCH_PARAMS="?key=$API_KEY&location=$LOCATION&lang=zh"
 
-CITY=$(echo $WEATHER_JSON | jq .location.name | tr -d '"')
+CITY=$(echo $(curl -L -X GET --compressed $GEO_API/$SEARCH_PARAMS) | jq ".location[0].name" | tr -d '"')
 
-if [ $CITY == null ]; then
-	CITY_ZH=$(cat $HOME/.config/sketchybar/json/location.json | jq .$BACK_LOCATION | tr -d '"')
-else
-	CITY_ZH=$(cat $HOME/.config/sketchybar/json/location.json | jq .$CITY | tr -d '"')
+WEATHER_JSON=$(curl -L -X GET --compressed $WEATHER_API/$SEARCH_PARAMS)
 
-	if [ $CITY_ZH == null ]; then
-		CITY_ZH=$CITY
-	fi
-fi
+TEMPERATURE=$(echo $WEATHER_JSON | jq .now.temp | tr -d '"')
 
-TEMPERATURE=$(echo $WEATHER_JSON | jq .current.temp_c | tr -d '"')
+WEATHER_DESCRIPTION=$(echo $WEATHER_JSON | jq .now.text | tr -d '"')
 
-WEATHER_DESCRIPTION=$(echo $WEATHER_JSON | jq .current.condition.text | tr -d '"')
+MOON_PHASE=$(echo $(curl -L -X GET --compressed $MOON_API/$SEARCH_PARAMS) | jq ".daily[0].moonPhase" | tr -d '"')
 
-MOON_JSON=$(curl -s "$WEATHER_API/astronomy.json?key=$WEATHER_TOKEN&q=$LOCATION")
+ICON=$(cat -s $HOME/.config/sketchybar/json/weather.json | jq '.["'"$MOON_PHASE"'"]' | tr -d '"')
 
-MOON_PHASE=$(echo $MOON_JSON | jq .astronomy.astro.moon_phase | tr -d '"')
-
-case ${MOON_PHASE} in
-'New Moon')
-	ICON=
-	;;
-"Waxing Crescent")
-	ICON=
-	;;
-"First Quarter")
-	ICON=
-	;;
-"Waxing Gibbous")
-	ICON=
-	;;
-"Full Moon")
-	ICON=
-	;;
-"Waning Gibbous")
-	ICON=
-	;;
-"Last Quarter")
-	ICON=
-	;;
-"Waning Crescent")
-	ICON=
-	;;
-esac
-
-sketchybar --set $NAME label="$CITY_ZH $TEMPERATURE"°C" $WEATHER_DESCRIPTION"
+sketchybar --set $NAME label="$CITY $TEMPERATURE"°C" $WEATHER_DESCRIPTION"
 sketchybar --set $NAME.moon icon=$ICON

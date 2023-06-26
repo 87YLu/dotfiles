@@ -9,7 +9,7 @@ spaceType=$(yabai -m query --spaces --space | jq .type)
 if [ $spaceType = '"bsp"' ]; then
 
 	read -r id floating <<<$(echo $(yabai -m query --windows --window | jq '.id, ."is-floating"'))
-	tmpfile=/tmp/yabai-tiling-floating-toggle/$id
+	tmpfile=~/dotfiles/yabai/tmp/yabai-tiling-floating-toggle/$id
 
 	# border=$(yabai -m config window_border)
 
@@ -19,7 +19,7 @@ if [ $spaceType = '"bsp"' ]; then
 
 		if [ ! -z $forceCenter ]; then
 			display=$(yabai -m query --windows --window | jq .display)
-			. /tmp/yabai-tiling-floating-toggle/display-$display
+			. ~/dotfiles/yabai/tmp/yabai-tiling-floating-toggle/display-$display
 			yabai -m window --move abs:$x:$y
 			yabai -m window --resize abs:$w:$h
 		else
@@ -39,7 +39,7 @@ if [ $spaceType = '"bsp"' ]; then
 		# [ $border = 'on' ] && yabai -m window --toggle border
 		if [ ! -z $forceCenter ]; then
 			display=$(yabai -m query --windows --window | jq .display)
-			. /tmp/yabai-tiling-floating-toggle/display-$display
+			. ~/dotfiles/yabai/tmp/yabai-tiling-floating-toggle/display-$display
 			yabai -m window --move abs:$x:$y
 			yabai -m window --resize abs:$w:$h
 			echo $(yabai -m query --windows --window | jq .frame) >>$tmpfile
@@ -50,10 +50,12 @@ if [ $spaceType = '"bsp"' ]; then
 			rm $tmpfile
 		else
 			display=$(yabai -m query --windows --window | jq .display)
-			. /tmp/yabai-tiling-floating-toggle/display-$display
+			. ~/dotfiles/yabai/tmp/yabai-tiling-floating-toggle/display-$display
 			yabai -m window --move abs:$x:$y
 			yabai -m window --resize abs:$w:$h
 		fi
 	fi
 
 fi
+
+$(~/dotfiles/yabai/sh/update_front_app_name.sh)
