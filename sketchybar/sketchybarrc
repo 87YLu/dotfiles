@@ -15,13 +15,13 @@ fi
 sketchybar --bar \
 	height=32 \
 	color=0xcc1a1a26 \
-	margin=8 \
-	corner_radius=5 \
+	margin=0 \
+	corner_radius=0 \
 	sticky=on \
 	padding_left=8 \
 	padding_right=8 \
 	notch_width=188 \
-	display=main
+	display=all
 
 sketchybar --default \
 	background.color=0xcc74747a \
