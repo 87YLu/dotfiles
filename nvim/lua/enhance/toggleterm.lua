@@ -37,7 +37,7 @@ local code_runner = terms:new({
     return cmd
   end,
   direction = 'float',
-  hidden = true,
+  hidden = false,
   close_on_exit = false,
 })
 
