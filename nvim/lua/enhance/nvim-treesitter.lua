@@ -39,9 +39,8 @@ treesitter.setup({
       scope_incremental = '<TAB>',
     },
   },
-  rainbow = {
+  context_commentstring = {
     enable = true,
-    disable = { 'jsx' },
   },
 })
 
@@ -50,3 +49,31 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 -- 默认不要折叠
 vim.opt.foldenable = false
+
+-- https://github.com/hiphish/rainbow-delimiters.nvim
+local status_ok, rainbow_delimiters = pcall(require, 'rainbow-delimiters')
+
+if not status_ok then
+  vim.notify('rainbow_delimiters not found!')
+  return
+end
+
+vim.g.rainbow_delimiters = {
+  strategy = {
+    [''] = rainbow_delimiters.strategy['global'],
+    vim = rainbow_delimiters.strategy['local'],
+  },
+  query = {
+    [''] = 'rainbow-delimiters',
+    lua = 'rainbow-blocks',
+  },
+  highlight = {
+    'RainbowDelimiterRed',
+    'RainbowDelimiterYellow',
+    'RainbowDelimiterBlue',
+    'RainbowDelimiterOrange',
+    'RainbowDelimiterGreen',
+    'RainbowDelimiterViolet',
+    'RainbowDelimiterCyan',
+  },
+}

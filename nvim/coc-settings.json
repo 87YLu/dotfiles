@@ -31,5 +31,6 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "󰌶",
-  "diagnostic.displayByAle": true
+  "diagnostic.displayByAle": true,
+  "rust-analyzer.updates.prompt": "neverDownload"
 }

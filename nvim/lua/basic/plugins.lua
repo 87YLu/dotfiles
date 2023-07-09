@@ -40,6 +40,12 @@ local plugins = {
     end,
   },
   {
+    'shellRaining/hlchunk.nvim',
+    config = function()
+      require('ui.hlchunk')
+    end,
+  },
+  {
     'nvim-lualine/lualine.nvim',
     config = function()
       require('ui.lualine')
@@ -59,6 +65,12 @@ local plugins = {
     'kyazdani42/nvim-tree.lua',
     config = function()
       require('ui.nvim-tree')
+    end,
+  },
+  {
+    'petertriho/nvim-scrollbar',
+    config = function()
+      require('ui.scrollbar')
     end,
   },
   -- enhance
@@ -93,7 +105,8 @@ local plugins = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     dependencies = {
-      'HiPhish/nvim-ts-rainbow2',
+      'hiphish/rainbow-delimiters.nvim',
+      'JoosepAlviste/nvim-ts-context-commentstring',
     },
     config = function()
       require('enhance.nvim-treesitter')
