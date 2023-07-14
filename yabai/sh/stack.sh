@@ -10,4 +10,6 @@ if [ $isStack -eq 0 ]; then
 		yabai -m window south --stack $windowId ||
 		yabai -m window west --stack $windowId ||
 		yabai -m window east --stack $windowId
+else
+	yabai -m window --toggle float && yabai -m window --toggle float
 fi
