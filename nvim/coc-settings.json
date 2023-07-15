@@ -32,5 +32,6 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "󰌶",
   "diagnostic.displayByAle": true,
-  "rust-analyzer.updates.prompt": "neverDownload"
+  "rust-analyzer.updates.prompt": "neverDownload",
+  "Lua.diagnostics.globals": ["vim"]
 }

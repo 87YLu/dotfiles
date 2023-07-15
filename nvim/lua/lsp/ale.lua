@@ -48,6 +48,20 @@ vim.api.nvim_exec(
   true
 )
 
+vim.g.ale_after_fix = function()
+  vim.cmd('Noice dismiss')
+end
+
+vim.api.nvim_exec(
+  [[
+    augroup slient
+      autocmd!
+      autocmd User ALEFixPost call ale_after_fix()
+    augroup END
+  ]],
+  true
+)
+
 vim.g.ale_fix_on_save = 1
 
 vim.g.ale_disable_lsp = 1

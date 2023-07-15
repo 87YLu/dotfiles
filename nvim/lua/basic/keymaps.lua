@@ -47,7 +47,7 @@ keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', ':q<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
-keyset('n', '<leader><leader>', ':w<CR>', { desc = 'save' })
+keyset('n', 'W', ':silent! w<CR>', { desc = 'save' })
 
 -- insert 模式设置
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
@@ -101,7 +101,7 @@ plugin_keys.nvimtree_keys = function(api, bufnr)
   nvimtree_keyset('n', 'x', api.fs.cut, { desc = 'cut' })
   nvimtree_keyset('n', 'c', api.fs.copy.node, { desc = 'copy' })
   nvimtree_keyset('n', 'p', api.fs.paste, { desc = 'paste' })
-  nvimtree_keyset('n', 's', api.node.run.system, { desc = 'run system' })
+  nvimtree_keyset('n', 'o', api.node.run.system, { desc = 'run system' })
   nvimtree_keyset('n', 'g', api.fs.copy.absolute_path, { desc = 'copy absolute path' })
 end
 -- plugin nvim-tree end
@@ -156,8 +156,8 @@ local coc_keyset = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-coc_keyset('n', '<space>o', ':<C-u>CocList outline<cr>', { desc = 'find symbol of current document' })
-coc_keyset('n', '<space>s', ':<C-u>CocList -I symbols<cr>', { desc = 'search workspace symbols' })
+-- coc_keyset('n', '<leader>o', ':<C-u>CocList outline<cr>', { desc = 'find symbol of current document' })
+-- coc_keyset('n', '<space>s', ':<C-u>CocList -I symbols<cr>', { desc = 'search workspace symbols' })
 coc_keyset('n', '<leader>qf', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
 -- coc_keyset('n', '<leader>cl', '<Plug>(coc-codelens-action)')
 -- coc_keyset({ 'x', 'o' }, 'if', '<Plug>(coc-funcobj-i)')
@@ -195,7 +195,7 @@ keyset('n', '<leader>fs', ':Gitsigns stage_buffer<CR>', { desc = 'file stage' })
 -- map('n', '<leader>td', gs.toggle_deleted)
 -- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 -- diffview
-keyset('n', 'dv', ':DiffviewOpen<CR>', { desc = 'view file diff' }) -- 跟 coc 插件冲突，打开时可能会报错但是不影响使用
+keyset('n', 'dv', ':DiffviewOpen<CR>', { desc = 'view file diff' })
 keyset('n', 'df', ':DiffviewFileHistory %<CR>', { desc = 'view file history' })
 keyset('n', 'dh', ':DiffviewFileHistory<CR>', { desc = 'view git history' })
 keyset('n', 'dc', ':DiffviewClose<CR>', { desc = 'diffview close' })
