@@ -77,6 +77,13 @@ local plugins = {
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope-ui-select.nvim' },
   {
+    'rhysd/accelerated-jk',
+    config = function()
+      vim.keymap.set('n', 'j', '<Plug>(accelerated_jk_gj)')
+      vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)')
+    end,
+  },
+  {
     'sindrets/diffview.nvim',
     config = function()
       require('enhance.diffview')
@@ -84,9 +91,7 @@ local plugins = {
   },
   {
     'Bekaboo/dropbar.nvim',
-    config = function()
-      require('enhance.dropbar')
-    end,
+    config = true,
   },
   {
     'folke/flash.nvim',
@@ -167,9 +172,7 @@ local plugins = {
   },
   {
     'folke/which-key.nvim',
-    config = function()
-      require('enhance.which-key')
-    end,
+    config = true,
   },
   -- lsp
   {
