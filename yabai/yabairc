@@ -38,7 +38,7 @@ yabai -m config left_padding $GAP
 yabai -m config right_padding $GAP
 yabai -m config window_gap $GAP
 
-IGNORE_APP="^(访达|微信|系统设置)$"
+IGNORE_APP="^(访达|微信|系统设置|Downie 4|Keka|Mos|Permute 3)$"
 yabai -m rule --add app="$IGNORE_APP" manage=off
 
 echo "yabai configuration loaded.."
