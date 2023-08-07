@@ -65,7 +65,7 @@ ctrl - right : yabai -m space --focus next || yabai -m space --focus first
 ctrl + alt + shift - backspace : yabai -m space --destroy
 
 # close window
-alt - x : yabai -m window --close
+alt - escape : yabai -m window --close
 
 # send current window to another space
 cmd + alt - 1 : yabai -m window --space 1 && yabai -m space --focus 1

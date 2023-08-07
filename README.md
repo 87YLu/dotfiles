@@ -5,18 +5,18 @@
 ### nvim and lazygit
 
 ```sh
-$ git clone https://github.com/87YLu/dotfiles.git
-$ ln -s ~/dotfiles/\$HOME/npmrc ~/.npmrc
-$ ln -s ~/dotfiles/\$HOME/zshrc ~/.zshrc
-$ ln -s ~/dotfiles/nvim ~/.config/nvim
-$ ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
+git clone https://github.com/87YLu/dotfiles.git
+ln -s ~/dotfiles/\$HOME/npmrc ~/.npmrc
+ln -s ~/dotfiles/\$HOME/zshrc ~/.zshrc
+ln -s ~/dotfiles/nvim ~/.config/nvim
+ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ```
 
 Unzip the files under *nvim/plugins-backup* first
 
 ```sh
-$ ln -s ~/dotfiles/nvim/plugins-backup/lazy ~/.local/share/nvim/lazy
-$ ln -s ~/dotfiles/nvim/plugins-backup/coc ~/.config/coc
+ln -s ~/dotfiles/nvim/plugins-backup/lazy ~/.local/share/nvim/lazy
+ln -s ~/dotfiles/nvim/plugins-backup/coc ~/.config/coc
 ```
 
 ### [yabai](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition)
@@ -32,8 +32,8 @@ $ sudo yabai --load-sa
 ```
 
 ```sh
-$ ln -s ~/dotfiles/yabai/yabairc ~/.yabairc
-$ ln -s ~/dotfiles/yabai/skhdrc ~/.skhdrc
+ln -s ~/dotfiles/yabai/yabairc ~/.yabairc
+ln -s ~/dotfiles/yabai/skhdrc ~/.skhdrc
 ```
 
 ```sh
@@ -45,7 +45,7 @@ $ sudo yabai --load-sa
 ### sketchybar
 
 ```sh
-$ ln -s ~/dotfiles/sketchybar ~/.config/sketchybar
+ln -s ~/dotfiles/sketchybar ~/.config/sketchybar
 ```
 
 ```sh
@@ -56,7 +56,7 @@ $ brew services start sketchybar
 ### hammerspoon
 
 ```sh
-$ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
+ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 ```
 
 ### [stackline](https://github.com/AdamWagner/stackline)
@@ -70,7 +70,7 @@ $ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 
 ### nerd font
 
-https://www.nerdfonts.com/font-downloads
+<https://www.nerdfonts.com/font-downloads>
 
 ### nvim
 
@@ -96,6 +96,6 @@ https://www.nerdfonts.com/font-downloads
 
 ### sketchybar
 
-weather api https://dev.qweather.com/
+weather api <https://dev.qweather.com/>
 
 download [location shortcut](https://www.icloud.com/shortcuts/30dc2bd916c54153b65805e6c9193527)
