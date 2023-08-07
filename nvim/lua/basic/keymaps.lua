@@ -52,7 +52,11 @@ keyset('n', 'W', ':silent! w<CR>', { desc = 'save' })
 -- insert 模式设置
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
-keyset({ 'i', 'n', 'v' }, '<C-/>', ':CommentToggle<CR>', { desc = 'toggle comment' })
+
+-- comment
+keyset({ 'i', 'n' }, '<C-/>', require('Comment.api').toggle.linewise.current, { desc = 'toggle comment' })
+keyset({ 'i', 'n' }, '<C-\\>', require('Comment.api').toggle.blockwise.current, { desc = 'toggle comment' })
+keyset('v', '<C-/>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
 
 -- plugin toggleterm start
 keyset('n', '<leader>t', ':ToggleTerm<CR>', { desc = 'open terminal horizontally' })

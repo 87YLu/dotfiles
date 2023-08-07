@@ -84,6 +84,10 @@ local plugins = {
     end,
   },
   {
+    'numToStr/Comment.nvim',
+    config = true,
+  },
+  {
     'sindrets/diffview.nvim',
     config = function()
       require('enhance.diffview')
@@ -127,12 +131,6 @@ local plugins = {
     event = 'InsertEnter',
     config = function()
       require('enhance.nvim-autopairs')
-    end,
-  },
-  {
-    'terrortylor/nvim-comment',
-    config = function()
-      require('enhance.nvim-comment')
     end,
   },
   {
