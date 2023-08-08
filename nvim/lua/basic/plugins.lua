@@ -85,7 +85,9 @@ local plugins = {
   },
   {
     'numToStr/Comment.nvim',
-    config = true,
+    config = function()
+      require('enhance.comment')
+    end,
   },
   {
     'sindrets/diffview.nvim',

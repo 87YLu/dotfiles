@@ -9,7 +9,7 @@ end
 hlchunk.setup({
   chunk = {
     enable = true,
-    use_treesitter = true,
+    use_treesitter = false,
     chars = {
       horizontal_line = '⌲',
       vertical_line = '│',
@@ -20,7 +20,7 @@ hlchunk.setup({
   },
   indent = {
     chars = { '│', '¦', '┆', '┊' },
-    use_treesitter = true,
+    use_treesitter = false,
   },
   blank = {
     enable = false,
