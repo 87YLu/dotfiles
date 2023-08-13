@@ -39,7 +39,7 @@ keyset('v', '<', '<gv', { desc = 'indent to the left' })
 keyset('v', '>', '>gv', { desc = 'indent to the right' })
 keyset('v', 'J', ":move '>+1<CR>gv-gv", { desc = 'Move the selected content up' })
 keyset('v', 'K', ":move '<-2<CR>gv-gv", { desc = 'move the selected content down' })
-keyset('v', 'p', "'_dP") -- 在visual 模式里粘贴不要复制
+keyset('v', 'p', '"_dP') -- 在visual 模式里粘贴不要复制
 keyset('v', 'jk', '<Esc>', { desc = 'exit visual mode' })
 
 -- normal 模式设置

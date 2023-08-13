@@ -73,6 +73,11 @@ local plugins = {
       require('ui.scrollbar')
     end,
   },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
+  },
   -- enhance
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope-ui-select.nvim' },
@@ -88,6 +93,12 @@ local plugins = {
     config = function()
       require('enhance.comment')
     end,
+  },
+  {
+    'gbprod/cutlass.nvim',
+    opts = {
+      cut_key = 'x',
+    },
   },
   {
     'sindrets/diffview.nvim',
