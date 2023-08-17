@@ -9,7 +9,7 @@ end
 hlchunk.setup({
   chunk = {
     enable = true,
-    use_treesitter = false,
+    use_treesitter = true,
     chars = {
       horizontal_line = '⌲',
       vertical_line = '│',
