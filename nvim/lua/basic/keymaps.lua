@@ -93,7 +93,6 @@ plugin_keys.nvimtree_keys = function(api, bufnr)
   end
 
   nvimtree_keyset('n', '<CR>', api.node.open.edit, { desc = 'open' })
-  nvimtree_keyset('n', 'o', api.node.open.edit, { desc = 'open' })
   nvimtree_keyset('n', '<2-LeftMouse>', api.node.open.edit, { desc = 'open' })
   nvimtree_keyset('n', 'v', api.node.open.vertical, { desc = 'open: vertical split' })
   nvimtree_keyset('n', 'h', api.node.open.horizontal, { desc = 'open: horizontal split' })
@@ -105,14 +104,26 @@ plugin_keys.nvimtree_keys = function(api, bufnr)
   nvimtree_keyset('n', 'x', api.fs.cut, { desc = 'cut' })
   nvimtree_keyset('n', 'c', api.fs.copy.node, { desc = 'copy' })
   nvimtree_keyset('n', 'p', api.fs.paste, { desc = 'paste' })
+  nvimtree_keyset('n', 'y', api.fs.copy.absolute_path, { desc = 'copy absolute path' })
   nvimtree_keyset('n', 'o', api.node.run.system, { desc = 'run system' })
-  nvimtree_keyset('n', 'g', api.fs.copy.absolute_path, { desc = 'copy absolute path' })
+  nvimtree_keyset('n', 'g', function()
+    local node = api.tree.get_node_under_cursor()
+    vim.cmd(':Telescope live_grep search_dirs={"' .. node.absolute_path .. '"}')
+  end, { desc = 'find contents in current directory' })
+  nvimtree_keyset('n', 'G', function()
+    local node = api.tree.get_node_under_cursor()
+    vim.cmd(':Telescope find_files search_dirs={"' .. node.absolute_path .. '"}')
+  end, { desc = 'find files in current directory' })
 end
 -- plugin nvim-tree end
 
 -- plugin telescope start
 keyset('n', '<C-p>', ':Telescope find_files<CR>', { desc = 'find files' })
 keyset('n', '<C-f>', ':Telescope live_grep<CR>', { desc = 'global search' })
+keyset('n', '<A-f>', function()
+  vim.cmd(':Telescope live_grep search_dirs={"' .. vim.api.nvim_buf_get_name(0) .. '"}')
+end, { desc = 'search in current file' })
+
 plugin_keys.telescope_keys = {
   i = {
     ['<Down>'] = 'move_selection_next',
