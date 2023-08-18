@@ -210,10 +210,9 @@ keyset('n', '<leader>fs', ':Gitsigns stage_buffer<CR>', { desc = 'file stage' })
 -- map('n', '<leader>td', gs.toggle_deleted)
 -- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 -- diffview
-keyset('n', 'dv', ':DiffviewOpen<CR>', { desc = 'view file diff' })
-keyset('n', 'df', ':DiffviewFileHistory %<CR>', { desc = 'view file history' })
-keyset('n', 'dh', ':DiffviewFileHistory<CR>', { desc = 'view git history' })
-keyset('n', 'dc', ':DiffviewClose<CR>', { desc = 'diffview close' })
+keyset('n', '<leader>,', '<CMD>lua _G.view_file_diff()<CR>', { desc = 'view file diff' })
+keyset('n', '<leader>.', '<CMD>lua _G.view_file_history()<CR>', { desc = 'view file history' })
+keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view git history' })
 -- lazygit
 keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazygit' })
 -- plugin about git end
