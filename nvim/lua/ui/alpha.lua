@@ -8,6 +8,11 @@ end
 
 local dashboard = require('alpha.themes.dashboard')
 
+-- if there is a session, alpha doesn't need to be loaded
+if require('session_manager.config').dir_to_session_filename(vim.loop.cwd()):exists() then
+  return
+end
+
 dashboard.section.header.val = {
   [[                                                   ]],
   [[                                                   ]],

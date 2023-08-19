@@ -22,6 +22,7 @@ local plugins = {
   },
   {
     'goolord/alpha-nvim',
+    event = 'VimEnter',
     config = function()
       require('ui.alpha')
     end,
@@ -41,6 +42,7 @@ local plugins = {
   },
   {
     'shellRaining/hlchunk.nvim',
+    event = 'VeryLazy',
     config = function()
       require('ui.hlchunk')
     end,
@@ -69,13 +71,15 @@ local plugins = {
   },
   {
     'petertriho/nvim-scrollbar',
+    event = 'VeryLazy',
     config = function()
       require('ui.scrollbar')
     end,
   },
   {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    'folke/todo-comments.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     config = true,
   },
   -- enhance
@@ -83,6 +87,7 @@ local plugins = {
   { 'nvim-telescope/telescope-ui-select.nvim' },
   {
     'rhysd/accelerated-jk',
+    event = 'VeryLazy',
     config = function()
       vim.keymap.set('n', 'j', '<Plug>(accelerated_jk_gj)')
       vim.keymap.set('n', 'k', '<Plug>(accelerated_jk_gk)')
@@ -90,24 +95,28 @@ local plugins = {
   },
   {
     'numToStr/Comment.nvim',
+    event = 'VeryLazy',
     config = function()
       require('enhance.comment')
     end,
   },
   {
     'gbprod/cutlass.nvim',
+    event = 'VeryLazy',
     opts = {
       cut_key = 'x',
     },
   },
   {
     'sindrets/diffview.nvim',
+    event = 'VeryLazy',
     config = function()
       require('enhance.diffview')
     end,
   },
   {
     'Bekaboo/dropbar.nvim',
+    event = 'VeryLazy',
     config = true,
   },
   {
@@ -135,6 +144,7 @@ local plugins = {
   },
   {
     'lewis6991/gitsigns.nvim',
+    event = 'VeryLazy',
     config = function()
       require('enhance.gitsigns')
     end,
@@ -148,6 +158,7 @@ local plugins = {
   },
   {
     'nvim-treesitter/nvim-treesitter',
+    event = 'VeryLazy',
     build = ':TSUpdate',
     dependencies = {
       'hiphish/rainbow-delimiters.nvim',
@@ -165,6 +176,7 @@ local plugins = {
   },
   {
     'Shatur/neovim-session-manager',
+    event = 'VimEnter',
     config = function()
       require('enhance.session-manager')
     end,
@@ -177,23 +189,27 @@ local plugins = {
   },
   {
     'akinsho/toggleterm.nvim',
+    event = 'VeryLazy',
     config = function()
       require('enhance.toggleterm')
     end,
   },
   {
     'folke/which-key.nvim',
+    event = 'VeryLazy',
     config = true,
   },
   -- lsp
   {
     'dense-analysis/ale',
+    event = 'VeryLazy',
     config = function()
       require('lsp.ale')
     end,
   },
   {
     'neoclide/coc.nvim',
+    event = 'VeryLazy',
     branch = 'release',
     config = function()
       require('lsp.coc')
