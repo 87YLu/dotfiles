@@ -60,9 +60,9 @@ keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the lin
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
 
 -- comment
-keyset({ 'i', 'n' }, '<C-/>', require('Comment.api').toggle.linewise.current, { desc = 'toggle comment' })
-keyset({ 'i', 'n' }, '<C-\\>', require('Comment.api').toggle.blockwise.current, { desc = 'toggle comment' })
-keyset('v', '<C-/>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
+keyset({ 'i', 'n' }, '<C-\\>', require('Comment.api').toggle.linewise.current, { desc = 'toggle comment' })
+keyset({ 'i', 'n' }, '<A-\\>', require('Comment.api').toggle.blockwise.current, { desc = 'toggle comment' })
+keyset('v', '<C-\\>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
 
 -- plugin about code action start
 -- ale
@@ -218,3 +218,4 @@ keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazy
 -- plugin about git end
 
 return plugin_keys
+-- TODO

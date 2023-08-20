@@ -80,7 +80,9 @@ local plugins = {
     'folke/todo-comments.nvim',
     event = 'VeryLazy',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = true,
+    config = function()
+      require('enhance.todo-comments')
+    end,
   },
   -- enhance
   { 'nvim-lua/plenary.nvim' },
