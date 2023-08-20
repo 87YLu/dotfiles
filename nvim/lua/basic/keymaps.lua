@@ -48,6 +48,12 @@ keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', ':q<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
 keyset('n', 'W', ':silent! w<CR>', { desc = 'save' })
+keyset('n', 'cp', function()
+  local path = vim.loop.cwd()
+  vim.fn.setreg('+', path)
+  vim.fn.setreg('"', path)
+  vim.notify(string.format('Copied %s to system clipboard!', path))
+end, { desc = 'copy project directory path' })
 
 -- insert 模式设置
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
@@ -57,12 +63,6 @@ keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' 
 keyset({ 'i', 'n' }, '<C-/>', require('Comment.api').toggle.linewise.current, { desc = 'toggle comment' })
 keyset({ 'i', 'n' }, '<C-\\>', require('Comment.api').toggle.blockwise.current, { desc = 'toggle comment' })
 keyset('v', '<C-/>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
-
--- plugin toggleterm start
-keyset('n', '<leader>t', ':ToggleTerm<CR>', { desc = 'open terminal horizontally' })
-keyset('n', '<leader>vt', ':ToggleTerm direction=vertical size=40<CR>', { desc = 'open terminal vertically' })
-keyset('n', '<leader>at', ':ToggleTermToggleAll<CR>', { desc = 'open all terminals' })
--- plugin toggleterm end
 
 -- plugin about code action start
 -- ale

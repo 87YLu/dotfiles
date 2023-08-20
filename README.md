@@ -18,6 +18,11 @@ Unzip the files under *nvim/plugins-backup* first
 ln -s ~/dotfiles/nvim/plugins-backup/lazy ~/.local/share/nvim/lazy
 ln -s ~/dotfiles/nvim/plugins-backup/coc ~/.config/coc
 ```
+### tmux
+
+```sh
+ln -s ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
+```
 
 ### [yabai](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)#configure-scripting-addition)
 
