@@ -47,11 +47,11 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- fix code fold
 -- https://github.com/nvim-telescope/telescope.nvim/issues/699
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*',
+  pattern = '*.*',
   command = 'normal zx',
 })
 
 vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*',
+  pattern = '*.*',
   command = 'normal zR',
 })

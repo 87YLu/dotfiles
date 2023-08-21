@@ -12,7 +12,7 @@ lualine.setup({
     component_separators = '|',
     section_separators = { left = '', right = '' },
   },
-  extensions = { 'nvim-tree', 'toggleterm' },
+  extensions = { 'neo-tree', 'toggleterm' },
   sections = {
     lualine_a = {
       { 'mode', separator = { left = '' }, right_padding = 2 },

@@ -80,42 +80,9 @@ keyset('n', '<leader>bl', ':BufferLineCloseLeft<CR>', { desc = 'close the left t
 keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to close' })
 -- plugin bufferline end
 
--- plugin nvim-tree start
-keyset('n', '<A-m>', ':NvimTreeToggle<CR>', { desc = 'toggle file explorer' })
-plugin_keys.nvimtree_keys = function(api, bufnr)
-  local nvimtree_keyset = function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts.buffer = bufnr
-    opts.noremap = opts.noremap ~= false
-    opts.silent = opts.silent ~= false
-    opts.nowait = opts.nowait ~= false
-    vim.keymap.set(mode, lhs, rhs, opts)
-  end
-
-  nvimtree_keyset('n', '<CR>', api.node.open.edit, { desc = 'open' })
-  nvimtree_keyset('n', '<2-LeftMouse>', api.node.open.edit, { desc = 'open' })
-  nvimtree_keyset('n', 'v', api.node.open.vertical, { desc = 'open: vertical split' })
-  nvimtree_keyset('n', 'h', api.node.open.horizontal, { desc = 'open: horizontal split' })
-  nvimtree_keyset('n', '.', api.tree.toggle_hidden_filter, { desc = 'toggle dotfiles' })
-  nvimtree_keyset('n', '<F5>', api.tree.reload, { desc = 'refresh' })
-  nvimtree_keyset('n', 'a', api.fs.create, { desc = 'create' })
-  nvimtree_keyset('n', 'd', api.fs.remove, { desc = 'delete' })
-  nvimtree_keyset('n', 'r', api.fs.rename, { desc = 'rename' })
-  nvimtree_keyset('n', 'x', api.fs.cut, { desc = 'cut' })
-  nvimtree_keyset('n', 'c', api.fs.copy.node, { desc = 'copy' })
-  nvimtree_keyset('n', 'p', api.fs.paste, { desc = 'paste' })
-  nvimtree_keyset('n', 'y', api.fs.copy.absolute_path, { desc = 'copy absolute path' })
-  nvimtree_keyset('n', 'o', api.node.run.system, { desc = 'run system' })
-  nvimtree_keyset('n', 'g', function()
-    local node = api.tree.get_node_under_cursor()
-    vim.cmd(':Telescope live_grep search_dirs={"' .. node.absolute_path .. '"}')
-  end, { desc = 'find contents in current directory' })
-  nvimtree_keyset('n', 'G', function()
-    local node = api.tree.get_node_under_cursor()
-    vim.cmd(':Telescope find_files search_dirs={"' .. node.absolute_path .. '"}')
-  end, { desc = 'find files in current directory' })
-end
--- plugin nvim-tree end
+-- plugin neo-tree start
+keyset('n', '<A-m>', ':Neotree toggle<CR>', { desc = 'toggle neotree' })
+-- plugin neo-tree end
 
 -- plugin telescope start
 keyset('n', '<C-p>', ':Telescope find_files<CR>', { desc = 'find files' })

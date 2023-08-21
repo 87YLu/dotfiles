@@ -54,6 +54,12 @@ local plugins = {
     end,
   },
   {
+    'nvim-neo-tree/neo-tree.nvim',
+    config = function()
+      require('ui.neo-tree')
+    end,
+  },
+  {
     'folke/noice.nvim',
     dependencies = {
       'MunifTanjim/nui.nvim',
@@ -61,12 +67,6 @@ local plugins = {
     },
     config = function()
       require('ui.noice')
-    end,
-  },
-  {
-    'kyazdani42/nvim-tree.lua',
-    config = function()
-      require('ui.nvim-tree')
     end,
   },
   {

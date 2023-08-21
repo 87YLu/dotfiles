@@ -29,9 +29,12 @@ session_manager.setup({
   max_path_length = 80,
 })
 
-vim.cmd([[
-  augroup open_nvim_tree
-    autocmd! * <buffer>
-    autocmd SessionLoadPost * silent! :NvimTreeOpen
-  augroup end
-]])
+local config_group = vim.api.nvim_create_augroup('session_manager', {})
+
+vim.api.nvim_create_autocmd({ 'QuitPre' }, {
+  group = config_group,
+  callback = function()
+    -- if neo-tree exists, saving the session will fail.
+    require('neo-tree.sources.manager').close_all()
+  end,
+})

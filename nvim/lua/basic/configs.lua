@@ -1,4 +1,5 @@
 local opt = vim.opt
+local g = vim.g
 
 -- utf8
 opt.encoding = 'UTF-8'
@@ -75,6 +76,7 @@ opt.showtabline = 2
 opt.showmode = false
 -- 系统剪贴板
 opt.clipboard = 'unnamedplus'
-
 opt.spell = true
 opt.spelllang = { 'en', 'cjk' }
+
+g.auto_open_explorer = true
