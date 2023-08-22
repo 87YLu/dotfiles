@@ -12,6 +12,10 @@ bufferline.setup({
     -- from moll/vim-bbye
     close_command = 'Bdelete! %d',
     right_mouse_command = 'Bdelete! %d',
+    show_tab_indicators = true,
+    indicator = {
+      style = 'underline',
+    },
     offsets = {
       {
         filetype = 'neo-tree',
