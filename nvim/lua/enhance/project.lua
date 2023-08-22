@@ -8,7 +8,8 @@ end
 
 project.setup({
   detection_methods = { 'pattern' },
-  patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'package.json', '.sln' },
+  -- because there may be monorepo, package.json is not added.
+  patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'Cargo.toml', '.sln' },
 })
 
 local status, telescope = pcall(require, 'telescope')
