@@ -17,7 +17,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.81176471710205078
   },
-  "Normal Font" : "FiraCodeNerdFontComplete-Regular 15",
+  "Normal Font" : "FiraCodeNF-Ret 15",
   "Bold Color" : {
     "Red Component" : 0.93333333730697632,
     "Color Space" : "sRGB",
@@ -25,30 +25,18 @@
     "Alpha Component" : 1,
     "Green Component" : 0.93333333730697632
   },
-  "Ansi 0 Color" : {
-    "Red Component" : 0.08235294371843338,
+  "Ansi 3 Color" : {
+    "Red Component" : 0.87843137979507446,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.11764705926179886,
+    "Blue Component" : 0.40784314274787903,
     "Alpha Component" : 1,
-    "Green Component" : 0.086274512112140656
+    "Green Component" : 0.68627452850341797
   },
-  "Ansi 4 Color" : {
-    "Red Component" : 0.47843137383460999,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.9686274528503418,
-    "Alpha Component" : 1,
-    "Green Component" : 0.63529413938522339
-  },
-  "Ansi 5 Color" : {
-    "Red Component" : 0.73333334922790527,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.9686274528503418,
-    "Alpha Component" : 1,
-    "Green Component" : 0.60392159223556519
-  },
+  "Custom Directory" : "No",
+  "Right Option Key Sends" : 0,
   "Rows" : 25,
   "Default Bookmark" : "No",
-  "Blend" : 0.050000000000000003,
+  "Blend" : 0.080000000000000002,
   "Cursor Guide Color" : {
     "Red Component" : 0.70213186740875244,
     "Color Space" : "sRGB",
@@ -93,7 +81,7 @@
   "Sync Title" : false,
   "Prompt Before Closing 2" : false,
   "BM Growl" : true,
-  "Command" : "",
+  "Command" : "\/Users\/chenyongchong\/dotfiles\/iTerm2\/sh\/random_background_image.sh",
   "Description" : "Default",
   "Mouse Reporting" : true,
   "Disable Window Resizing" : true,
@@ -311,7 +299,8 @@
     }
   },
   "Window Type" : 0,
-  "Background Image Location" : "\/Users\/chenyongchong\/dotfiles\/iTerm2\/background\/wallhaven-gpm1gd.jpg",
+  "Cursor Type" : 2,
+  "Background Image Location" : "\/Users\/chenyongchong\/dotfiles\/iTerm2\/background\/wallhaven-1pdg81.png",
   "Blur" : false,
   "Badge Color" : {
     "Red Component" : 1,
@@ -320,6 +309,7 @@
     "Alpha Component" : 0.5,
     "Green Component" : 0.1491314172744751
   },
+  "Initial Text" : "",
   "Scrollback Lines" : 1000,
   "Send Code When Idle" : false,
   "Close Sessions On End" : true,
@@ -353,19 +343,28 @@
     "Green Component" : 0.7921568751335144
   },
   "Transparency" : 0,
-  "Ansi 1 Color" : {
-    "Red Component" : 0.9686274528503418,
+  "Guid" : "3D59B3D4-EC1C-4301-A488-A80208319B81",
+  "Horizontal Spacing" : 1,
+  "Ansi 0 Color" : {
+    "Red Component" : 0.08235294371843338,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.55686277151107788,
+    "Blue Component" : 0.11764705926179886,
     "Alpha Component" : 1,
-    "Green Component" : 0.46274510025978088
+    "Green Component" : 0.086274512112140656
   },
-  "Ansi 2 Color" : {
-    "Red Component" : 0.61960786581039429,
+  "Ansi 4 Color" : {
+    "Red Component" : 0.47843137383460999,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.41568627953529358,
+    "Blue Component" : 0.9686274528503418,
     "Alpha Component" : 1,
-    "Green Component" : 0.80784314870834351
+    "Green Component" : 0.63529413938522339
+  },
+  "Ansi 5 Color" : {
+    "Red Component" : 0.73333334922790527,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.9686274528503418,
+    "Alpha Component" : 1,
+    "Green Component" : 0.60392159223556519
   },
   "Link Color" : {
     "Red Component" : 0.45098039507865906,
@@ -373,15 +372,6 @@
     "Blue Component" : 0.7921568751335144,
     "Alpha Component" : 1,
     "Green Component" : 0.85490196943283081
-  },
-  "Guid" : "3D59B3D4-EC1C-4301-A488-A80208319B81",
-  "Custom Directory" : "No",
-  "Ansi 3 Color" : {
-    "Red Component" : 0.87843137979507446,
-    "Color Space" : "sRGB",
-    "Blue Component" : 0.40784314274787903,
-    "Alpha Component" : 1,
-    "Green Component" : 0.68627452850341797
   },
   "Ansi 7 Color" : {
     "Red Component" : 0.66274511814117432,
@@ -404,6 +394,18 @@
     "Alpha Component" : 1,
     "Green Component" : 0.46274510025978088
   },
-  "Horizontal Spacing" : 1,
-  "Right Option Key Sends" : 0
+  "Ansi 1 Color" : {
+    "Red Component" : 0.9686274528503418,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.55686277151107788,
+    "Alpha Component" : 1,
+    "Green Component" : 0.46274510025978088
+  },
+  "Ansi 2 Color" : {
+    "Red Component" : 0.61960786581039429,
+    "Color Space" : "sRGB",
+    "Blue Component" : 0.41568627953529358,
+    "Alpha Component" : 1,
+    "Green Component" : 0.80784314870834351
+  }
 }

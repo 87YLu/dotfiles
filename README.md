@@ -2,6 +2,14 @@
 
 ## how to use
 
+### iTerm2
+
+If you want to change the background image regularly，run `crontab -e` and add this line.
+
+```sh
+*/15 * * * *  /bin/bash $HOME/dotfiles/iTerm2/random_background_image.sh
+```
+
 ### nvim and lazygit
 
 ```sh
