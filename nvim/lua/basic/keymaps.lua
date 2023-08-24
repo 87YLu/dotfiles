@@ -47,7 +47,7 @@ keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', ':q<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
-keyset('n', 'W', ':silent! w<CR>', { desc = 'save' })
+keyset('n', '<leader><leader>', ':silent! w<CR>', { desc = 'save' })
 keyset('n', 'cp', function()
   local path = vim.loop.cwd()
   vim.fn.setreg('+', path)
@@ -85,11 +85,16 @@ keyset('n', '<A-m>', ':Neotree toggle<CR>', { desc = 'toggle neotree' })
 -- plugin neo-tree end
 
 -- plugin telescope start
-keyset('n', '<C-p>', ':Telescope find_files<CR>', { desc = 'find files' })
-keyset('n', '<C-f>', ':Telescope live_grep<CR>', { desc = 'global search' })
+keyset('n', '<C-p>', function()
+  _G.resume_find_files()
+end, { desc = 'find files' })
+keyset('n', '<C-f>', function()
+  _G.resume_live_grep()
+end, { desc = 'global search' })
 keyset('n', '<A-f>', function()
-  vim.cmd(':Telescope live_grep search_dirs={"' .. vim.api.nvim_buf_get_name(0) .. '"}')
+  _G.resume_live_grep(vim.api.nvim_buf_get_name(0))
 end, { desc = 'search in current file' })
+keyset('n', '<leader>c', require('telescope.builtin').pickers, { desc = 'list telescope pickers' })
 
 plugin_keys.telescope_keys = {
   i = {
@@ -140,7 +145,7 @@ end
 
 -- coc_keyset('n', '<leader>o', ':<C-u>CocList outline<cr>', { desc = 'find symbol of current document' })
 -- coc_keyset('n', '<space>s', ':<C-u>CocList -I symbols<cr>', { desc = 'search workspace symbols' })
-coc_keyset('n', '<leader>qf', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
+coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
 -- coc_keyset('n', '<leader>cl', '<Plug>(coc-codelens-action)')
 -- coc_keyset({ 'x', 'o' }, 'if', '<Plug>(coc-funcobj-i)')
 -- coc_keyset({ 'x', 'o' }, 'af', '<Plug>(coc-funcobj-a)')

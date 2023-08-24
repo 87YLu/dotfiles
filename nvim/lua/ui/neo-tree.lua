@@ -75,16 +75,16 @@ neo_tree.setup({
       ['<'] = 'prev_source',
       ['>'] = 'next_source',
       ['i'] = 'show_file_details',
-      ['g'] = function(state)
+      ['<C-f>'] = function(state)
         local path = Get_path(state)
         if path then
-          vim.cmd(':Telescope live_grep search_dirs={"' .. path .. '"}')
+          _G.resume_live_grep(path)
         end
       end,
-      ['G'] = function(state)
+      ['<C-p>'] = function(state)
         local path = Get_path(state)
         if path then
-          vim.cmd(':Telescope find_files search_dirs={"' .. path .. '"}')
+          _G.resume_find_files(path)
         end
       end,
       ['y'] = function(state)
