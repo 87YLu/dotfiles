@@ -142,38 +142,7 @@ coc_keyset('n', 'gr', '<Plug>(coc-references)', { desc = 'list the references' }
 coc_keyset('n', 'K', '<CMD>lua _G.show_docs()<CR>', { desc = 'show doc' })
 coc_keyset('n', '<leader>rn', '<Plug>(coc-rename)', { desc = 'rename' })
 coc_keyset({ 'n', 'x' }, '<leader>r', '<Plug>(coc-codeaction-refactor-selected)', { desc = 'refactor code actions' })
-coc_keyset({ 'n', 'x' }, '<C-s>', '<Plug>(coc-range-select)', { desc = 'range select' })
-
-local coc_keyset = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = true
-  opts.nowait = true
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
--- coc_keyset('n', '<leader>o', ':<C-u>CocList outline<cr>', { desc = 'find symbol of current document' })
--- coc_keyset('n', '<space>s', ':<C-u>CocList -I symbols<cr>', { desc = 'search workspace symbols' })
 coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
--- coc_keyset('n', '<leader>cl', '<Plug>(coc-codelens-action)')
--- coc_keyset({ 'x', 'o' }, 'if', '<Plug>(coc-funcobj-i)')
--- coc_keyset({ 'x', 'o' }, 'af', '<Plug>(coc-funcobj-a)')
--- coc_keyset({ 'x', 'o' }, 'ic', '<Plug>(coc-classobj-i)')
--- coc_keyset({ 'x', 'o' }, 'ac', '<Plug>(coc-classobj-a)')
-
--- local coc_keyset = function(mode, lhs, rhs, opts)
---   opts = opts or {}
---   opts.silent = true
---   opts.nowait = true
---   opts.expr = true
---   vim.keymap.set(mode, lhs, rhs, opts)
--- end
-
--- coc_keyset('n', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
--- coc_keyset('n', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
--- coc_keyset('i', '<C-f>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"')
--- coc_keyset('i', '<C-b>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"')
--- coc_keyset('v', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"')
--- coc_keyset('v', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"')
 -- plugin coc end
 
 -- plugin about git start
@@ -198,4 +167,3 @@ keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazy
 -- plugin about git end
 
 return plugin_keys
--- TODO
