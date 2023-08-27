@@ -36,8 +36,8 @@ dashboard.section.header.val = {
 
 dashboard.section.buttons.val = {
   dashboard.button('n', '  New File', ':enew<CR>'),
-  dashboard.button('p', '  Projects', ':Telescope projects<CR>'),
-  dashboard.button('r', '  Recently files', ':Telescope oldfiles<CR>'),
+  dashboard.button('p', '  Projects', ':lua require("telescope").extensions.projects.projects()<CR>'),
+  dashboard.button('r', '  Recently files', ':lua require("telescope.builtin").oldfiles()<CR>'),
   dashboard.button('k', '󰥻  Edit keymaps', ':edit ~/.config/nvim/lua/basic/keymaps.lua<CR>'),
   dashboard.button('f', '  Edit Projects', ':edit ~/.local/share/nvim/project_nvim/project_history<CR>'),
   dashboard.button('q', '󰗼  Quit', ':qa<CR>'),

@@ -85,8 +85,6 @@ local plugins = {
     end,
   },
   -- enhance
-  { 'nvim-lua/plenary.nvim' },
-  { 'nvim-telescope/telescope-ui-select.nvim' },
   {
     'rhysd/accelerated-jk',
     event = 'VeryLazy',
@@ -104,7 +102,6 @@ local plugins = {
   },
   {
     'gbprod/cutlass.nvim',
-    event = 'VeryLazy',
     opts = {
       cut_key = 'x',
     },
@@ -160,7 +157,7 @@ local plugins = {
   },
   {
     'nvim-treesitter/nvim-treesitter',
-    event = 'VeryLazy',
+    event = 'BufReadPost',
     build = ':TSUpdate',
     dependencies = {
       'hiphish/rainbow-delimiters.nvim',
@@ -172,6 +169,7 @@ local plugins = {
   },
   {
     'ahmedkhalf/project.nvim',
+    event = 'VeryLazy',
     config = function()
       require('enhance.project')
     end,
@@ -185,6 +183,10 @@ local plugins = {
   },
   {
     'nvim-telescope/telescope.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-telescope/telescope-ui-select.nvim',
+    },
     config = function()
       require('enhance.telescope')
     end,

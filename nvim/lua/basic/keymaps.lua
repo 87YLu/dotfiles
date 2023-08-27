@@ -60,8 +60,12 @@ keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the lin
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
 
 -- comment
-keyset({ 'i', 'n' }, '<C-\\>', require('Comment.api').toggle.linewise.current, { desc = 'toggle comment' })
-keyset({ 'i', 'n' }, '<A-\\>', require('Comment.api').toggle.blockwise.current, { desc = 'toggle comment' })
+keyset({ 'i', 'n' }, '<C-\\>', function()
+  require('Comment.api').toggle.linewise.current()
+end, { desc = 'toggle comment' })
+keyset({ 'i', 'n' }, '<A-\\>', function()
+  require('Comment.api').toggle.blockwise.current()
+end, { desc = 'toggle comment' })
 keyset('v', '<C-\\>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
 
 -- plugin about code action start
@@ -96,7 +100,9 @@ end, { desc = 'global search' })
 keyset('n', '<A-f>', function()
   _G.resume_live_grep(vim.api.nvim_buf_get_name(0))
 end, { desc = 'search in current file' })
-keyset('n', '<leader>c', require('telescope.builtin').pickers, { desc = 'list telescope pickers' })
+keyset('n', '<leader>c', function()
+  require('telescope.builtin').pickers()
+end, { desc = 'list telescope pickers' })
 
 plugin_keys.telescope_keys = {
   i = {

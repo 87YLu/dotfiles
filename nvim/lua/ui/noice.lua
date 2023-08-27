@@ -23,4 +23,20 @@ noice.setup({
     inc_rename = false, -- enables an input dialog for inc-rename.nvim
     lsp_doc_border = false, -- add a border to hover docs and signature help
   },
+  routes = {
+    {
+      filter = { find = 'coc#pum#close' },
+      opts = { skip = true },
+    },
+    {
+      filter = { find = 'neovim-session-manager' },
+      opts = { skip = true },
+    },
+  },
+})
+
+require('notify').setup({
+  stages = 'static',
+  render = 'compact',
+  timeout = 2500,
 })
