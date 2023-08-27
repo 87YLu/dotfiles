@@ -81,7 +81,9 @@ keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to clos
 -- plugin bufferline end
 
 -- plugin neo-tree start
-keyset('n', '<A-m>', ':Neotree toggle<CR>', { desc = 'toggle neotree' })
+keyset('n', '<A-m>', function()
+  _G.toggle_neo_tree()
+end, { desc = 'toggle neotree' })
 -- plugin neo-tree end
 
 -- plugin telescope start

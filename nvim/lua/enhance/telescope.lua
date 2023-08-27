@@ -6,6 +6,21 @@ if not status_ok then
   return
 end
 
+local function is_editing_win(winnr)
+  local bufnr = vim.api.nvim_win_get_buf(winnr)
+  local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
+  return buftype == ''
+end
+
+local function get_editing_win()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if is_editing_win(win) then
+      return win
+    end
+  end
+  return 0
+end
+
 telescope.setup({
   defaults = {
     initial_mode = 'insert',
@@ -21,6 +36,14 @@ telescope.setup({
       height = 0.80,
       width = 0.75,
     },
+    -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/958
+    -- https://github.com/nvim-telescope/telescope.nvim/pull/531
+    get_selection_window = function()
+      if not is_editing_win(vim.api.nvim_get_current_win()) then
+        return get_editing_win()
+      end
+      return 0
+    end,
   },
 })
 

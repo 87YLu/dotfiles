@@ -9,6 +9,8 @@ function Get_path(state)
   return node:get_id()
 end
 
+local open_status = false
+
 neo_tree.setup({
   close_if_last_window = true,
   filesystem = {
@@ -20,14 +22,14 @@ neo_tree.setup({
       never_show = { '.DS_Store', 'thumbs.db' },
     },
     follow_current_file = {
-      enabled = true,
+      enabled = false,
       leave_dirs_open = false,
     },
     use_libuv_file_watcher = true,
   },
   window = {
     position = 'left',
-    width = 40,
+    width = 50,
     mapping_options = {
       noremap = true,
       nowait = true,
@@ -45,7 +47,6 @@ neo_tree.setup({
       ['z'] = '',
       ['A'] = '',
       ['m'] = '',
-      ['q'] = '',
       ['#'] = '',
       ['/'] = '',
       ['.'] = '',
@@ -59,6 +60,9 @@ neo_tree.setup({
       ['ot'] = '',
       ['<bs>'] = '',
       -- keys
+      ['q'] = function()
+        -- do nothing
+      end,
       ['<2-LeftMouse>'] = 'open',
       ['<cr>'] = 'open',
       ['<esc>'] = 'cancel',
@@ -103,16 +107,72 @@ neo_tree.setup({
       end,
     },
   },
+  event_handlers = {
+    {
+      event = 'neo_tree_window_before_close',
+      handler = function()
+        open_status = false
+      end,
+    },
+    {
+      event = 'neo_tree_window_before_open',
+      handler = function()
+        open_status = true
+      end,
+    },
+  },
 })
 
+function _G.toggle_neo_tree()
+  if not open_status then
+    local buffer = vim.api.nvim_buf_get_name(0)
+    local file = io.open(buffer, 'r')
+    if file then
+      file:close()
+      vim.cmd('Neotree reveal')
+    else
+      vim.cmd('Neotree')
+    end
+  else
+    vim.cmd('Neotree close')
+  end
+end
+
+local manager = require('neo-tree.sources.manager')
+local command = require('neo-tree.command')
 local auto_open_status = false
-local config_group = vim.api.nvim_create_augroup('neotree_autoopen', { clear = true })
+local config_group = vim.api.nvim_create_augroup('neotree_actions', { clear = true })
+
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
   callback = function()
     if vim.g.auto_open_explorer and not auto_open_status then
-      require('neo-tree.sources.manager').show('filesystem')
+      manager.show('filesystem')
       auto_open_status = true
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  group = config_group,
+  callback = function()
+    local cwd = vim.loop.cwd()
+    local buffer = vim.api.nvim_buf_get_name(0)
+
+    if
+      not open_status
+      or vim.g.is_diffview_opening
+      or not vim.g.follow_current_file
+      or not (string.sub(buffer, 1, string.len(cwd)) == cwd)
+    then
+      return
+    end
+
+    local file = io.open(buffer, 'r')
+
+    if file then
+      file:close()
+      command.execute({ source_name = 'filesystem', action = 'show', reveal = true, reveal_force_cwd = true })
     end
   end,
 })

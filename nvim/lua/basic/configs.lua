@@ -79,4 +79,6 @@ opt.clipboard = 'unnamedplus'
 opt.spell = true
 opt.spelllang = { 'en', 'cjk' }
 
+-- neotree
 g.auto_open_explorer = true
+g.follow_current_file = true

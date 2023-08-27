@@ -6,7 +6,7 @@ if not status_ok then
   return
 end
 
-local is_diffview_opening = false
+vim.g.is_diffview_opening = false
 
 function Open_file_at_diffview_panel()
   local lib = require('diffview.lib')
@@ -35,12 +35,12 @@ diffview.setup({
     view_opened = function()
       vim.cmd('CocDisable')
       vim.cmd('Noice dismiss')
-      is_diffview_opening = true
+      vim.g.is_diffview_opening = true
     end,
     view_closed = function()
       vim.cmd('CocEnable')
       vim.cmd('Noice dismiss')
-      is_diffview_opening = false
+      vim.g.is_diffview_opening = false
     end,
   },
   keymaps = {
@@ -52,7 +52,7 @@ diffview.setup({
 })
 
 function _G.view_file_diff()
-  if is_diffview_opening then
+  if vim.g.is_diffview_opening then
     vim.cmd('DiffviewClose')
   else
     vim.cmd('DiffviewOpen')
@@ -60,7 +60,7 @@ function _G.view_file_diff()
 end
 
 function _G.view_file_history()
-  if is_diffview_opening then
+  if vim.g.is_diffview_opening then
     vim.cmd('DiffviewClose')
   else
     vim.cmd('DiffviewFileHistory %')
@@ -68,7 +68,7 @@ function _G.view_file_history()
 end
 
 function _G.view_git_history()
-  if is_diffview_opening then
+  if vim.g.is_diffview_opening then
     vim.cmd('DiffviewClose')
   else
     vim.cmd('DiffviewFileHistory')

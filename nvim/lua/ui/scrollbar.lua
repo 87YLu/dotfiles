@@ -11,4 +11,7 @@ scrollbar.setup({
   handle = {
     color = '#b390f2',
   },
+  excluded_filetypes = {
+    'neo-tree',
+  },
 })
