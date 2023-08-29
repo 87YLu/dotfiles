@@ -46,12 +46,15 @@ vim.api.nvim_create_autocmd('BufEnter', {
 
 -- fix code fold
 -- https://github.com/nvim-telescope/telescope.nvim/issues/699
-vim.api.nvim_create_autocmd('BufEnter', {
+vim.api.nvim_create_autocmd('BufRead', {
   pattern = '*.*',
-  command = 'normal zx',
-})
-
-vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*.*',
-  command = 'normal zR',
+  callback = function()
+    vim.api.nvim_create_autocmd('BufWinEnter', {
+      once = true,
+      callback = function()
+        vim.cmd('normal! zx')
+        vim.cmd('normal! zR')
+      end,
+    })
+  end,
 })
