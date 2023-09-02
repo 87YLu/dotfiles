@@ -2,6 +2,7 @@
 local format_config = '~/.config/nvim/lua/lsp/format-configs/'
 local global_prettier_config = format_config .. '/.prettierrc'
 local stylua_config = format_config .. 'stylua.toml'
+local utils = require('utils')
 
 local set_perttier_config = function()
   local prettier_type = 'javascript'
@@ -14,7 +15,7 @@ local set_perttier_config = function()
     .. 'json'
     .. 'yaml'
 
-  local is_prettier_type = string.find(prettier_type, vim.o.filetype) ~= nil
+  local is_prettier_type = string.find(prettier_type, utils.current_file.type()) ~= nil
 
   if not is_prettier_type then
     return

@@ -8,6 +8,8 @@ end
 
 vim.g.is_diffview_opening = false
 
+local utils = require('utils')
+
 function Open_file_at_diffview_panel()
   local lib = require('diffview.lib')
   local file = lib.get_current_view():infer_cur_file()
@@ -16,16 +18,12 @@ function Open_file_at_diffview_panel()
     return
   end
 
-  local exist = io.open(file.path, 'rb')
-
-  if not exist then
+  if utils.file.is_exist(file.path) then
+    vim.cmd('DiffviewClose')
+    vim.cmd(':e ' .. file.path)
+  else
     vim.notify('the file has been deleted.')
-    return
   end
-
-  exist:close()
-  vim.cmd('DiffviewClose')
-  vim.cmd(':e ' .. file.path)
 end
 
 diffview.setup({

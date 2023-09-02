@@ -2,6 +2,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 local plugin_keys = {}
+local utils = require('utils')
 
 local keyset = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -49,7 +50,7 @@ keyset('n', 'q', ':q<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
 keyset('n', '<leader><leader>', ':silent! w<CR>', { desc = 'save' })
 keyset('n', 'cp', function()
-  local path = vim.loop.cwd()
+  local path = utils.cwd()
   vim.fn.setreg('+', path)
   vim.fn.setreg('"', path)
   vim.notify(string.format('Copied %s to system clipboard!', path))

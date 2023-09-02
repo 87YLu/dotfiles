@@ -51,6 +51,7 @@ telescope.load_extension('ui-select')
 
 local telescope_state = require('telescope.state')
 local telescope_builtin = require('telescope.builtin')
+local utils = require('utils')
 
 function get_cache_index(path, prefix)
   local cache_index = 0
@@ -68,16 +69,16 @@ end
 
 function _G.resume_live_grep(path)
   if path == nil then
-    path = vim.loop.cwd()
+    path = utils.cwd()
   end
 
   local prompt_prefix = 'live_grep 󰺯 '
-  local cache_index = get_cache_index(path, prompt_prefix)
-
+  local relative_path = utils.file.relative_path(path)
+  local cache_index = get_cache_index(relative_path, prompt_prefix)
   if cache_index == 0 then
     telescope_builtin.live_grep({
       search_dirs = { path },
-      prompt_title = path,
+      prompt_title = relative_path,
       prompt_prefix = prompt_prefix,
     })
   else
@@ -87,16 +88,17 @@ end
 
 function _G.resume_find_files(path)
   if path == nil then
-    path = vim.loop.cwd()
+    path = utils.cwd()
   end
 
   local prompt_prefix = 'find_files 󰱽 '
-  local cache_index = get_cache_index(path, prompt_prefix)
+  local relative_path = utils.file.relative_path(path)
+  local cache_index = get_cache_index(relative_path, prompt_prefix)
 
   if cache_index == 0 then
     telescope_builtin.find_files({
       search_dirs = { path },
-      prompt_title = path,
+      prompt_title = relative_path,
       prompt_prefix = prompt_prefix,
     })
   else

@@ -123,18 +123,15 @@ neo_tree.setup({
   },
 })
 
+local utils = require('utils')
+
 function _G.toggle_neo_tree()
   if not open_status then
-    local buffer = vim.api.nvim_buf_get_name(0)
-    local file = io.open(buffer, 'r')
-    if file then
-      file:close()
+    if utils.current_file.is_exist() then
       vim.cmd('Neotree reveal')
     else
       vim.cmd('Neotree')
     end
-  else
-    vim.cmd('Neotree close')
   end
 end
 
@@ -156,23 +153,16 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = config_group,
   callback = function()
-    local cwd = vim.loop.cwd()
-    local buffer = vim.api.nvim_buf_get_name(0)
-
     if
       not open_status
       or vim.g.is_diffview_opening
       or not vim.g.follow_current_file
-      or not (string.sub(buffer, 1, string.len(cwd)) == cwd)
+      or not utils.current_file.is_exist()
+      or not utils.current_file.is_in_cwd()
     then
       return
     end
 
-    local file = io.open(buffer, 'r')
-
-    if file then
-      file:close()
-      command.execute({ source_name = 'filesystem', action = 'show', reveal = true, reveal_force_cwd = true })
-    end
+    command.execute({ source_name = 'filesystem', action = 'show', reveal = true, reveal_force_cwd = true })
   end,
 })

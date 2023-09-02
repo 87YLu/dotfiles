@@ -41,11 +41,13 @@ local code_runner = terms:new({
   close_on_exit = false,
 })
 
+local current_file = require('utils').current_file
+
 function _G.code_runner_toggle()
-  local filetype = vim.o.filetype
-  local filepath = vim.api.nvim_buf_get_name(0)
-  local filename = vim.fn.fnamemodify(filepath, ':t')
-  local dirpath = vim.fn.fnamemodify(filepath, ':h')
+  local filetype = current_file.type()
+  local filepath = current_file.path()
+  local filename = current_file.name()
+  local dirpath = current_file.dir()
 
   cmd = ({
     javascript = 'node ' .. filepath,
