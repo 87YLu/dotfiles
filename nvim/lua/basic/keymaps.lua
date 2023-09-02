@@ -18,14 +18,14 @@ keyset('n', 'cc', '<C-w>c', { desc = 'close current window' })
 keyset('n', 'co', '<C-w>o', { desc = 'close other windows' })
 
 -- 窗口跳转
-keyset('n', '<A-h>', '<C-w>h', { desc = 'jump to the left window' })
-keyset('n', '<A-j>', '<C-w>j', { desc = 'jump to the lower window' })
-keyset('n', '<A-k>', '<C-w>k', { desc = 'jump to the upper window' })
-keyset('n', '<A-l>', '<C-w>l', { desc = 'jump to the right window' })
-keyset('t', '<A-h>', [[ <C-\><C-N><C-w>h ]], { desc = 'jump to the left window' })
-keyset('t', '<A-j>', [[ <C-\><C-N><C-w>j ]], { desc = 'jump to the lower window' })
-keyset('t', '<A-k>', [[ <C-\><C-N><C-w>k ]], { desc = 'jump to the upper window' })
-keyset('t', '<A-l>', [[ <C-\><C-N><C-w>l ]], { desc = 'jump to the right window' })
+keyset('n', '<C-h>', '<C-w>h', { desc = 'jump to the left window' })
+keyset('n', '<C-j>', '<C-w>j', { desc = 'jump to the lower window' })
+keyset('n', '<C-k>', '<C-w>k', { desc = 'jump to the upper window' })
+keyset('n', '<C-l>', '<C-w>l', { desc = 'jump to the right window' })
+keyset('t', '<C-h>', [[ <C-\><C-N><C-w>h ]], { desc = 'jump to the left window' })
+keyset('t', '<C-j>', [[ <C-\><C-N><C-w>j ]], { desc = 'jump to the lower window' })
+keyset('t', '<C-k>', [[ <C-\><C-N><C-w>k ]], { desc = 'jump to the upper window' })
+keyset('t', '<C-l>', [[ <C-\><C-N><C-w>l ]], { desc = 'jump to the right window' })
 
 -- 窗口调整大小
 keyset('n', '<C-,>', ':vertical resize -20<CR>', { desc = 'horizontal narrowing window' })
@@ -76,8 +76,8 @@ keyset('n', '<C-A-n>', '<CMD>lua _G.code_runner_toggle()<CR>', { desc = 'run cod
 -- plugin about code action end
 
 -- plugin bufferline start
-keyset('n', '<C-h>', ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
-keyset('n', '<C-l>', ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })
+keyset('n', '<A-h>', ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
+keyset('n', '<A-l>', ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })
 keyset('n', '<C-w>', ':Bdelete!<CR>', { desc = 'close current tab' })
 keyset('n', '<leader>br', ':BufferLineCloseRight<CR>', { desc = 'close the right tab' })
 keyset('n', '<leader>bl', ':BufferLineCloseLeft<CR>', { desc = 'close the left tab' })
