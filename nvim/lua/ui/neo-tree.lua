@@ -82,13 +82,18 @@ neo_tree.setup({
       ['<C-f>'] = function(state)
         local path = Get_path(state)
         if path then
-          _G.resume_live_grep(path)
+          _G.resume_telescope({
+            path = path,
+          })
         end
       end,
       ['<C-p>'] = function(state)
         local path = Get_path(state)
         if path then
-          _G.resume_find_files(path)
+          _G.resume_telescope({
+            action = 'find_files',
+            path = path,
+          })
         end
       end,
       ['y'] = function(state)
@@ -156,10 +161,12 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     if
       not open_status
       or vim.g.is_diffview_opening
+      or vim.g.is_telescope_pickers_opening
       or not vim.g.follow_current_file
       or not utils.current_file.is_exist()
       or not utils.current_file.is_in_cwd()
     then
+      vim.g.is_telescope_pickers_opening = false
       return
     end
 

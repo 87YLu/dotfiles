@@ -1,7 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local plugin_keys = {}
 local utils = require('utils')
 
 local keyset = function(mode, lhs, rhs, opts)
@@ -93,27 +92,18 @@ end, { desc = 'toggle neotree' })
 
 -- plugin telescope start
 keyset('n', '<C-p>', function()
-  _G.resume_find_files()
+  _G.resume_telescope({ action = 'find_files' })
 end, { desc = 'find files' })
 keyset('n', '<C-f>', function()
-  _G.resume_live_grep()
+  _G.resume_telescope()
 end, { desc = 'global search' })
 keyset('n', '<A-f>', function()
   _G.resume_live_grep(vim.api.nvim_buf_get_name(0))
 end, { desc = 'search in current file' })
 keyset('n', '<leader>c', function()
+  vim.g.is_telescope_pickers_opening = true
   require('telescope.builtin').pickers()
 end, { desc = 'list telescope pickers' })
-
-plugin_keys.telescope_keys = {
-  i = {
-    ['<Down>'] = 'move_selection_next',
-    ['<Up>'] = 'move_selection_previous',
-    ['<C-c>'] = 'close',
-    ['<C-u>'] = 'preview_scrolling_up',
-    ['<C-d>'] = 'preview_scrolling_down',
-  },
-}
 -- plugin telescope end
 
 -- plugin session manager start
@@ -166,5 +156,3 @@ keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view gi
 -- lazygit
 keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazygit' })
 -- plugin about git end
-
-return plugin_keys
