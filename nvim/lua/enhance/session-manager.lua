@@ -38,3 +38,16 @@ vim.api.nvim_create_autocmd({ 'QuitPre' }, {
     require('neo-tree.sources.manager').close_all()
   end,
 })
+
+vim.api.nvim_create_autocmd({ 'User' }, {
+  pattern = 'SessionLoadPost',
+  group = config_group,
+  callback = function()
+    if vim.g.auto_open_explorer then
+      -- call it twice to make sure the ui is correct
+      vim.cmd('Neotree show')
+      vim.cmd('Neotree close')
+      vim.cmd('Neotree show')
+    end
+  end,
+})

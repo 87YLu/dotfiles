@@ -6,6 +6,14 @@ M.cwd = function()
   return vim.loop.cwd()
 end
 
+M.session_exist = function()
+  if require('session_manager.config').dir_to_session_filename(M.cwd()):exists() then
+    return true
+  end
+
+  return false
+end
+
 -- file --------------------
 
 file.is_exist = function(path)

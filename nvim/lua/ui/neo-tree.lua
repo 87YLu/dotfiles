@@ -131,7 +131,9 @@ neo_tree.setup({
 local utils = require('utils')
 
 function _G.toggle_neo_tree()
-  if not open_status then
+  if open_status then
+    vim.cmd('Neotree close')
+  else
     if utils.current_file.is_exist() then
       vim.cmd('Neotree reveal')
     else
@@ -149,8 +151,10 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
   callback = function()
     if vim.g.auto_open_explorer and not auto_open_status then
-      manager.show('filesystem')
       auto_open_status = true
+      if not utils.session_exist() then
+        manager.show('filesystem')
+      end
     end
   end,
 })

@@ -9,7 +9,7 @@ end
 local dashboard = require('alpha.themes.dashboard')
 
 -- if there is a session, alpha doesn't need to be loaded
-if require('session_manager.config').dir_to_session_filename(vim.loop.cwd()):exists() then
+if require('utils').session_exist() then
   return
 end
 
