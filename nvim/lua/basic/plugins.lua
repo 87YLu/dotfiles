@@ -36,8 +36,36 @@ local plugins = {
   },
   {
     'folke/tokyonight.nvim',
+    lazy = vim.g.colorscheme ~= vim.g.colorschemes.tokyonight,
     config = function()
-      require('ui.colorscheme')
+      if vim.g.colorscheme == vim.g.colorschemes.tokyonight then
+        require('ui.colorscheme')
+      else
+        return false
+      end
+    end
+  },
+  {
+    'dracula/vim',
+    name = 'dracula',
+    lazy = vim.g.colorscheme ~= vim.g.colorschemes.dracula,
+    config = function()
+      if vim.g.colorscheme == vim.g.colorschemes.dracula then
+        require('ui.colorscheme')
+      else
+        return false
+      end
+    end
+  },
+  {
+    'olimorris/onedarkpro.nvim',
+    lazy = vim.g.colorscheme ~= vim.g.colorschemes.onedarkpro,
+    config = function()
+      if vim.g.colorscheme == vim.g.colorschemes.onedarkpro then
+        require('ui.colorscheme')
+      else
+        return false
+      end
     end,
   },
   {

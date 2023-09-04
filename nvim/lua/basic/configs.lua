@@ -82,3 +82,23 @@ opt.spelllang = { 'en', 'cjk' }
 -- neotree
 g.auto_open_explorer = true
 g.follow_current_file = true
+
+-- colorscheme
+g.colorschemes = {
+  tokyonight = 'tokyonight',
+  dracula = 'dracula',
+  onedarkpro = 'onedarkpro',
+}
+
+local function randomColorscheme()
+  local keys = {}
+  for key, _ in pairs(g.colorschemes) do
+    table.insert(keys, key)
+  end
+  local randomKey = keys[math.random(#keys)]
+  return g.colorschemes[randomKey]
+end
+
+g.random_colorscheme = true
+g.default_colorscheme = g.colorschemes.dracula
+g.colorscheme = g.random_colorscheme and randomColorscheme() or g.default_colorscheme
