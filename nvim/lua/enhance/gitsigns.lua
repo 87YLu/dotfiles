@@ -6,9 +6,15 @@ if not status_ok then
   return
 end
 
-gitsigns.setup({
-  current_line_blame = true,
-  current_line_blame_opts = {
-    delay = 0,
-  },
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*.*',
+  once = true,
+  callback = function()
+    gitsigns.setup({
+      current_line_blame = true,
+      current_line_blame_opts = {
+        delay = 0,
+      },
+    })
+  end,
 })
