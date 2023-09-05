@@ -52,5 +52,19 @@
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"],
     "typescriptreact": ["javascript", "javascriptreact", "typescript"]
-  }
+  },
+  "cSpell.ignoreWords": ["nvim", "antd"],
+  "cSpell.ignorePaths": [
+    "node_modules",
+    "**/node_modules",
+    "**/node_modules/**",
+    "node_modules/**",
+    ".git",
+    "*.dll",
+    "**/*.dll",
+    "**/package.json",
+    "**/package-lock.json",
+    "**/pnpm-lock.yaml",
+    "**/coc-settings.json"
+  ]
 }

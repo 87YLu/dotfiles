@@ -99,6 +99,6 @@ local function randomColorscheme()
   return g.colorschemes[randomKey]
 end
 
-g.random_colorscheme = true
-g.default_colorscheme = g.colorschemes.dracula
+g.random_colorscheme = false
+g.default_colorscheme = g.colorschemes.tokyonight
 g.colorscheme = g.random_colorscheme and randomColorscheme() or g.default_colorscheme

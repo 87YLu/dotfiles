@@ -11,6 +11,7 @@ vim.g.coc_global_extensions = {
   'coc-sh',
   'coc-tabnine',
   'coc-snippets',
+  'coc-spell-checker',
 }
 
 vim.opt.backup = false
