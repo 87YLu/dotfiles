@@ -1,6 +1,5 @@
 -- https://github.com/neoclide/coc.nvim
 vim.g.coc_global_extensions = {
-  'coc-marketplace',
   'coc-tsserver',
   'coc-json',
   'coc-html',
@@ -12,6 +11,7 @@ vim.g.coc_global_extensions = {
   'coc-tabnine',
   'coc-snippets',
   'coc-spell-checker',
+  'coc-nav'
 }
 
 vim.opt.backup = false
@@ -23,6 +23,8 @@ vim.opt.signcolumn = 'yes'
 
 vim.g.coc_snippet_next = '<Tab>'
 vim.g.coc_snippet_prev = '<S-Tab>'
+
+local utils = require('utils')
 
 -- Autocomplete
 function _G.check_back_space()
@@ -75,3 +77,14 @@ vim.api.nvim_create_user_command('OR', "call CocActionAsync('runCommand', 'edito
 -- NOTE: Please see `:h coc-status` for integrations with external plugins that
 -- provide custom statusline: lightline.vim, vim-airline
 vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
+
+-- https://github.com/yuki-yano/coc-nav/issues/4
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    if utils.current_file.is_in_types({ 'sh', 'html' }) then
+      vim.cmd("call CocActionAsync('deactivateExtension', 'coc-nav')")
+    else
+      vim.cmd("call CocActionAsync('activeExtension', 'coc-nav')")
+    end
+  end,
+})

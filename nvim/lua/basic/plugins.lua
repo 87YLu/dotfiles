@@ -142,11 +142,6 @@ local plugins = {
     end,
   },
   {
-    'Bekaboo/dropbar.nvim',
-    event = 'VeryLazy',
-    config = true,
-  },
-  {
     'folke/flash.nvim',
     event = 'VeryLazy',
     opts = {},

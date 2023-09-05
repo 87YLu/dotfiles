@@ -63,6 +63,10 @@ current_file.is_exist = function()
   return file.is_exist(current_file.path())
 end
 
+current_file.is_in_types = function(types)
+  return string.find(table.concat(types, ''), current_file.type()) ~= nil
+end
+
 M.file = file
 M.current_file = current_file
 

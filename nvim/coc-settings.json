@@ -32,7 +32,7 @@
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "󰌶",
   "diagnostic.displayByAle": false,
-  "diagnostic.virtualText": true,
+  "diagnostic.virtualText": false,
   "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
   "diagnostic.messageTarget": "float",

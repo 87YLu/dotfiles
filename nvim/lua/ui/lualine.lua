@@ -6,22 +6,55 @@ if not status_ok then
   return
 end
 
+local function nav()
+  local items = vim.b.coc_nav or {}
+  local t = { '%#NonText#' .. '    ' }
+  for k, v in ipairs(items) do
+    t[#t + 1] = ' %#'
+      .. (v.highlight or 'NormalNC')
+      .. '#'
+      .. (type(v.label) == 'string' and v.label .. ' ' or ' ')
+      .. '%#Comment#'
+      .. (v.name or '')
+    if next(items, k) ~= nil then
+      t[#t + 1] = '%#NonText# '
+    end
+  end
+
+  return table.concat(t)
+end
+
 lualine.setup({
   options = {
     theme = vim.g.colorscheme,
     component_separators = '|',
-    section_separators = { left = '', right = '' },
+    section_separators = { left = '', right = '' },
+    disabled_filetypes = {
+      statusline = { 'alpha' },
+      winbar = { 'neo-tree', 'alpha' },
+    },
+  },
+  winbar = {
+    lualine_a = { nav },
+    lualine_b = { '%#NonText#' .. '' },
+  },
+  inactive_winbar = {
+    lualine_a = { nav },
+    lualine_b = { '%#NonText#' .. '' },
   },
   extensions = { 'neo-tree', 'toggleterm' },
   sections = {
     lualine_a = {
       { 'mode', separator = { left = '' }, right_padding = 2 },
     },
-    lualine_b = { 'branch', 'filename' },
+    lualine_b = { 'branch', { 'filename', separator = { right = '' } } },
     lualine_c = { 'diagnostics' },
     lualine_x = {},
     lualine_y = {
-      'tabnine',
+      {
+        'tabnine',
+        separator = { left = '' },
+      },
       'filetype',
       {
         'fileformat',

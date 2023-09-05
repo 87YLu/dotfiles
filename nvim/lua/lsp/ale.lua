@@ -5,17 +5,17 @@ local stylua_config = format_config .. 'stylua.toml'
 local utils = require('utils')
 
 local set_perttier_config = function()
-  local prettier_type = 'javascript'
-    .. 'javascriptreact'
-    .. 'typescript'
-    .. 'typescriptreact'
-    .. 'css'
-    .. 'less'
-    .. 'html'
-    .. 'json'
-    .. 'yaml'
-
-  local is_prettier_type = string.find(prettier_type, utils.current_file.type()) ~= nil
+  local is_prettier_type = utils.current_file.is_in_types({
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'css',
+    'less',
+    'html',
+    'json',
+    'yaml',
+  })
 
   if not is_prettier_type then
     return
