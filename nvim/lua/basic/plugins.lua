@@ -43,7 +43,7 @@ local plugins = {
       else
         return false
       end
-    end
+    end,
   },
   {
     'dracula/vim',
@@ -55,7 +55,7 @@ local plugins = {
       else
         return false
       end
-    end
+    end,
   },
   {
     'olimorris/onedarkpro.nvim',
@@ -245,6 +245,14 @@ local plugins = {
     branch = 'release',
     config = function()
       require('lsp.coc')
+    end,
+  },
+  {
+    'codota/tabnine-nvim',
+    build = './dl_binaries.sh',
+    event = 'VeryLazy',
+    config = function()
+      require('lsp.tabnine')
     end,
   },
 }

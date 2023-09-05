@@ -21,6 +21,7 @@ lualine.setup({
     lualine_c = { 'diagnostics' },
     lualine_x = {},
     lualine_y = {
+      'tabnine',
       'filetype',
       {
         'fileformat',
