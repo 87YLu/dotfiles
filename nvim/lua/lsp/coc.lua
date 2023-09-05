@@ -10,6 +10,7 @@ vim.g.coc_global_extensions = {
   'coc-sumneko-lua',
   'coc-sh',
   'coc-tabnine',
+  'coc-snippets',
 }
 
 vim.opt.backup = false
@@ -18,6 +19,9 @@ vim.opt.writebackup = false
 vim.opt.updatetime = 100
 
 vim.opt.signcolumn = 'yes'
+
+vim.g.coc_snippet_next = '<Tab>'
+vim.g.coc_snippet_prev = '<S-Tab>'
 
 -- Autocomplete
 function _G.check_back_space()

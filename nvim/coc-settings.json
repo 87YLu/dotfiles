@@ -3,29 +3,29 @@
   "suggest.completionItemKindLabels": {
     "class": "",
     "color": "",
-    "constant": "",
+    "constant": "",
     "default": "",
     "enum": "",
     "enumMember": "",
     "event": "鬒",
-    "field": "綠",
-    "file": "",
+    "field": "󰽐",
+    "file": "",
     "folder": "",
     "function": "󰆒",
     "interface": "",
     "keyword": "",
-    "method": "",
+    "method": "",
     "module": "",
-    "operator": "洛",
+    "operator": "",
     "property": "",
-    "reference": "渚",
+    "reference": "",
     "snippet": "",
     "struct": "פּ",
     "text": "",
-    "typeParameter": "",
+    "typeParameter": "",
     "unit": "",
     "value": "",
-    "variable": ""
+    "variable": ""
   },
   "diagnostic.errorSign": "",
   "diagnostic.warningSign": "",
@@ -46,5 +46,11 @@
   "typescript.inlayHints.parameterTypes.enabled": true,
   "typescript.inlayHints.enumMemberValues.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-  "less.lint.important": "warning"
+  "less.lint.important": "warning",
+  "snippets.ultisnips.directories": ["$HOME/.config/nvim/lua/lsp/Ultisnips/"],
+  "snippets.extends": {
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"],
+    "typescriptreact": ["javascript", "javascriptreact", "typescript"]
+  }
 }
