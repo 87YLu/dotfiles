@@ -1,8 +1,6 @@
 .DS_Store
 
-nvim/plugins-backup/lazy
-
-nvim/plugins-backup/coc
+nvim/plugins-backup
 
 sketchybar/json/weather.json
 
