@@ -134,6 +134,8 @@ coc_keyset('n', 'K', '<CMD>lua _G.show_docs()<CR>', { desc = 'show doc' })
 coc_keyset('n', '<leader>rn', '<Plug>(coc-rename)', { desc = 'rename' })
 coc_keyset({ 'n', 'x' }, '<leader>r', '<Plug>(coc-codeaction-refactor-selected)', { desc = 'refactor code actions' })
 coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
+coc_keyset('n', '<leader>t', '<Plug>(coc-translator-p)', { desc = 'translate' })
+coc_keyset('v', '<leader>t', '<Plug>(coc-translator-pv)', { desc = 'translate' })
 -- plugin coc end
 
 -- plugin about git start

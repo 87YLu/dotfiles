@@ -32,6 +32,10 @@ noice.setup({
       filter = { find = 'neovim-session-manager' },
       opts = { skip = true },
     },
+    {
+      filter = { find = 'Translating failed' },
+      opts = { skip = true },
+    },
   },
 })
 
