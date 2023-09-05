@@ -23,6 +23,7 @@ treesitter.setup({
     'markdown',
     'markdown_inline',
     'yaml',
+    'bash',
   },
   -- 启用代码高亮模块
   highlight = {
