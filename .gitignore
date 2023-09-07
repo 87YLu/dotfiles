@@ -1,11 +1,7 @@
 .DS_Store
 
-nvim/plugins-backup
+nvim/plugins
 
 sketchybar/json/weather.json
 
 yabai/tmp/yabai-tiling-floating-toggle
-
-iTerm2/.last_file
-
-iTerm2/background

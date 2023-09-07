@@ -8,7 +8,6 @@ vim.g.coc_global_extensions = {
   'coc-eslint',
   'coc-sumneko-lua',
   'coc-sh',
-  'coc-tabnine',
   'coc-snippets',
   'coc-spell-checker',
   'coc-nav',

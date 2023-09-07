@@ -2,14 +2,6 @@
 
 ## how to use
 
-### iTerm2
-
-If you want to change the background image regularly，run `crontab -e` and add this line.
-
-```sh
-*/15 * * * *  /bin/bash $HOME/dotfiles/iTerm2/random_background_image.sh
-```
-
 ### nvim and lazygit
 
 ```sh
@@ -20,12 +12,6 @@ ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ```
 
-Unzip the files under *nvim/plugins-backup* first
-
-```sh
-ln -s ~/dotfiles/nvim/plugins-backup/lazy ~/.local/share/nvim/lazy
-ln -s ~/dotfiles/nvim/plugins-backup/coc ~/.config/coc
-```
 ### tmux
 
 ```sh
@@ -78,6 +64,30 @@ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 2. Open the hammerspoon console via the menu bar
 3. Type `hs.ipc.cliInstall("/opt/homebrew"`) and hit return
 4. Type `hs -c 'stackline.config:toggle("appearance.showIcons")'` in the terminal and hit return
+
+## use dotfiles-resources
+
+```sh
+git clone https://github.com/87YLu/dotfiles-resources.git
+```
+
+### iTerm2
+
+If you want to change the background image regularly，run `crontab -e` and add this line.
+
+```sh
+*/15 * * * *  /bin/bash $HOME/dotfiles-resources/iTerm2/random_background_image.sh
+```
+
+### nvim
+
+Unzip the files under **nvim/plugins** first
+
+```sh
+ln -s ~/dotfiles-resources/nvim/plugins ~/dotfiles/nvim/plugins
+ln -s ~/dotfiles-resources/nvim/plugins/lazy ~/.local/share/nvim/lazy
+ln -s ~/dotfiles-resources/nvim/plugins/coc ~/.config/coc
+```
 
 ## Prerequisites
 
