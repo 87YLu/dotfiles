@@ -12,6 +12,7 @@ vim.g.coc_global_extensions = {
   'coc-spell-checker',
   'coc-nav',
   'coc-translator',
+  'coc-highlight',
 }
 
 vim.opt.backup = false

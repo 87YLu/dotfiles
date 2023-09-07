@@ -69,5 +69,6 @@
     "**/package-lock.json",
     "**/pnpm-lock.yaml",
     "**/coc-settings.json"
-  ]
+  ],
+  "colors.enable": true
 }
