@@ -36,6 +36,10 @@ noice.setup({
       filter = { find = 'Translating failed' },
       opts = { skip = true },
     },
+    {
+      filter = { find = 'UnhandledRejection' },
+      opts = { skip = true },
+    },
   },
 })
 
