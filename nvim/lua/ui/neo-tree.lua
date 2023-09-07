@@ -139,10 +139,10 @@ neo_tree.setup({
         end
       end,
       ['<c-,>'] = function()
-        set_width(current_width - 10)
+        set_width(current_width - 5)
       end,
       ['<c-.>'] = function()
-        set_width(current_width + 10)
+        set_width(current_width + 5)
       end,
     },
   },

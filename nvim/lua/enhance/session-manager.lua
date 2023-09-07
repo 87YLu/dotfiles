@@ -44,10 +44,10 @@ vim.api.nvim_create_autocmd({ 'User' }, {
   group = config_group,
   callback = function()
     if vim.g.auto_open_explorer then
-      -- call it twice to make sure the ui is correct
-      vim.cmd('Neotree show')
-      vim.cmd('Neotree close')
-      vim.cmd('Neotree show')
+      -- make neotree ui correctly
+      require('utils').set_timeout(function()
+        vim.cmd('Neotree show')
+      end, 0)
     end
   end,
 })
