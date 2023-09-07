@@ -2,6 +2,8 @@
 
 nvim/plugins
 
+nvim/lua/ui/.neo_tree_width
+
 sketchybar/json/weather.json
 
 yabai/tmp/yabai-tiling-floating-toggle

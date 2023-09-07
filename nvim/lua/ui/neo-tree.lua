@@ -1,12 +1,40 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 local neo_tree = require('neo-tree')
+local width_data = os.getenv('HOME') .. '/dotfiles/nvim/lua/ui/.neo_tree_width'
 
-function Get_path(state)
+function get_path(state)
   local node = state.tree:get_node()
   if node.type == 'message' then
     return
   end
   return node:get_id()
+end
+
+function get_width()
+  local file = io.open(width_data, 'r')
+  if file then
+    local content = file:read('*a')
+    file:close()
+    return tonumber(content)
+  else
+    return 50
+  end
+end
+
+local current_width = get_width()
+
+function set_width(width)
+  local _width = math.max(20, math.min(width, 130))
+  local delta = _width - current_width
+  local change = (delta >= 0 and '+' or '') .. tostring(delta)
+  local file = io.open(width_data, 'w')
+  if file then
+    file:write(_width)
+    file:close()
+  end
+
+  vim.cmd(':vertical resize' .. change .. '<CR>')
+  current_width = _width
 end
 
 local open_status = false
@@ -29,7 +57,7 @@ neo_tree.setup({
   },
   window = {
     position = 'left',
-    width = 50,
+    width = current_width,
     mapping_options = {
       noremap = true,
       nowait = true,
@@ -80,7 +108,7 @@ neo_tree.setup({
       ['>'] = 'next_source',
       ['i'] = 'show_file_details',
       ['<C-f>'] = function(state)
-        local path = Get_path(state)
+        local path = get_path(state)
         if path then
           _G.resume_telescope({
             path = path,
@@ -88,7 +116,7 @@ neo_tree.setup({
         end
       end,
       ['<C-p>'] = function(state)
-        local path = Get_path(state)
+        local path = get_path(state)
         if path then
           _G.resume_telescope({
             action = 'find_files',
@@ -97,7 +125,7 @@ neo_tree.setup({
         end
       end,
       ['y'] = function(state)
-        local path = Get_path(state)
+        local path = get_path(state)
         if path then
           vim.fn.setreg('+', path)
           vim.fn.setreg('"', path)
@@ -105,10 +133,16 @@ neo_tree.setup({
         end
       end,
       ['o'] = function(state)
-        local path = Get_path(state)
+        local path = get_path(state)
         if path then
           os.execute('open ' .. path)
         end
+      end,
+      ['<c-,>'] = function()
+        set_width(current_width - 10)
+      end,
+      ['<c-.>'] = function()
+        set_width(current_width + 10)
       end,
     },
   },
