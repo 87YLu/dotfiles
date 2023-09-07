@@ -40,6 +40,10 @@ noice.setup({
       filter = { find = 'UnhandledRejection' },
       opts = { skip = true },
     },
+    {
+      filter = { find = 'sumneko' },
+      opts = { skip = true },
+    },
   },
 })
 

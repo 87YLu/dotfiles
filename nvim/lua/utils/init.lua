@@ -14,6 +14,18 @@ M.session_exist = function()
   return false
 end
 
+M.set_timeout = function(func, delay)
+  local timer = vim.loop.new_timer()
+  timer:start(
+    delay,
+    0,
+    vim.schedule_wrap(function()
+      func()
+      timer:stop()
+    end)
+  )
+end
+
 -- file --------------------
 
 file.is_exist = function(path)

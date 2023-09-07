@@ -88,3 +88,14 @@ vim.api.nvim_create_autocmd('BufEnter', {
     end
   end,
 })
+
+-- coc-sumneko-lua has a probability of startup failure
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*.lua',
+  once = true,
+  callback = function()
+    utils.set_timeout(function()
+      vim.cmd("call CocActionAsync('runCommand', 'sumneko-lua.restart')")
+    end, 500)
+  end,
+})
