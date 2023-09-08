@@ -11,9 +11,16 @@ local keyset = function(mode, lhs, rhs, opts)
 end
 
 -- 窗口分屏
-keyset('n', 's', '')
-keyset('n', 'sv', ':vsp<CR>', { desc = 'split vertically' })
-keyset('n', 'sh', ':sp<CR>', { desc = 'split horizontally' })
+keyset('n', 'sv', function()
+  if utils.current_file.type() ~= 'neo-tree' then
+    vim.cmd(':vsp')
+  end
+end, { desc = 'split vertically' })
+keyset('n', 'sh', function()
+  if utils.current_file.type() ~= 'neo-tree' then
+    vim.cmd(':sp')
+  end
+end, { desc = 'split horizontally' })
 keyset('n', 'cc', '<C-w>c', { desc = 'close current window' })
 keyset('n', 'co', '<C-w>o', { desc = 'close other windows' })
 
@@ -41,6 +48,7 @@ keyset('v', 'J', ":move '>+1<CR>gv-gv", { desc = 'Move the selected content up' 
 keyset('v', 'K', ":move '<-2<CR>gv-gv", { desc = 'move the selected content down' })
 keyset('v', 'p', '"_dP') -- 在visual 模式里粘贴不要复制
 keyset('v', 'jk', '<Esc>', { desc = 'exit visual mode' })
+keyset('v', 'q', '<Esc>', { desc = 'exit visual mode' })
 
 -- normal 模式设置
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
@@ -98,7 +106,7 @@ keyset('n', '<C-f>', function()
   _G.resume_telescope()
 end, { desc = 'global search' })
 keyset('n', '<A-f>', function()
-  _G.resume_live_grep(vim.api.nvim_buf_get_name(0))
+  _G.resume_telescope({ path = utils.current_file.path() })
 end, { desc = 'search in current file' })
 keyset('n', '<leader>c', function()
   vim.g.is_telescope_pickers_opening = true
