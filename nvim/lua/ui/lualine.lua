@@ -45,7 +45,7 @@ lualine.setup({
   extensions = { 'neo-tree', 'toggleterm' },
   sections = {
     lualine_a = {
-      { 'mode', separator = { left = '' }, right_padding = 2 },
+      { 'mode', separator = { right = '' }, right_padding = 2 },
     },
     lualine_b = { 'branch', { 'filename', separator = { right = '' } } },
     lualine_c = { 'diagnostics' },
@@ -68,7 +68,7 @@ lualine.setup({
       'progress',
     },
     lualine_z = {
-      { 'location', separator = { right = '' }, left_padding = 2 },
+      'location',
     },
   },
 })
