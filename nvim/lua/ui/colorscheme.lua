@@ -2,6 +2,8 @@
 local colorschemes = vim.g.colorschemes
 local colorscheme = vim.g.colorscheme
 
+vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic,underline')
+
 if colorscheme == colorschemes.tokyonight then
   require('tokyonight').setup({
     style = 'night',
