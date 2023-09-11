@@ -29,7 +29,7 @@ noice.setup({
       opts = { skip = true },
     },
     {
-      filter = { find = 'neovim-session-manager' },
+      filter = { find = 'session_manager' },
       opts = { skip = true },
     },
     {
