@@ -3,6 +3,7 @@ local colorschemes = vim.g.colorschemes
 local colorscheme = vim.g.colorscheme
 
 vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic,underline')
+vim.cmd(':highlight CursorLineNr gui=italic,bold')
 
 if colorscheme == colorschemes.tokyonight then
   require('tokyonight').setup({
@@ -10,7 +11,7 @@ if colorscheme == colorschemes.tokyonight then
     transparent = true,
     on_colors = function(colors)
       colors.comment = '#737881'
-      colors.bg_visual = '#3a4150'
+      colors.bg_visual = '#303F9F'
     end,
   })
 
