@@ -3,7 +3,6 @@ local g = vim.g
 
 -- neotree
 g.auto_open_explorer = true
-g.follow_current_file = true
 
 -- colorscheme
 g.colorschemes = {

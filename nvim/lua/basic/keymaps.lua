@@ -49,8 +49,12 @@ keyset('v', 'K', ":move '<-2<CR>gv-gv", { desc = 'move the selected content down
 keyset('v', 'p', '"_dP') -- 在visual 模式里粘贴不要复制
 keyset('v', 'jk', '<Esc>', { desc = 'exit visual mode' })
 keyset('v', 'q', '<Esc>', { desc = 'exit visual mode' })
+keyset('v', 'h', '0')
+keyset('v', 'l', '$')
 
 -- normal 模式设置
+keyset('n', 'h', '0')
+keyset('n', 'l', '$')
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', ':q<CR>', { desc = 'exit' })
@@ -96,6 +100,10 @@ keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to clos
 keyset('n', '<A-m>', function()
   _G.toggle_neo_tree()
 end, { desc = 'toggle neotree' })
+
+keyset('n', '<leader>c', function()
+  _G.focus_current_file()
+end, { desc = 'toggle neotree' })
 -- plugin neo-tree end
 
 -- plugin telescope start
@@ -108,7 +116,7 @@ end, { desc = 'global search' })
 keyset('n', '<A-f>', function()
   _G.resume_telescope({ path = utils.current_file.path() })
 end, { desc = 'search in current file' })
-keyset('n', '<leader>c', function()
+keyset('n', '<leader>m', function()
   vim.g.is_telescope_pickers_opening = true
   require('telescope.builtin').pickers()
 end, { desc = 'list telescope pickers' })

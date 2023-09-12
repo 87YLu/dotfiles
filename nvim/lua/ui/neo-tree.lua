@@ -1,6 +1,8 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 local neo_tree = require('neo-tree')
 local width_data = os.getenv('HOME') .. '/dotfiles/nvim/lua/ui/.neo_tree_width'
+local source_data = os.getenv('HOME') .. '/dotfiles/nvim/lua/ui/.neo_tree_source'
+local utils = require('utils')
 
 function get_path(state)
   local node = state.tree:get_node()
@@ -10,36 +12,38 @@ function get_path(state)
   return node:get_id()
 end
 
-function get_width()
-  local file = io.open(width_data, 'r')
-  if file then
-    local content = file:read('*a')
-    file:close()
-    return tonumber(content)
-  else
-    return 50
-  end
-end
-
-local current_width = get_width()
+local current_width = utils.file.get_content(width_data, 50)
 
 function set_width(width)
   local _width = math.max(20, math.min(width, 130))
   local delta = _width - current_width
   local change = (delta >= 0 and '+' or '') .. tostring(delta)
-  local file = io.open(width_data, 'w')
-  if file then
-    file:write(_width)
-    file:close()
-  end
-
+  utils.file.write_content(width_data, _width)
   vim.cmd(':vertical resize' .. change .. '<CR>')
   current_width = _width
+end
+
+local current_source = utils.file.get_content(source_data, 'filesystem')
+
+function set_source()
+  local all_sources = { 'filesystem', 'git_status', 'buffers' }
+  local filename = utils.current_file.name()
+  for _, source in ipairs(all_sources) do
+    if string.find(filename, source) ~= nil then
+      current_source = source
+      break
+    end
+  end
+  utils.file.write_content(source_data, current_source)
 end
 
 local open_status = false
 
 neo_tree.setup({
+  source_selector = {
+    winbar = true,
+    statusline = false,
+  },
   close_if_last_window = true,
   filesystem = {
     filtered_items = {
@@ -54,6 +58,13 @@ neo_tree.setup({
       leave_dirs_open = false,
     },
     use_libuv_file_watcher = true,
+  },
+  buffers = {
+    show_unloaded = true,
+    follow_current_file = {
+      enabled = false,
+      leave_dirs_open = false,
+    },
   },
   window = {
     position = 'left',
@@ -159,36 +170,45 @@ neo_tree.setup({
         open_status = true
       end,
     },
+    {
+      event = 'neo_tree_buffer_enter',
+      handler = set_source,
+    },
   },
 })
-
-local utils = require('utils')
 
 function _G.toggle_neo_tree()
   if open_status then
     vim.cmd('Neotree close')
   else
-    if utils.current_file.is_exist() then
-      vim.cmd('Neotree reveal')
-    else
-      vim.cmd('Neotree')
-    end
+    vim.cmd('Neotree ' .. current_source .. (utils.current_file.is_exist() and ' reveal' or ''))
   end
 end
 
-local manager = require('neo-tree.sources.manager')
 local command = require('neo-tree.command')
 local auto_open_status = false
 local config_group = vim.api.nvim_create_augroup('neotree_actions', { clear = true })
+
+function _G.focus_current_file()
+  command.execute({
+    source = current_source,
+    action = 'focus',
+    reveal = true,
+    reveal_force_cwd = true,
+  })
+end
 
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
   callback = function()
     if vim.g.auto_open_explorer and not auto_open_status then
       auto_open_status = true
-      if not utils.session_exist() then
-        manager.show('filesystem')
-      end
+      utils.set_timeout(function()
+        if current_source ~= 'filesystem' then
+          vim.cmd('Neotree show filesystem')
+        end
+        vim.cmd('Neotree show ' .. current_source)
+      end, 0)
     end
   end,
 })
@@ -196,18 +216,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = config_group,
   callback = function()
-    if
-      not open_status
-      or vim.g.is_diffview_opening
-      or vim.g.is_telescope_pickers_opening
-      or not vim.g.follow_current_file
-      or not utils.current_file.is_exist()
-      or not utils.current_file.is_in_cwd()
-    then
-      vim.g.is_telescope_pickers_opening = false
-      return
-    end
-
-    command.execute({ source_name = 'filesystem', action = 'show', reveal = true, reveal_force_cwd = true })
+    vim.g.is_telescope_pickers_opening = false
   end,
 })

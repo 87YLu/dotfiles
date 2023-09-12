@@ -49,6 +49,25 @@ file.relative_path = function(path)
   return string.gsub(path, M.cwd(), '')
 end
 
+file.get_content = function(path, default_content)
+  local _file = io.open(path, 'r')
+  if _file then
+    local content = _file:read('*a')
+    _file:close()
+    return content
+  else
+    return default_content
+  end
+end
+
+file.write_content = function(path, content)
+  local _file = io.open(path, 'w')
+  if _file then
+    _file:write(content)
+    _file:close()
+  end
+end
+
 -- current_file --------------------
 
 current_file.path = function()
