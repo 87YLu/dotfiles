@@ -36,6 +36,7 @@
   "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
   "diagnostic.messageTarget": "float",
+  "diagnostic.refreshOnInsertMode": true,
   "typescript.format.enable": false,
   "javascript.format.enable": false,
   "json.format.enable": false,

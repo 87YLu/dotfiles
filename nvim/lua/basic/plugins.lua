@@ -209,6 +209,7 @@ local plugins = {
     event = 'VeryLazy',
     dependencies = {
       'nvim-telescope/telescope-ui-select.nvim',
+      'fannheyward/telescope-coc.nvim',
     },
     config = function()
       require('enhance.telescope')

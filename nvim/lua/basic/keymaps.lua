@@ -142,8 +142,6 @@ end
 
 coc_keyset('n', '[g', '<Plug>(coc-diagnostic-prev)', { desc = 'find the previous question' })
 coc_keyset('n', ']g', '<Plug>(coc-diagnostic-next)', { desc = 'find the next question' })
-coc_keyset('n', 'gd', '<Plug>(coc-definition)', { desc = 'back to the definition position' })
-coc_keyset('n', 'gy', '<Plug>(coc-type-definition)', { desc = 'go to type definition' })
 coc_keyset('n', 'gi', '<Plug>(coc-implementation)', { desc = 'list todos' }) -- 待验证
 coc_keyset('n', 'gr', '<Plug>(coc-references)', { desc = 'list the references' })
 coc_keyset('n', 'K', '<CMD>lua _G.show_docs()<CR>', { desc = 'show doc' })
@@ -152,6 +150,28 @@ coc_keyset({ 'n', 'x' }, '<leader>r', '<Plug>(coc-codeaction-refactor-selected)'
 coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
 coc_keyset('n', '<leader>t', '<Plug>(coc-translator-p)', { desc = 'translate' })
 coc_keyset('v', '<leader>t', '<Plug>(coc-translator-pv)', { desc = 'translate' })
+local cursor_layout = {
+  layout_config = {
+    width = 0.6,
+    height = 0.4,
+  },
+}
+keyset('n', '<leader>d', function()
+  require('telescope').extensions.coc.diagnostics(require('telescope.themes').get_ivy())
+end, { desc = 'show current file diagnostics' })
+keyset('n', '<leader>D', function()
+  require('telescope').extensions.coc.workspace_diagnostics(require('telescope.themes').get_ivy())
+end, { desc = 'show workspace diagnostics' })
+keyset('n', 'gd', function()
+  require('telescope').extensions.coc.definitions(require('telescope.themes').get_cursor(cursor_layout))
+end, { desc = 'show definition' })
+keyset('n', 'gy', function()
+  require('telescope').extensions.coc.type_definitions(require('telescope.themes').get_cursor(cursor_layout))
+end, { desc = 'show type definition' })
+keyset('n', '<leader>t', function()
+  require('telescope').extensions.coc.document_symbols({})
+end, { desc = 'show document symbols' })
+
 -- plugin coc end
 
 -- plugin about git start

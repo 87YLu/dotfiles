@@ -56,20 +56,28 @@ telescope.setup({
       return 0
     end,
   },
+  extensions = {
+    coc = {
+      prefer_locations = true,
+    },
+  },
 })
 
 telescope.load_extension('ui-select')
+telescope.load_extension('coc')
 
 local telescope_state = require('telescope.state')
 local telescope_builtin = require('telescope.builtin')
 local utils = require('utils')
+local live_grep_prefix = 'live_grep 󰺯 '
+local find_files_prefix = 'find_files 󰱽 '
 
 function _G.resume_telescope(params)
   params = params or {}
   local path = params.path ~= nil and params.path or utils.cwd()
   local action = params.action ~= nil and params.action or 'live_grep'
 
-  local prompt_prefix = action == 'live_grep' and 'live_grep 󰺯 ' or 'find_files 󰱽 '
+  local prompt_prefix = action == 'live_grep' and live_grep_prefix or find_files_prefix
   local relative_path = utils.file.relative_path(path)
   local cache_index = 0
   local cached_pickers = telescope_state.get_global_key('cached_pickers') or {}
@@ -98,3 +106,21 @@ function _G.resume_telescope(params)
     telescope_builtin.find_files(action_params)
   end
 end
+
+function clear_cached_pickers()
+  local cached_pickers = telescope_state.get_global_key('cached_pickers') or {}
+  for i, picker in ipairs(cached_pickers) do
+    if picker.prompt_prefix ~= live_grep_prefix and picker.prompt_prefix ~= find_files_prefix then
+      table.remove(cached_pickers, i)
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd('BufLeave', {
+  pattern = '',
+  callback = function()
+    if vim.o.filetype == 'TelescopePrompt' then
+      clear_cached_pickers()
+    end
+  end,
+})
