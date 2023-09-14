@@ -120,6 +120,12 @@ keyset('n', '<leader>m', function()
   vim.g.is_telescope_pickers_opening = true
   require('telescope.builtin').pickers()
 end, { desc = 'list telescope pickers' })
+keyset(
+  'n',
+  '<leader>o',
+  ':lua require("telescope.builtin").oldfiles({cwd_only = true})<CR>',
+  { desc = 'list recently files ' }
+)
 -- plugin telescope end
 
 -- plugin session manager start
