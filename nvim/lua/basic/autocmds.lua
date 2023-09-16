@@ -55,7 +55,6 @@ vim.api.nvim_create_autocmd('BufRead', {
       once = true,
       callback = function()
         vim.cmd('normal! zx')
-        vim.cmd('normal! zR')
       end,
     })
   end,

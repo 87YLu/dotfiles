@@ -52,12 +52,6 @@ treesitter.setup({
   },
 })
 
--- 开启 Folding 模块
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
--- 默认不要折叠
-vim.opt.foldenable = false
-
 -- https://github.com/hiphish/rainbow-delimiters.nvim
 local status_ok, rainbow_delimiters = pcall(require, 'rainbow-delimiters')
 
