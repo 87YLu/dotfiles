@@ -98,6 +98,14 @@ local plugins = {
     end,
   },
   {
+    'kevinhwang91/nvim-ufo',
+    dependencies = 'kevinhwang91/promise-async',
+    event = 'VeryLazy',
+    config = function()
+      require('ui.nvim-ufo')
+    end,
+  },
+  {
     'petertriho/nvim-scrollbar',
     event = 'VeryLazy',
     config = function()

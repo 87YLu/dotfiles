@@ -102,8 +102,10 @@ opt.clipboard = 'unnamedplus'
 opt.spell = true
 opt.spelllang = { 'en', 'cjk' }
 -- 开启 Folding 模块
-opt.foldmethod = 'expr'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- opt.foldmethod = 'expr'
+-- opt.foldexpr = 'nvim_treesitter#foldexpr()'
+opt.foldmethod = 'indent'
 -- 默认不要折叠
-opt.foldenable = false
+opt.foldenable = true
+opt.foldlevelstart = 99
 opt.foldlevel = 99
