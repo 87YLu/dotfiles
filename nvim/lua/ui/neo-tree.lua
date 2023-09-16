@@ -37,8 +37,6 @@ function set_source()
   utils.file.write_content(source_data, current_source)
 end
 
-local open_status = false
-
 neo_tree.setup({
   source_selector = {
     winbar = true,
@@ -159,18 +157,6 @@ neo_tree.setup({
   },
   event_handlers = {
     {
-      event = 'neo_tree_window_before_close',
-      handler = function()
-        open_status = false
-      end,
-    },
-    {
-      event = 'neo_tree_window_before_open',
-      handler = function()
-        open_status = true
-      end,
-    },
-    {
       event = 'neo_tree_buffer_enter',
       handler = set_source,
     },
@@ -178,11 +164,7 @@ neo_tree.setup({
 })
 
 function _G.toggle_neo_tree()
-  if open_status then
-    vim.cmd('Neotree close')
-  else
-    vim.cmd('Neotree ' .. current_source .. (utils.current_file.is_exist() and ' reveal' or ''))
-  end
+  vim.cmd('Neotree toggle ' .. current_source .. (utils.current_file.is_exist() and ' reveal' or ''))
 end
 
 local command = require('neo-tree.command')
@@ -219,3 +201,12 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     vim.g.is_telescope_pickers_opening = false
   end,
 })
+
+_G.a = function()
+  local is_neotree_open = vim.fn.exists('lua') == 2
+  if is_neotree_open then
+    vim.notify('Neotree is open.')
+  else
+    vim.notify('Neotree is not open.')
+  end
+end
