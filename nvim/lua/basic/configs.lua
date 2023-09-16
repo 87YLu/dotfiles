@@ -58,7 +58,7 @@ opt.hlsearch = false
 -- 边输入边搜索
 opt.incsearch = true
 -- 命令行高为1
-opt.cmdheight = 1
+opt.cmdheight = 0
 -- 当文件被外部程序修改时，自动加载
 opt.autoread = true
 -- 禁止折行

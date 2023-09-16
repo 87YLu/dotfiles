@@ -30,6 +30,7 @@ local plugins = {
   {
     'akinsho/bufferline.nvim',
     dependencies = 'moll/vim-bbye',
+    event = 'VeryLazy',
     config = function()
       require('ui.bufferline')
     end,
@@ -77,6 +78,7 @@ local plugins = {
   },
   {
     'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
     config = function()
       require('ui.lualine')
     end,
@@ -89,6 +91,7 @@ local plugins = {
   },
   {
     'folke/noice.nvim',
+    event = 'VeryLazy',
     dependencies = {
       'MunifTanjim/nui.nvim',
       'rcarriga/nvim-notify',
@@ -130,6 +133,7 @@ local plugins = {
   },
   {
     'gbprod/cutlass.nvim',
+    event = 'VimEnter',
     opts = {
       cut_key = 'x',
     },
