@@ -6,6 +6,8 @@ if not status_ok then
   return
 end
 
+local input_mode = require('utils.input_mode')
+
 local function nav()
   local items = vim.b.coc_nav or {}
   local t = { '%#NonText#' .. '    ' }
@@ -32,6 +34,9 @@ lualine.setup({
     disabled_filetypes = {
       statusline = { 'alpha' },
       winbar = { 'neo-tree', 'alpha' },
+      refresh = {
+        statusline = 2000,
+      },
     },
   },
   winbar = {
@@ -47,7 +52,11 @@ lualine.setup({
     lualine_a = {
       { 'mode', separator = { right = '' }, right_padding = 2 },
     },
-    lualine_b = { 'branch', { 'filename', separator = { right = '' } } },
+    lualine_b = {
+      'branch',
+      input_mode.mode,
+      { 'filename', separator = { right = '' } },
+    },
     lualine_c = { 'diagnostics' },
     lualine_x = {},
     lualine_y = {

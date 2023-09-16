@@ -1,3 +1,5 @@
+local input_mode = require('utils.input_mode')
+
 local function augroup(name)
   return vim.api.nvim_create_augroup(name, { clear = true })
 end
@@ -56,5 +58,13 @@ vim.api.nvim_create_autocmd('BufRead', {
         vim.cmd('normal! zR')
       end,
     })
+  end,
+})
+
+-- auto change to english input mode
+vim.api.nvim_create_autocmd('InsertLeave', {
+  pattern = '',
+  callback = function()
+    input_mode.to_en()
   end,
 })
