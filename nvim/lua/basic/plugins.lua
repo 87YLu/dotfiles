@@ -179,6 +179,13 @@ local plugins = {
     end,
   },
   {
+    'kylechui/nvim-surround',
+    event = 'VeryLazy',
+    config = function()
+      require('enhance.nvim-surround')
+    end,
+  },
+  {
     'nvim-treesitter/nvim-treesitter',
     event = 'BufReadPost',
     build = ':TSUpdate',
