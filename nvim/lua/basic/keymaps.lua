@@ -116,7 +116,7 @@ end, { desc = 'global search' })
 keyset('n', '<A-f>', function()
   _G.resume_telescope({ path = utils.current_file.path() })
 end, { desc = 'search in current file' })
-keyset('n', '<leader>m', function()
+keyset('n', '<leader>l', function()
   vim.g.is_telescope_pickers_opening = true
   require('telescope.builtin').pickers()
 end, { desc = 'list telescope pickers' })
@@ -131,6 +131,24 @@ keyset(
 -- plugin session manager start
 keyset('n', '<leader>p', ':SessionManager load_session<CR>', { desc = 'load session' })
 -- plugin session manager end
+
+--plugin harpoon start
+keyset('n', '<leader>m', function()
+  require('telescope').extensions.harpoon.marks()
+end, { desc = 'show marks' })
+keyset('n', '<leader>am', function()
+  require('harpoon.mark').add_file()
+  vim.notify('add mark')
+end, { desc = 'add mark' })
+keyset('n', '<leader>rm', function()
+  require('harpoon.mark').rm_file()
+  vim.notify('remove mark')
+end, { desc = 'remove mark' })
+keyset('n', '<leader>cm', function()
+  require('harpoon.mark').clear_all()
+  vim.notify('clear all marks')
+end, { desc = 'clear all marks' })
+--plugin harpoon end
 
 -- plugin coc start
 -- tab/cr 选中代码

@@ -176,6 +176,16 @@ local plugins = {
     end,
   },
   {
+    'ThePrimeagen/harpoon',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      require('enhance.harpoon')
+    end,
+  },
+  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function()

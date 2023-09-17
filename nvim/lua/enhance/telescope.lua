@@ -65,6 +65,7 @@ telescope.setup({
 
 telescope.load_extension('ui-select')
 telescope.load_extension('coc')
+telescope.load_extension('harpoon')
 
 local telescope_state = require('telescope.state')
 local telescope_builtin = require('telescope.builtin')
