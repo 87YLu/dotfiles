@@ -1,9 +1,9 @@
 local M = {}
 local en_input_mode_name = 'ABC'
-local is_macos = vim.fn.has('mac') == 1
+local system = require('utils.system')
 
 M.mode = function()
-  if not is_macos then
+  if not system.is_macos then
     return ''
   end
 
@@ -27,7 +27,7 @@ M.mode = function()
 end
 
 M.toggle = function()
-  if not is_macos then
+  if not system.is_macos then
     return
   end
 

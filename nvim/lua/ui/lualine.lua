@@ -7,6 +7,7 @@ if not status_ok then
 end
 
 local input_mode = require('utils.input_mode')
+local system = require('utils.system')
 
 local function nav()
   local items = vim.b.coc_nav or {}
@@ -54,7 +55,7 @@ lualine.setup({
     },
     lualine_b = {
       'branch',
-      input_mode.mode,
+      system.is_apple_silicon and input_mode.mode or nil,
       { 'filename', separator = { right = '' } },
     },
     lualine_c = { 'diagnostics' },
