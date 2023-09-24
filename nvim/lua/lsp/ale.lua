@@ -4,50 +4,18 @@ local global_prettier_config = format_config .. '/.prettierrc'
 local stylua_config = format_config .. 'stylua.toml'
 local utils = require('utils')
 
-local set_perttier_config = function()
-  local is_prettier_type = utils.current_file.is_in_types({
-    'javascript',
-    'javascriptreact',
-    'typescript',
-    'typescriptreact',
-    'css',
-    'less',
-    'html',
-    'json',
-    'yaml',
-  })
+local package_json = utils.cwd() .. '/package.json'
 
-  if not is_prettier_type then
-    return
-  end
-
-  local package_json = vim.fn.getcwd() .. '/package.json'
-
-  local success, result = pcall(function()
-    for line in io.lines(package_json) do
-      if string.find(line, '"prettier"') ~= nil then
-        return true
-      end
+local success, result = pcall(function()
+  for line in io.lines(package_json) do
+    if string.find(line, '"prettier"') ~= nil then
+      return true
     end
-    return false
-  end)
+  end
+  return false
+end)
 
-  vim.g.ale_javascript_prettier_options = success and result and '' or '--config ' .. global_prettier_config
-end
-
-vim.g.ale_before_fix = function()
-  set_perttier_config()
-end
-
-vim.api.nvim_exec(
-  [[
-    augroup prettier
-      autocmd!
-      autocmd User ALEFixPre call ale_before_fix()
-    augroup END
-  ]],
-  true
-)
+vim.g.ale_javascript_prettier_options = success and result and '' or '--config ' .. global_prettier_config
 
 vim.g.ale_after_fix = function()
   vim.cmd('Noice dismiss')
@@ -72,12 +40,6 @@ vim.g.ale_use_neovim_diagnostics_api = 1
 vim.g.ale_echo_cursor = 0
 
 vim.g.ale_linters_explicit = 1
-
--- local signs = { Error = '', Warn = '', Hint = '󰌶', Info = '' }
--- for type, icon in pairs(signs) do
---   local hl = 'DiagnosticSign' .. type
---   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
--- end
 
 vim.g.ale_fixers = {
   javascript = 'prettier',
