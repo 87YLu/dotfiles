@@ -87,7 +87,7 @@ opt.background = 'dark'
 opt.termguicolors = true
 -- 不可见字符的显示，这里只把空格显示为一个点
 opt.list = true
-opt.listchars = 'space:·'
+-- opt.listchars = 'space:·'
 -- 补全增强
 opt.wildmenu = true
 opt.shortmess:append({ W = true, I = true, c = true })
