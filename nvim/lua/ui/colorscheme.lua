@@ -24,20 +24,24 @@ if colorscheme == colorschemes.tokyonight then
   return
 end
 
--- https://github.com/dracula/vim
-if colorscheme == colorschemes.dracula then
-  vim.g.dracula_colorterm = 0
-  vim.cmd('colorscheme dracula')
+-- https://github.com/catppuccin/nvim
+if colorscheme == colorschemes.catppuccin then
+  require('catppuccin').setup({
+    flavour = 'macchiato', -- latte, frappe, macchiato, mocha
+    transparent_background = true,
+  })
+
+  vim.cmd('colorscheme catppuccin')
   return
 end
 
--- https://github.com/olimorris/onedarkpro.nvim
-if colorscheme == colorschemes.onedarkpro then
-  require('onedarkpro').setup({
-    options = {
-      transparency = true,
-    },
+-- https://github.com/rebelot/kanagawa.nvim
+if colorscheme == colorschemes.kanagawa then
+  require('kanagawa').setup({
+    transparent = true,
+    theme = 'wave',
   })
-  vim.cmd('colorscheme onedark')
+
+  vim.cmd('colorscheme kanagawa')
   return
 end

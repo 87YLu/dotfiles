@@ -36,33 +36,33 @@ local plugins = {
     end,
   },
   {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    lazy = vim.g.colorscheme ~= vim.g.colorschemes.catppuccin,
+    config = function()
+      if vim.g.colorscheme == vim.g.colorschemes.catppuccin then
+        require('ui.colorscheme')
+      else
+        return false
+      end
+    end,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    lazy = vim.g.colorscheme ~= vim.g.colorschemes.kanagawa,
+    config = function()
+      if vim.g.colorscheme == vim.g.colorschemes.kanagawa then
+        require('ui.colorscheme')
+      else
+        return false
+      end
+    end,
+  },
+  {
     'folke/tokyonight.nvim',
     lazy = vim.g.colorscheme ~= vim.g.colorschemes.tokyonight,
     config = function()
       if vim.g.colorscheme == vim.g.colorschemes.tokyonight then
-        require('ui.colorscheme')
-      else
-        return false
-      end
-    end,
-  },
-  {
-    'dracula/vim',
-    name = 'dracula',
-    lazy = vim.g.colorscheme ~= vim.g.colorschemes.dracula,
-    config = function()
-      if vim.g.colorscheme == vim.g.colorschemes.dracula then
-        require('ui.colorscheme')
-      else
-        return false
-      end
-    end,
-  },
-  {
-    'olimorris/onedarkpro.nvim',
-    lazy = vim.g.colorscheme ~= vim.g.colorschemes.onedarkpro,
-    config = function()
-      if vim.g.colorscheme == vim.g.colorschemes.onedarkpro then
         require('ui.colorscheme')
       else
         return false

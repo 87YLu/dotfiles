@@ -7,8 +7,8 @@ g.auto_open_explorer = true
 -- colorscheme
 g.colorschemes = {
   tokyonight = 'tokyonight',
-  dracula = 'dracula',
-  onedarkpro = 'onedarkpro',
+  catppuccin = 'catppuccin',
+  kanagawa = 'kanagawa',
 }
 
 local function randomColorscheme()
@@ -21,7 +21,7 @@ local function randomColorscheme()
 end
 
 g.random_colorscheme = false
-g.default_colorscheme = g.colorschemes.tokyonight
+g.default_colorscheme = g.colorschemes.catppuccin
 g.colorscheme = g.random_colorscheme and randomColorscheme() or g.default_colorscheme
 
 -- utf8

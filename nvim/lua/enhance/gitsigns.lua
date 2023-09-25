@@ -16,8 +16,5 @@ vim.api.nvim_create_autocmd('BufEnter', {
         delay = 0,
       },
     })
-    if vim.g.colorscheme == vim.g.colorschemes.dracula then
-      vim.cmd(':highlight GitSignsCurrentLineBlame guifg=#737881')
-    end
   end,
 })
