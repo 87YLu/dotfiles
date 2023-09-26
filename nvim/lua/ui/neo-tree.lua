@@ -1,8 +1,7 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 local neo_tree = require('neo-tree')
-local width_data = os.getenv('HOME') .. '/dotfiles/nvim/lua/ui/.neo_tree_width'
-local source_data = os.getenv('HOME') .. '/dotfiles/nvim/lua/ui/.neo_tree_source'
 local utils = require('utils')
+local global_config_utils = require('utils.global-config')
 
 function get_path(state)
   local node = state.tree:get_node()
@@ -12,18 +11,18 @@ function get_path(state)
   return node:get_id()
 end
 
-local current_width = utils.file.get_content(width_data, 50)
+local current_width = vim.g.neo_tree_width or 50
 
 function set_width(width)
   local _width = math.max(20, math.min(width, 130))
   local delta = _width - current_width
   local change = (delta >= 0 and '+' or '') .. tostring(delta)
-  utils.file.write_content(width_data, _width)
+  global_config_utils.set_global_config('neo_tree_width', _width)
   vim.cmd(':vertical resize' .. change .. '<CR>')
   current_width = _width
 end
 
-local current_source = utils.file.get_content(source_data, 'filesystem')
+local current_source = vim.g.neo_tree_source or 'filesystem'
 
 function set_source()
   local all_sources = { 'filesystem', 'git_status', 'buffers' }
@@ -34,7 +33,7 @@ function set_source()
       break
     end
   end
-  utils.file.write_content(source_data, current_source)
+  global_config_utils.set_global_config('neo_tree_source', current_source)
 end
 
 neo_tree.setup({

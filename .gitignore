@@ -2,9 +2,7 @@
 
 nvim/plugins
 
-nvim/lua/ui/.neo_tree_width
-
-nvim/lua/ui/.neo_tree_source
+nvim/global_config.json
 
 sketchybar/json/weather.json
 
