@@ -94,23 +94,45 @@ local actions = require('telescope.actions')
 local state = require('telescope.actions.state')
 local global_config_utils = require('utils.global-config')
 
-local colorschemes = {
-  'catppuccin',
-  'github',
-  'kanagawa',
-  'tokyonight',
-  'tokyonight_day',
-}
+local colorschemes = {}
+
+for key, _ in pairs(colorscheme) do
+  table.insert(colorschemes, key)
+end
+
+table.sort(colorschemes, function(a, b)
+  return a < b
+end)
 
 function _G.open_colorscheme_switcher()
-  change_colorscheme(colorschemes[1])
+  local default_index = 1
+
+  for i, item in ipairs(colorschemes) do
+    if item == current_colorscheme then
+      default_index = i
+      break
+    end
+  end
+
+  -- 创建新的数组并插入特定项
+  local result = {}
+  table.insert(result, colorschemes[default_index])
+
+  -- 将原数组的其他项插入新数组
+  for i = 1, #colorschemes do
+    if i ~= default_index then
+      table.insert(result, colorschemes[i])
+    end
+  end
 
   local picker = pickers.new({
     results_title = 'Change Colorscheme',
     finder = finders.new_table({
-      results = colorschemes,
+      results = result,
     }),
     sorter = sorters.get_fzy_sorter(),
+    prompt_title = '',
+    prompt_prefix = ' ',
     layout_config = {
       height = 0.3,
       width = 0.3,
@@ -164,6 +186,8 @@ function _G.open_transparent_background_switcher()
       },
     }),
     sorter = sorters.get_fzy_sorter(),
+    prompt_title = '',
+    prompt_prefix = '  ',
     layout_config = {
       height = 0.15,
       width = 0.3,
