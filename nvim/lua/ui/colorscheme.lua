@@ -62,11 +62,22 @@ local tokyonight = function()
   vim.cmd('colorscheme tokyonight')
 end
 
+local tokyonight_day = function()
+  require('tokyonight').setup({
+    style = 'day',
+    transparent = false,
+  })
+
+  vim.opt.background = 'light'
+  vim.cmd('colorscheme tokyonight')
+end
+
 local colorscheme = {
   catppuccin = catppuccin,
   github = github,
   kanagawa = kanagawa,
   tokyonight = tokyonight,
+  tokyonight_day = tokyonight_day,
 }
 
 local change_colorscheme = function(color)
@@ -83,11 +94,13 @@ local actions = require('telescope.actions')
 local state = require('telescope.actions.state')
 local global_config_utils = require('utils.global-config')
 
-local colorschemes = {}
-
-for key, _ in pairs(colorscheme) do
-  table.insert(colorschemes, key)
-end
+local colorschemes = {
+  'catppuccin',
+  'github',
+  'kanagawa',
+  'tokyonight',
+  'tokyonight_day',
+}
 
 function _G.open_colorscheme_switcher()
   change_colorscheme(colorschemes[1])

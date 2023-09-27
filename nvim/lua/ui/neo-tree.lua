@@ -40,6 +40,9 @@ neo_tree.setup({
   source_selector = {
     winbar = true,
     statusline = false,
+    highlight_tab = 'Comment',
+    highlight_separator = 'Comment',
+    highlight_background = 'Comment',
   },
   close_if_last_window = true,
   filesystem = {

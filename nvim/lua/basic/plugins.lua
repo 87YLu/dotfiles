@@ -50,7 +50,7 @@ local plugins = {
   },
   {
     'folke/tokyonight.nvim',
-    lazy = vim.g.colorscheme ~= 'tokyonight',
+    lazy = vim.g.colorscheme ~= 'tokyonight' and vim.g.colorscheme ~= 'tokyonight_day',
   },
   {
     'shellRaining/hlchunk.nvim',
