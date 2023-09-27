@@ -41,6 +41,10 @@ local plugins = {
     lazy = vim.g.colorscheme ~= 'catppuccin',
   },
   {
+    'projekt0n/github-nvim-theme',
+    lazy = vim.g.colorscheme ~= 'github',
+  },
+  {
     'rebelot/kanagawa.nvim',
     lazy = vim.g.colorscheme ~= 'kanagawa',
   },

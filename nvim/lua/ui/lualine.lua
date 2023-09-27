@@ -29,7 +29,6 @@ end
 
 lualine.setup({
   options = {
-    theme = vim.g.colorscheme,
     component_separators = '|',
     section_separators = { left = '', right = '' },
     disabled_filetypes = {

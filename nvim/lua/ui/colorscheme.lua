@@ -2,6 +2,7 @@ vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic,underline')
 vim.cmd(':highlight CursorLineNr gui=italic,bold')
 
 local transparent_background = vim.g.transparent_background
+local current_colorscheme
 
 -- https://github.com/catppuccin/nvim
 local catppuccin = function()
@@ -10,7 +11,20 @@ local catppuccin = function()
     transparent_background = transparent_background,
   })
 
+  vim.opt.background = 'dark'
   vim.cmd('colorscheme catppuccin')
+end
+
+-- https://github.com/projekt0n/github-nvim-theme
+local github = function()
+  require('github-theme').setup({
+    options = {
+      transparent = transparent_background,
+    },
+  })
+
+  vim.opt.background = 'dark'
+  vim.cmd('colorscheme github_dark')
 end
 
 -- https://github.com/rebelot/kanagawa.nvim
@@ -20,6 +34,7 @@ local kanagawa = function()
     theme = 'wave',
   })
 
+  vim.opt.background = 'dark'
   vim.cmd('colorscheme kanagawa')
 end
 
@@ -43,16 +58,23 @@ local tokyonight = function()
     background_colour = '#414868',
   })
 
+  vim.opt.background = 'dark'
   vim.cmd('colorscheme tokyonight')
 end
 
 local colorscheme = {
   catppuccin = catppuccin,
+  github = github,
   kanagawa = kanagawa,
   tokyonight = tokyonight,
 }
 
-colorscheme[vim.g.colorscheme]()
+local change_colorscheme = function(color)
+  colorscheme[color]()
+  current_colorscheme = color
+end
+
+change_colorscheme(vim.g.colorscheme)
 
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
@@ -61,14 +83,14 @@ local actions = require('telescope.actions')
 local state = require('telescope.actions.state')
 local global_config_utils = require('utils.global-config')
 
-local colorschemes = {
-  'catppuccin',
-  'kanagawa',
-  'tokyonight',
-}
+local colorschemes = {}
+
+for key, _ in pairs(colorscheme) do
+  table.insert(colorschemes, key)
+end
 
 function _G.open_colorscheme_switcher()
-  colorscheme[colorschemes[1]]()
+  change_colorscheme(colorschemes[1])
 
   local picker = pickers.new({
     results_title = 'Change Colorscheme',
@@ -83,17 +105,17 @@ function _G.open_colorscheme_switcher()
     attach_mappings = function(prompt_bufnr, map)
       local down = function()
         actions.move_selection_next(prompt_bufnr)
-        colorscheme[state.get_selected_entry().value]()
+        change_colorscheme(state.get_selected_entry().value)
       end
 
       local up = function()
         actions.move_selection_previous(prompt_bufnr)
-        colorscheme[state.get_selected_entry().value]()
+        change_colorscheme(state.get_selected_entry().value)
       end
 
       local close = function()
         actions.close(prompt_bufnr)
-        colorscheme[vim.g.colorscheme]()
+        change_colorscheme(vim.g.colorscheme)
       end
 
       local select = function()
@@ -139,7 +161,7 @@ function _G.open_transparent_background_switcher()
         actions.close(prompt_bufnr)
         global_config_utils.set_global_config('transparent_background', (value == 'true'))
         transparent_background = value == 'true'
-        colorscheme[vim.g.colorscheme]()
+        change_colorscheme(current_colorscheme)
       end)
       map({ 'i', 'n' }, '<Tab>', function()
         actions.move_selection_next(prompt_bufnr)
