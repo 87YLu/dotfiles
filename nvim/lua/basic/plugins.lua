@@ -38,36 +38,15 @@ local plugins = {
   {
     'catppuccin/nvim',
     name = 'catppuccin',
-    lazy = vim.g.colorscheme ~= vim.g.colorschemes.catppuccin,
-    config = function()
-      if vim.g.colorscheme == vim.g.colorschemes.catppuccin then
-        require('ui.colorscheme')
-      else
-        return false
-      end
-    end,
+    lazy = vim.g.colorscheme ~= 'catppuccin',
   },
   {
     'rebelot/kanagawa.nvim',
-    lazy = vim.g.colorscheme ~= vim.g.colorschemes.kanagawa,
-    config = function()
-      if vim.g.colorscheme == vim.g.colorschemes.kanagawa then
-        require('ui.colorscheme')
-      else
-        return false
-      end
-    end,
+    lazy = vim.g.colorscheme ~= 'kanagawa',
   },
   {
     'folke/tokyonight.nvim',
-    lazy = vim.g.colorscheme ~= vim.g.colorschemes.tokyonight,
-    config = function()
-      if vim.g.colorscheme == vim.g.colorschemes.tokyonight then
-        require('ui.colorscheme')
-      else
-        return false
-      end
-    end,
+    lazy = vim.g.colorscheme ~= 'tokyonight',
   },
   {
     'shellRaining/hlchunk.nvim',

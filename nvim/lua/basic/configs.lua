@@ -3,26 +3,7 @@ local g = vim.g
 
 -- neotree
 g.auto_open_explorer = true
-
--- colorscheme
-g.colorschemes = {
-  tokyonight = 'tokyonight',
-  catppuccin = 'catppuccin',
-  kanagawa = 'kanagawa',
-}
-
-local function randomColorscheme()
-  local keys = {}
-  for key, _ in pairs(g.colorschemes) do
-    table.insert(keys, key)
-  end
-  local randomKey = keys[math.random(#keys)]
-  return g.colorschemes[randomKey]
-end
-
-g.random_colorscheme = false
-g.default_colorscheme = g.colorschemes.catppuccin
-g.colorscheme = g.random_colorscheme and randomColorscheme() or g.default_colorscheme
+g.colorscheme = g.colorscheme or 'catppuccin'
 
 -- utf8
 opt.encoding = 'UTF-8'
@@ -86,8 +67,8 @@ opt.completeopt = 'menu,menuone,noselect,noinsert'
 opt.background = 'dark'
 opt.termguicolors = true
 -- 不可见字符的显示，这里只把空格显示为一个点
-opt.list = true
--- opt.listchars = 'space:·'
+opt.list = false
+opt.listchars = 'space:·'
 -- 补全增强
 opt.wildmenu = true
 opt.shortmess:append({ W = true, I = true, c = true })
