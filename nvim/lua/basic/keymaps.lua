@@ -126,6 +126,10 @@ end, { desc = 'list recently files' })
 keyset('n', '<leader>h', function()
   _G.open_colorscheme_switcher()
 end, { desc = 'change colorscheme' })
+keyset('n', '<leader>H', function()
+  _G.open_transparent_background_switcher()
+end, { desc = 'change the background transparency' })
+
 -- plugin telescope end
 
 -- plugin session manager start

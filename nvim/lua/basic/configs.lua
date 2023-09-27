@@ -4,7 +4,7 @@ local g = vim.g
 -- neotree
 g.auto_open_explorer = true
 g.colorscheme = g.colorscheme or 'catppuccin'
-
+g.transparent_background = (g.transparent_background == nil) and true or g.transparent_background
 -- utf8
 opt.encoding = 'UTF-8'
 opt.fileencoding = 'utf-8'

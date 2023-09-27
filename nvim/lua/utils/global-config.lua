@@ -47,7 +47,7 @@ M.set_global_config = function(key, value)
   local file = io.open(global_config_json, 'w')
 
   if file then
-    json[key] = tostring(value)
+    json[key] = value
     file:write(format_json(vim.fn.json_encode(json)))
     file:close()
   end

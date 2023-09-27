@@ -1,11 +1,13 @@
 vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic,underline')
 vim.cmd(':highlight CursorLineNr gui=italic,bold')
 
+local transparent_background = vim.g.transparent_background
+
 -- https://github.com/catppuccin/nvim
 local catppuccin = function()
   require('catppuccin').setup({
     flavour = 'macchiato', -- latte, frappe, macchiato, mocha
-    transparent_background = true,
+    transparent_background = transparent_background,
   })
 
   vim.cmd('colorscheme catppuccin')
@@ -14,7 +16,7 @@ end
 -- https://github.com/rebelot/kanagawa.nvim
 local kanagawa = function()
   require('kanagawa').setup({
-    transparent = true,
+    transparent = transparent_background,
     theme = 'wave',
   })
 
@@ -25,10 +27,10 @@ end
 local tokyonight = function()
   require('tokyonight').setup({
     style = 'night',
-    transparent = true,
+    transparent = transparent_background,
     styles = {
-      sidebars = 'transparent',
-      floats = 'transparent',
+      sidebars = transparent_background and 'transparent' or 'dark',
+      floats = transparent_background and 'transparent' or 'dark',
     },
     on_colors = function(colors)
       colors.comment = '#737881'
@@ -110,6 +112,38 @@ function _G.open_colorscheme_switcher()
       map('n', '<Esc>', close)
       map('i', '<C-c>', close)
 
+      return true
+    end,
+  })
+
+  picker:find()
+end
+
+function _G.open_transparent_background_switcher()
+  local picker = pickers.new({
+    results_title = 'Transparent Background',
+    finder = finders.new_table({
+      results = {
+        'true',
+        'false',
+      },
+    }),
+    sorter = sorters.get_fzy_sorter(),
+    layout_config = {
+      height = 0.15,
+      width = 0.3,
+    },
+    attach_mappings = function(prompt_bufnr, map)
+      map({ 'i', 'n' }, '<CR>', function()
+        local value = state.get_selected_entry().value
+        actions.close(prompt_bufnr)
+        global_config_utils.set_global_config('transparent_background', (value == 'true'))
+        transparent_background = value == 'true'
+        colorscheme[vim.g.colorscheme]()
+      end)
+      map({ 'i', 'n' }, '<Tab>', function()
+        actions.move_selection_next(prompt_bufnr)
+      end)
       return true
     end,
   })
