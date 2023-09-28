@@ -35,11 +35,11 @@ keyset('t', '<C-k>', [[ <C-\><C-N><C-w>k ]], { desc = 'jump to the upper window'
 keyset('t', '<C-l>', [[ <C-\><C-N><C-w>l ]], { desc = 'jump to the right window' })
 
 -- 窗口调整大小
-keyset('n', '<C-,>', ':vertical resize -20<CR>', { desc = 'horizontal narrowing window' })
-keyset('n', '<C-.>', ':vertical resize +20<CR>', { desc = 'horizontal zoom window' })
-keyset('n', '<C-;>', ':resize -10<CR>', { desc = 'vertical narrowing window' })
-keyset('n', "<C-'>", ':resize +10<CR>', { desc = 'vertical zoom window' })
-keyset('n', '<C-=>', '<C-w>=', { desc = 'equal all windows' })
+keyset('n', '<A-,>', ':vertical resize -20<CR>', { desc = 'horizontal narrowing window' })
+keyset('n', '<A-.>', ':vertical resize +20<CR>', { desc = 'horizontal zoom window' })
+keyset('n', '<A-;>', ':resize -10<CR>', { desc = 'vertical narrowing window' })
+keyset('n', "<A-'>", ':resize +10<CR>', { desc = 'vertical zoom window' })
+keyset('n', '<A-=>', '<C-w>=', { desc = 'equal all windows' })
 
 -- visual 模式设置
 keyset('v', '<', '<gv', { desc = 'indent to the left' })

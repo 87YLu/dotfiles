@@ -149,10 +149,10 @@ neo_tree.setup({
           os.execute('open ' .. path)
         end
       end,
-      ['<c-,>'] = function()
+      ['<A-,>'] = function()
         set_width(current_width - 5)
       end,
-      ['<c-.>'] = function()
+      ['<A-.>'] = function()
         set_width(current_width + 5)
       end,
     },
