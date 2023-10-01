@@ -49,12 +49,12 @@ keyset('v', 'K', ":move '<-2<CR>gv-gv", { desc = 'move the selected content down
 keyset('v', 'p', '"_dP') -- 在visual 模式里粘贴不要复制
 keyset('v', 'jk', '<Esc>', { desc = 'exit visual mode' })
 keyset('v', 'q', '<Esc>', { desc = 'exit visual mode' })
-keyset('v', 'h', '0')
-keyset('v', 'l', '$')
+keyset('v', 'H', '0')
+keyset('v', 'L', '$')
 
 -- normal 模式设置
-keyset('n', 'h', '0')
-keyset('n', 'l', '$')
+keyset('n', 'H', '0')
+keyset('n', 'L', '$')
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', ':q<CR>', { desc = 'exit' })
