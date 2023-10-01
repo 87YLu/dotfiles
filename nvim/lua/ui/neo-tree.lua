@@ -162,6 +162,18 @@ neo_tree.setup({
       event = 'neo_tree_buffer_enter',
       handler = set_source,
     },
+    {
+      event = 'neo_tree_window_before_close',
+      handler = function()
+        global_config_utils.set_global_config('neo_tree_open_status', false)
+      end,
+    },
+    {
+      event = 'neo_tree_window_before_open',
+      handler = function()
+        global_config_utils.set_global_config('neo_tree_open_status', true)
+      end,
+    },
   },
 })
 
@@ -185,7 +197,7 @@ end
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
   callback = function()
-    if vim.g.auto_open_explorer and not auto_open_status then
+    if ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status) and not auto_open_status then
       auto_open_status = true
       utils.set_timeout(function()
         if current_source ~= 'filesystem' then
@@ -203,12 +215,3 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     vim.g.is_telescope_pickers_opening = false
   end,
 })
-
-_G.a = function()
-  local is_neotree_open = vim.fn.exists('lua') == 2
-  if is_neotree_open then
-    vim.notify('Neotree is open.')
-  else
-    vim.notify('Neotree is not open.')
-  end
-end
