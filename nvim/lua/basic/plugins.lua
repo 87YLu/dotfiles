@@ -189,6 +189,7 @@ local plugins = {
     dependencies = {
       'hiphish/rainbow-delimiters.nvim',
       'JoosepAlviste/nvim-ts-context-commentstring',
+      'windwp/nvim-ts-autotag',
     },
     config = function()
       require('enhance.nvim-treesitter')

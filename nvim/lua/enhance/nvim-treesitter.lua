@@ -50,6 +50,11 @@ treesitter.setup({
   context_commentstring = {
     enable = true,
   },
+  autotag = {
+    enable = true,
+    enable_rename = true,
+    enable_close_on_slash = false,
+  },
 })
 
 -- https://github.com/hiphish/rainbow-delimiters.nvim
