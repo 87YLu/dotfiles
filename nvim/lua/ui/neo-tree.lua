@@ -165,7 +165,9 @@ neo_tree.setup({
     {
       event = 'neo_tree_window_before_close',
       handler = function()
-        global_config_utils.set_global_config('neo_tree_open_status', false)
+        if not vim.g.before_quit then
+          global_config_utils.set_global_config('neo_tree_open_status', false)
+        end
       end,
     },
     {

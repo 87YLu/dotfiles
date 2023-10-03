@@ -35,6 +35,7 @@ vim.api.nvim_create_autocmd({ 'QuitPre' }, {
   group = config_group,
   callback = function()
     -- if neo-tree exists, saving the session will fail.
+    vim.g.before_quit = true
     require('neo-tree.sources.manager').close_all()
   end,
 })
