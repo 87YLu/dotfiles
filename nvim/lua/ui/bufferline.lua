@@ -6,7 +6,8 @@ if not status_ok then
   return
 end
 
--- https://github.com/akinsho/bufferline.nvim#configuration
+local hbac = require('hbac.state')
+
 bufferline.setup({
   options = {
     -- from moll/vim-bbye
@@ -16,6 +17,9 @@ bufferline.setup({
     indicator = {
       style = 'underline',
     },
+    name_formatter = function(buf)
+      return ((hbac.is_pinned(buf.bufnr) and hbac.autoclose_enabled) and ' ' or '') .. buf.name
+    end,
     offsets = {
       {
         filetype = 'neo-tree',

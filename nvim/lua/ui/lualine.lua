@@ -1,4 +1,5 @@
 local lualine = require('lualine')
+local hbac = require('hbac.state')
 local input_mode = require('utils.input_mode')
 local system = require('utils.system')
 
@@ -62,7 +63,7 @@ local config = {
     },
     lualine_b = {},
     lualine_y = {},
-    lualine_z = {},
+    lualine_z = { 'location' },
     lualine_c = {},
     lualine_x = {},
   },
@@ -163,7 +164,9 @@ ins_right({
 })
 
 ins_right({
-  'location',
+  function()
+    return hbac.autoclose_enabled and '󰐃' or '󰤱'
+  end,
   color = function()
     return get_color('@string.regex')
   end,

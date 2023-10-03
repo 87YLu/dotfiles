@@ -2,6 +2,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 local utils = require('utils')
+local global_config_utils = require('utils.global-config')
 
 local keyset = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -153,6 +154,16 @@ keyset('n', '<leader>cm', function()
   vim.notify('clear all marks')
 end, { desc = 'clear all marks' })
 --plugin harpoon end
+
+-- plugin hbac start
+keyset('n', '<leader>\\', function()
+  require('hbac').toggle_pin()
+end, { desc = 'toggle pin' })
+keyset('n', '<leader>|', function()
+  require('hbac').toggle_autoclose()
+  global_config_utils.set_global_config('hbac_autoclose', require('hbac.state').autoclose_enabled)
+end, { desc = 'toggle autoclose' })
+-- plugin hbac end
 
 -- plugin coc start
 -- tab/cr 选中代码

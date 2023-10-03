@@ -169,6 +169,13 @@ local plugins = {
     end,
   },
   {
+    'axkirillov/hbac.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('enhance.hbac')
+    end,
+  },
+  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = function()
