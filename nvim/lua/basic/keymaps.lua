@@ -2,7 +2,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 local utils = require('utils')
-local global_config_utils = require('utils.global-config')
+local global_config_utils = require('utils.global_config')
 
 local keyset = function(mode, lhs, rhs, opts)
   opts = opts or {}

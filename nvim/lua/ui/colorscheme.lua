@@ -92,7 +92,7 @@ local finders = require('telescope.finders')
 local sorters = require('telescope.sorters')
 local actions = require('telescope.actions')
 local state = require('telescope.actions.state')
-local global_config_utils = require('utils.global-config')
+local global_config_utils = require('utils.global_config')
 
 local colorschemes = {}
 

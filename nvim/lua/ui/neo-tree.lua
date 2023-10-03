@@ -1,7 +1,7 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 local neo_tree = require('neo-tree')
 local utils = require('utils')
-local global_config_utils = require('utils.global-config')
+local global_config_utils = require('utils.global_config')
 
 function get_path(state)
   local node = state.tree:get_node()

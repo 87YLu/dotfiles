@@ -1,4 +1,4 @@
-local global_config = require('utils.global-config').get_global_config()
+local global_config = require('utils.global_config').get_global_config()
 
 if global_config ~= nil then
   for key, value in pairs(global_config) do
