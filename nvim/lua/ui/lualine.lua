@@ -105,6 +105,7 @@ ins_left({
 if system.is_apple_silicon then
   ins_left({
     input_mode.mode,
+    fmt = string.upper,
     icon = '󰓽',
     color = function()
       return get_color('@character')
@@ -165,11 +166,12 @@ ins_right({
 
 ins_right({
   function()
-    return hbac.autoclose_enabled and '󰐃' or '󰤱'
+    return hbac.autoclose_enabled and '󰱝' or '󰱞'
   end,
   color = function()
-    return get_color('@string.regex')
+    return hbac.autoclose_enabled and get_color('@string.regex') or get_color('Comment')
   end,
+  padding = { left = 1, right = 2 },
 })
 
 lualine.setup(config)

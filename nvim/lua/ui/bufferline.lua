@@ -18,13 +18,12 @@ bufferline.setup({
       style = 'underline',
     },
     name_formatter = function(buf)
-      return ((hbac.is_pinned(buf.bufnr) and hbac.autoclose_enabled) and ' ' or '') .. buf.name
+      return ((hbac.is_pinned(buf.bufnr) and hbac.autoclose_enabled) and '󰄛 ' or '') .. buf.name
     end,
     offsets = {
       {
         filetype = 'neo-tree',
         text = 'NeoTree',
-        highlight = 'Directory',
         text_align = 'center',
       },
     },
