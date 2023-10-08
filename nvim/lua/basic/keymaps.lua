@@ -43,17 +43,17 @@ keyset('n', "<A-'>", ':resize +10<CR>', { desc = 'vertical zoom window' })
 keyset('n', '<A-=>', '<C-w>=', { desc = 'equal all windows' })
 
 -- visual 模式设置
+keyset('v', '<Esc>', '<Esc><Esc>')
 keyset('v', '<', '<gv', { desc = 'indent to the left' })
 keyset('v', '>', '>gv', { desc = 'indent to the right' })
 keyset('v', 'J', ":move '>+1<CR>gv-gv", { desc = 'Move the selected content up' })
 keyset('v', 'K', ":move '<-2<CR>gv-gv", { desc = 'move the selected content down' })
 keyset('v', 'p', '"_dP') -- 在visual 模式里粘贴不要复制
-keyset('v', 'jk', '<Esc>', { desc = 'exit visual mode' })
-keyset('v', 'q', '<Esc>', { desc = 'exit visual mode' })
 keyset('v', 'H', '0')
 keyset('v', 'L', '$')
 
 -- normal 模式设置
+keyset('n', '<Esc>', '<Esc><Esc>')
 keyset('n', 'H', '0')
 keyset('n', 'L', '$')
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
@@ -69,6 +69,7 @@ keyset('n', 'cp', function()
 end, { desc = 'copy project directory path' })
 
 -- insert 模式设置
+keyset('i', '<Esc>', '<Esc><Esc>')
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
 
