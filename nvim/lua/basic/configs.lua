@@ -79,8 +79,7 @@ opt.showtabline = 2
 opt.showmode = false
 -- 系统剪贴板
 opt.clipboard = 'unnamedplus'
-opt.spell = true
-opt.spelllang = { 'en', 'cjk' }
+opt.spell = false
 -- 开启 Folding 模块
 -- opt.foldmethod = 'expr'
 -- opt.foldexpr = 'nvim_treesitter#foldexpr()'

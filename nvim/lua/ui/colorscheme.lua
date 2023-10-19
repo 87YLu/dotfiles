@@ -1,5 +1,13 @@
-vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic,underline')
-vim.cmd(':highlight CursorLineNr gui=italic,bold')
+local utils = require('utils')
+
+utils.set_timeout(function()
+  vim.cmd(':highlight CursorLineNr gui=italic,bold')
+  vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic')
+  vim.cmd(':highlight DiagnosticUnderlineInfo cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
+  vim.cmd(':highlight DiagnosticUnderlineHint cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
+  vim.cmd(':highlight DiagnosticUnderlineWarn cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
+  vim.cmd(':highlight DiagnosticUnderlineError cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
+end, 0)
 
 local transparent_background = vim.g.transparent_background
 local current_colorscheme
