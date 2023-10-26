@@ -1,5 +1,6 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 local neo_tree = require('neo-tree')
+local neo_tree_utils = require('neo-tree.utils')
 local utils = require('utils')
 local global_config_utils = require('utils.global_config')
 
@@ -36,6 +37,8 @@ function set_source()
   global_config_utils.set_global_config('neo_tree_source', current_source)
 end
 
+local position = vim.g.neotree_position
+
 neo_tree.setup({
   source_selector = {
     winbar = true,
@@ -67,7 +70,7 @@ neo_tree.setup({
     },
   },
   window = {
-    position = 'left',
+    position = position,
     width = current_width,
     mapping_options = {
       noremap = true,
@@ -138,9 +141,14 @@ neo_tree.setup({
       ['y'] = function(state)
         local path = get_path(state)
         if path then
-          vim.fn.setreg('+', path)
-          vim.fn.setreg('"', path)
-          vim.notify(string.format('Copied %s to system clipboard!', path))
+          local _path, filename = neo_tree_utils.split_path(path)
+          utils.copy(filename)
+        end
+      end,
+      ['Y'] = function(state)
+        local path = get_path(state)
+        if path then
+          utils.copy(path)
         end
       end,
       ['o'] = function(state)
@@ -199,7 +207,11 @@ end
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
   callback = function()
-    if ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status) and not auto_open_status then
+    if
+      ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status)
+      and not auto_open_status
+      and position ~= 'float'
+    then
       auto_open_status = true
       utils.set_timeout(function()
         if current_source ~= 'filesystem' then
@@ -208,12 +220,5 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         vim.cmd('Neotree show ' .. current_source)
       end, 0)
     end
-  end,
-})
-
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-  group = config_group,
-  callback = function()
-    vim.g.is_telescope_pickers_opening = false
   end,
 })

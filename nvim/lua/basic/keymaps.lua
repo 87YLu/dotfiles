@@ -119,7 +119,6 @@ keyset('n', '<A-f>', function()
   _G.resume_telescope({ path = utils.current_file.path() })
 end, { desc = 'search in current file' })
 keyset('n', '<leader>l', function()
-  vim.g.is_telescope_pickers_opening = true
   require('telescope.builtin').pickers()
 end, { desc = 'list telescope pickers' })
 keyset('n', '<leader>o', function()

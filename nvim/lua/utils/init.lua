@@ -26,6 +26,12 @@ M.set_timeout = function(func, delay)
   )
 end
 
+M.copy = function(content)
+  vim.fn.setreg('+', content)
+  vim.fn.setreg('"', content)
+  vim.notify(string.format('Copied %s to system clipboard!', content))
+end
+
 -- file --------------------
 
 file.is_exist = function(path)
