@@ -6,6 +6,8 @@ if not status_ok then
   return
 end
 
+local plugin_keys = require('basic.keymaps')
+
 vim.api.nvim_create_autocmd('BufEnter', {
   pattern = '*.*',
   once = true,
@@ -15,6 +17,17 @@ vim.api.nvim_create_autocmd('BufEnter', {
       current_line_blame_opts = {
         delay = 0,
       },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        plugin_keys.gitsigns(map, gs)
+      end,
     })
   end,
 })

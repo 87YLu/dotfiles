@@ -11,6 +11,8 @@ local keyset = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+local plugin_keys = {}
+
 -- 窗口分屏
 keyset('n', 'sv', function()
   if utils.current_file.type() ~= 'neo-tree' then
@@ -73,163 +75,182 @@ keyset('i', '<Esc>', '<Esc><Esc>')
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
 
--- comment
-keyset({ 'i', 'n' }, '<C-\\>', function()
-  require('Comment.api').toggle.linewise.current()
-end, { desc = 'toggle comment' })
-keyset({ 'i', 'n' }, '<A-\\>', function()
-  require('Comment.api').toggle.blockwise.current()
-end, { desc = 'toggle comment' })
-keyset('v', '<C-\\>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
+plugin_keys.comment = (function()
+  keyset({ 'i', 'n' }, '<C-\\>', function()
+    require('Comment.api').toggle.linewise.current()
+  end, { desc = 'toggle comment' })
+  keyset({ 'i', 'n' }, '<A-\\>', function()
+    require('Comment.api').toggle.blockwise.current()
+  end, { desc = 'toggle comment' })
+  keyset('v', '<C-\\>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
+end)()
 
--- plugin about code action start
--- ale
-keyset('n', '<leader>f', ':ALEFix<CR>', { desc = 'format code' })
--- toggleterm
-keyset('n', '<C-A-n>', '<CMD>lua _G.code_runner_toggle()<CR>', { desc = 'run code' })
--- plugin about code action end
+plugin_keys.ale = (function()
+  keyset('n', '<leader>f', ':ALEFix<CR>', { desc = 'format code' })
+end)()
 
--- plugin bufferline start
-keyset('n', '<A-h>', ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
-keyset('n', '<A-l>', ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })
-keyset('n', '<C-w>', ':Bdelete!<CR>', { desc = 'close current tab' })
-keyset('n', '<leader>br', ':BufferLineCloseRight<CR>', { desc = 'close the right tab' })
-keyset('n', '<leader>bl', ':BufferLineCloseLeft<CR>', { desc = 'close the left tab' })
-keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to close' })
--- plugin bufferline end
+plugin_keys.toggleterm = (function()
+  keyset('n', '<C-A-n>', '<CMD>lua _G.code_runner_toggle()<CR>', { desc = 'run code' })
+  keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazygit' })
+end)()
 
--- plugin neo-tree start
-keyset('n', '<A-m>', function()
-  _G.toggle_neo_tree()
-end, { desc = 'toggle neotree' })
+plugin_keys.bufferline = (function()
+  keyset('n', '<A-h>', ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
+  keyset('n', '<A-l>', ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })
+  keyset('n', '<C-w>', ':Bdelete!<CR>', { desc = 'close current tab' })
+  keyset('n', '<leader>br', ':BufferLineCloseRight<CR>', { desc = 'close the right tab' })
+  keyset('n', '<leader>bl', ':BufferLineCloseLeft<CR>', { desc = 'close the left tab' })
+  keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to close' })
+end)()
 
-keyset('n', '<leader>c', function()
-  _G.focus_current_file()
-end, { desc = 'toggle neotree' })
--- plugin neo-tree end
+plugin_keys.neo_tree = (function()
+  keyset('n', '<A-m>', function()
+    _G.toggle_neo_tree()
+  end, { desc = 'toggle neotree' })
+end)()
 
--- plugin telescope start
-keyset('n', '<C-p>', function()
-  _G.resume_telescope({ action = 'find_files' })
-end, { desc = 'find files' })
-keyset('n', '<C-f>', function()
-  _G.resume_telescope()
-end, { desc = 'global search' })
-keyset('n', '<A-f>', function()
-  _G.resume_telescope({ path = utils.current_file.path() })
-end, { desc = 'search in current file' })
-keyset('n', '<leader>l', function()
-  require('telescope.builtin').pickers()
-end, { desc = 'list telescope pickers' })
-keyset('n', '<leader>o', function()
-  require('telescope.builtin').oldfiles({ cwd_only = true })
-end, { desc = 'list recently files' })
-keyset('n', '<leader>h', function()
-  _G.open_colorscheme_switcher()
-end, { desc = 'change colorscheme' })
-keyset('n', '<leader>H', function()
-  _G.open_transparent_background_switcher()
-end, { desc = 'change the background transparency' })
+plugin_keys.telescope = (function()
+  keyset('n', '<C-p>', function()
+    _G.resume_telescope({ action = 'find_files' })
+  end, { desc = 'find files' })
+  keyset('n', '<C-f>', function()
+    _G.resume_telescope()
+  end, { desc = 'global search' })
+  keyset('n', '<A-f>', function()
+    _G.resume_telescope({ path = utils.current_file.path() })
+  end, { desc = 'search in current file' })
+  keyset('n', '<leader>l', function()
+    require('telescope.builtin').pickers()
+  end, { desc = 'list telescope pickers' })
+  keyset('n', '<leader>o', function()
+    require('telescope.builtin').oldfiles({ cwd_only = true })
+  end, { desc = 'list recently files' })
+  keyset('n', '<leader>c', function()
+    _G.open_colorscheme_switcher()
+  end, { desc = 'change colorscheme' })
+  keyset('n', '<leader>C', function()
+    _G.open_transparent_background_switcher()
+  end, { desc = 'change the background transparency' })
+end)()
 
--- plugin telescope end
+plugin_keys.session_manager = (function()
+  keyset('n', '<leader>p', ':SessionManager load_session<CR>', { desc = 'load session' })
+end)()
 
--- plugin session manager start
-keyset('n', '<leader>p', ':SessionManager load_session<CR>', { desc = 'load session' })
--- plugin session manager end
+plugin_keys.harpoon = (function()
+  keyset('n', '<leader>m', function()
+    require('telescope').extensions.harpoon.marks()
+  end, { desc = 'show marks' })
+  keyset('n', '<leader>am', function()
+    require('harpoon.mark').add_file()
+    vim.notify('add mark')
+  end, { desc = 'add mark' })
+  keyset('n', '<leader>rm', function()
+    require('harpoon.mark').rm_file()
+    vim.notify('remove mark')
+  end, { desc = 'remove mark' })
+  keyset('n', '<leader>cm', function()
+    require('harpoon.mark').clear_all()
+    vim.notify('clear all marks')
+  end, { desc = 'clear all marks' })
+end)()
 
---plugin harpoon start
-keyset('n', '<leader>m', function()
-  require('telescope').extensions.harpoon.marks()
-end, { desc = 'show marks' })
-keyset('n', '<leader>am', function()
-  require('harpoon.mark').add_file()
-  vim.notify('add mark')
-end, { desc = 'add mark' })
-keyset('n', '<leader>rm', function()
-  require('harpoon.mark').rm_file()
-  vim.notify('remove mark')
-end, { desc = 'remove mark' })
-keyset('n', '<leader>cm', function()
-  require('harpoon.mark').clear_all()
-  vim.notify('clear all marks')
-end, { desc = 'clear all marks' })
---plugin harpoon end
+plugin_keys.hbac = (function()
+  keyset('n', '<leader>\\', function()
+    require('hbac').toggle_pin()
+  end, { desc = 'toggle pin' })
+  keyset('n', '<leader>|', function()
+    require('hbac').toggle_autoclose()
+    global_config_utils.set_global_config('hbac_autoclose', require('hbac.state').autoclose_enabled)
+  end, { desc = 'toggle autoclose' })
+end)()
 
--- plugin hbac start
-keyset('n', '<leader>\\', function()
-  require('hbac').toggle_pin()
-end, { desc = 'toggle pin' })
-keyset('n', '<leader>|', function()
-  require('hbac').toggle_autoclose()
-  global_config_utils.set_global_config('hbac_autoclose', require('hbac.state').autoclose_enabled)
-end, { desc = 'toggle autoclose' })
--- plugin hbac end
+plugin_keys.coc = (function()
+  -- tab/cr 选中代码
+  local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
+  keyset('i', '<TAB>', 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+  keyset('i', '<S-TAB>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+  keyset('i', '<cr>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+  keyset('i', '<c-o>', 'coc#refresh()', { desc = 'trigger complement', silent = true, expr = true })
 
--- plugin coc start
--- tab/cr 选中代码
-local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
-keyset('i', '<TAB>', 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-keyset('i', '<S-TAB>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
-keyset('i', '<cr>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
-keyset('i', '<c-o>', 'coc#refresh()', { desc = 'trigger complement', silent = true, expr = true })
+  local coc_keyset = function(mode, lhs, rhs, opts)
+    opts = opts or {}
+    opts.silent = true
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
 
-local coc_keyset = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = true
-  vim.keymap.set(mode, lhs, rhs, opts)
+  coc_keyset('n', '[g', '<Plug>(coc-diagnostic-prev)', { desc = 'find the previous question' })
+  coc_keyset('n', ']g', '<Plug>(coc-diagnostic-next)', { desc = 'find the next question' })
+  coc_keyset('n', 'gi', '<Plug>(coc-implementation)', { desc = 'list todos' }) -- 待验证
+  coc_keyset('n', 'gr', '<Plug>(coc-references)', { desc = 'list the references' })
+  coc_keyset('n', 'K', '<CMD>lua _G.show_docs()<CR>', { desc = 'show doc' })
+  coc_keyset('n', '<leader>rn', '<Plug>(coc-rename)', { desc = 'rename' })
+  coc_keyset({ 'n', 'x' }, '<leader>r', '<Plug>(coc-codeaction-refactor-selected)', { desc = 'refactor code actions' })
+  coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
+  coc_keyset('n', '<leader>t', '<Plug>(coc-translator-p)', { desc = 'translate' })
+  coc_keyset('v', '<leader>t', '<Plug>(coc-translator-pv)', { desc = 'translate' })
+  local cursor_layout = {
+    layout_config = {
+      width = 0.6,
+      height = 0.4,
+    },
+  }
+  keyset('n', '<leader>d', function()
+    require('telescope').extensions.coc.diagnostics(require('telescope.themes').get_ivy())
+  end, { desc = 'show current file diagnostics' })
+  keyset('n', '<leader>D', function()
+    require('telescope').extensions.coc.workspace_diagnostics(require('telescope.themes').get_ivy())
+  end, { desc = 'show workspace diagnostics' })
+  keyset('n', 'gd', function()
+    require('telescope').extensions.coc.definitions(require('telescope.themes').get_cursor(cursor_layout))
+  end, { desc = 'show definition' })
+  keyset('n', 'gy', function()
+    require('telescope').extensions.coc.type_definitions(require('telescope.themes').get_cursor(cursor_layout))
+  end, { desc = 'show type definition' })
+  keyset('n', '<leader>t', function()
+    require('telescope').extensions.coc.document_symbols({})
+  end, { desc = 'show document symbols' })
+end)()
+
+plugin_keys.diffview = (function()
+  keyset('n', '<leader>,', '<CMD>lua _G.view_file_diff()<CR>', { desc = 'view file diff' })
+  keyset('n', '<leader>.', '<CMD>lua _G.view_file_history()<CR>', { desc = 'view file history' })
+  keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view git history' })
+end)()
+
+plugin_keys.gitsigns = function(map, gs)
+  map('n', '[c', function()
+    if vim.wo.diff then
+      return '[c'
+    end
+    vim.schedule(function()
+      gs.prev_hunk()
+    end)
+    return '<Ignore>'
+  end, { expr = true, desc = 'prev hunk' })
+
+  map('n', ']c', function()
+    if vim.wo.diff then
+      return ']c'
+    end
+    vim.schedule(function()
+      gs.next_hunk()
+    end)
+    return '<Ignore>'
+  end, { expr = true, desc = 'next hunk' })
+  map('n', '<leader>hv', gs.preview_hunk, { desc = 'hunk view' })
+  map('n', '<leader>hs', gs.stage_hunk, { desc = 'hunk stage' })
+  map('n', '<leader>hr', gs.reset_hunk, { desc = 'hunk reset' })
+  map('n', '<leader>hS', gs.stage_buffer, { desc = 'file stage' })
+  map('n', '<leader>hR', gs.reset_buffer, { desc = 'file reset' })
+  -- map('n', '<leader>hu', gs.undo_stage_hunk)
+  -- map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+  -- map('n', '<leader>tb', gs.toggle_current_line_blame)
+  -- map('n', '<leader>hd', gs.diffthis)
+  -- map('n', '<leader>hD', function() gs.diffthis('~') end)
+  -- map('n', '<leader>td', gs.toggle_deleted)
+
+  -- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 end
 
-coc_keyset('n', '[g', '<Plug>(coc-diagnostic-prev)', { desc = 'find the previous question' })
-coc_keyset('n', ']g', '<Plug>(coc-diagnostic-next)', { desc = 'find the next question' })
-coc_keyset('n', 'gi', '<Plug>(coc-implementation)', { desc = 'list todos' }) -- 待验证
-coc_keyset('n', 'gr', '<Plug>(coc-references)', { desc = 'list the references' })
-coc_keyset('n', 'K', '<CMD>lua _G.show_docs()<CR>', { desc = 'show doc' })
-coc_keyset('n', '<leader>rn', '<Plug>(coc-rename)', { desc = 'rename' })
-coc_keyset({ 'n', 'x' }, '<leader>r', '<Plug>(coc-codeaction-refactor-selected)', { desc = 'refactor code actions' })
-coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
-coc_keyset('n', '<leader>t', '<Plug>(coc-translator-p)', { desc = 'translate' })
-coc_keyset('v', '<leader>t', '<Plug>(coc-translator-pv)', { desc = 'translate' })
-local cursor_layout = {
-  layout_config = {
-    width = 0.6,
-    height = 0.4,
-  },
-}
-keyset('n', '<leader>d', function()
-  require('telescope').extensions.coc.diagnostics(require('telescope.themes').get_ivy())
-end, { desc = 'show current file diagnostics' })
-keyset('n', '<leader>D', function()
-  require('telescope').extensions.coc.workspace_diagnostics(require('telescope.themes').get_ivy())
-end, { desc = 'show workspace diagnostics' })
-keyset('n', 'gd', function()
-  require('telescope').extensions.coc.definitions(require('telescope.themes').get_cursor(cursor_layout))
-end, { desc = 'show definition' })
-keyset('n', 'gy', function()
-  require('telescope').extensions.coc.type_definitions(require('telescope.themes').get_cursor(cursor_layout))
-end, { desc = 'show type definition' })
-keyset('n', '<leader>t', function()
-  require('telescope').extensions.coc.document_symbols({})
-end, { desc = 'show document symbols' })
-
--- plugin coc end
-
--- plugin about git start
--- gitsigns
-keyset('n', '[c', ':Gitsigns prev_hunk<CR>', { desc = 'prev hunk' })
-keyset('n', ']c', ':Gitsigns next_hunk<CR>', { desc = 'next hunk' })
-keyset('n', 'hv', ':Gitsigns preview_hunk<CR>', { desc = 'hunk view' })
-keyset('n', 'hr', ':Gitsigns reset_hunk<CR>', { desc = 'hunk reset' })
-keyset('n', '<leader>hs', ':Gitsigns stage_hunk<CR>', { desc = 'hunk stage' })
-keyset('n', '<leader>fs', ':Gitsigns stage_buffer<CR>', { desc = 'file stage' })
--- map('n', '<leader>hu', gs.undo_stage_hunk)
--- map('n', '<leader>hb', function() gs.blame_line { full = true } end)
--- map('n', '<leader>hD', function() gs.diffthis('~') end)
--- map('n', '<leader>td', gs.toggle_deleted)
--- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
--- diffview
-keyset('n', '<leader>,', '<CMD>lua _G.view_file_diff()<CR>', { desc = 'view file diff' })
-keyset('n', '<leader>.', '<CMD>lua _G.view_file_history()<CR>', { desc = 'view file history' })
-keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view git history' })
--- lazygit
-keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazygit' })
--- plugin about git end
+return plugin_keys
