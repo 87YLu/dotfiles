@@ -29,16 +29,31 @@ end
 diffview.setup({
   hooks = {
     -- diffview 会跟 coc 插件冲突，进入时先禁用 coc
-    -- https://github.com/neoclide/coc.nvim/issues/1183
     view_opened = function()
       vim.cmd('CocDisable')
       vim.cmd('Noice dismiss')
+      vim.cmd('DisableHL')
       vim.g.is_diffview_opening = true
     end,
     view_closed = function()
       vim.cmd('CocEnable')
       vim.cmd('Noice dismiss')
+      vim.cmd('EnableHL')
       vim.g.is_diffview_opening = false
+    end,
+    diff_buf_read = function(bufnr)
+      local is_diffview = string.sub(utils.current_file.path(), 1, string.len('diffview://')) == 'diffview://'
+
+      if is_diffview then
+        vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+      end
+
+      vim.opt_local.foldlevel = 99
+      vim.opt_local.foldenable = false
+    end,
+    diff_buf_win_enter = function(bufnr, ctx)
+      vim.opt_local.foldlevel = 99
+      vim.opt_local.foldenable = false
     end,
   },
   keymaps = {
