@@ -52,7 +52,7 @@ file.is_in_cwd = function(path)
 end
 
 file.relative_path = function(path)
-  return string.gsub(path, M.cwd(), '')
+  return string.gsub(path, M.cwd() .. '/', '')
 end
 
 file.get_content = function(path, default_content)

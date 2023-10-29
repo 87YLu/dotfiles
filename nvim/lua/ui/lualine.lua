@@ -1,5 +1,6 @@
 local lualine = require('lualine')
 local hbac = require('hbac.state')
+local utils = require('utils')
 local input_mode = require('utils.input_mode')
 local system = require('utils.system')
 
@@ -10,9 +11,17 @@ local function get_color(color)
   }
 end
 
+local empty = function()
+  return '%#NonText#' .. '   '
+end
+
+local path = function()
+  return utils.file.relative_path(utils.current_file.path())
+end
+
 local function nav()
   local items = vim.b.coc_nav or {}
-  local t = { '%#NonText#' .. '    ' }
+  local t = { '%#NonText#' .. '' }
   for k, v in ipairs(items) do
     t[#t + 1] = ' %#'
       .. (v.highlight or 'NormalNC')
@@ -34,19 +43,19 @@ local config = {
     section_separators = '',
     disabled_filetypes = {
       tabline = { 'alpha', 'neo-tree' },
-      statusline = { 'alpha' },
-      winbar = { 'neo-tree', 'alpha' },
+      statusline = { 'alpha', 'DiffviewFiles' },
+      winbar = { 'neo-tree', 'alpha', 'DiffviewFiles' },
       refresh = {
         statusline = 2000,
       },
     },
   },
   winbar = {
-    lualine_a = { nav },
+    lualine_a = { empty, { path, color = { fg = '#CCCCCC', bg = '#333333' } }, nav },
     lualine_b = { '%#NonText#' .. '' },
   },
   inactive_winbar = {
-    lualine_a = { nav },
+    lualine_a = { empty, { path, color = get_color('Comment') } },
     lualine_b = { '%#NonText#' .. '' },
   },
   extensions = { 'neo-tree', 'toggleterm' },
@@ -86,20 +95,12 @@ local function ins_right(component)
 end
 
 ins_left({
-  'filetype',
-  fmt = function()
-    return ' '
-  end,
-  padding = { left = 2, right = 0 },
-})
-
-ins_left({
   'branch',
   icon = '',
   color = function()
     return get_color('@tag')
   end,
-  padding = { left = 0 },
+  padding = { left = 3, right = 1 },
 })
 
 if system.is_apple_silicon then
@@ -116,6 +117,17 @@ end
 ins_left({
   'diagnostics',
   symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
+  padding = { left = 1, right = 1 },
+})
+
+ins_left({
+  function()
+    if current_file.is_in_types({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }) then
+      return string.gsub(vim.g.coc_status or '', 'cSpell', '')
+    end
+    return ''
+  end,
+  padding = { left = 0, right = 1 },
 })
 
 ins_right({
@@ -170,6 +182,18 @@ ins_right({
   end,
   color = function()
     return hbac.autoclose_enabled and get_color('@string.regex') or get_color('Comment')
+  end,
+})
+
+ins_right({
+  function()
+    return '󰨞'
+  end,
+  color = {
+    fg = '#3790E9',
+  },
+  on_click = function()
+    vim.cmd('!code ' .. utils.cwd() .. ' --goto ' .. utils.current_file.path())
   end,
   padding = { left = 1, right = 2 },
 })
