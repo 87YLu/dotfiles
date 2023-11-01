@@ -107,6 +107,7 @@ neo_tree.setup({
       end,
       ['<2-LeftMouse>'] = 'open',
       ['<cr>'] = 'open',
+      ['<leader>'] = 'open',
       ['<esc>'] = 'cancel',
       ['h'] = 'open_split',
       ['v'] = 'open_vsplit',
