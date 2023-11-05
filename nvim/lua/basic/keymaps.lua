@@ -55,7 +55,6 @@ keyset('v', 'H', '0')
 keyset('v', 'L', '$')
 
 -- normal 模式设置
-keyset('n', '<Esc>', '<Esc><Esc>')
 keyset('n', 'H', '0')
 keyset('n', 'L', '$')
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
@@ -71,7 +70,9 @@ keyset('n', 'cp', function()
 end, { desc = 'copy project directory path' })
 
 -- insert 模式设置
-keyset('i', '<Esc>', '<Esc><Esc>')
+keyset('i', '<Esc>', function()
+  vim.cmd('stopinsert')
+end)
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
 
@@ -98,6 +99,7 @@ plugin_keys.bufferline = (function()
   keyset('n', '<A-h>', ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
   keyset('n', '<A-l>', ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })
   keyset('n', '<C-w>', ':Bdelete!<CR>', { desc = 'close current tab' })
+  keyset('n', '<C-q>', ':BufferLineCloseOthers<CR>', { desc = 'close other tab' })
   keyset('n', '<leader>br', ':BufferLineCloseRight<CR>', { desc = 'close the right tab' })
   keyset('n', '<leader>bl', ':BufferLineCloseLeft<CR>', { desc = 'close the left tab' })
   keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to close' })
