@@ -1,12 +1,9 @@
 -- https://github.com/akinsho/bufferline.nvim
-local status_ok, bufferline = pcall(require, 'bufferline')
-
-if not status_ok then
-  vim.notify('bufferline not found!')
-  return
-end
-
 local hbac = require('hbac.state')
+
+local buffers = {}
+
+vim.cmd('highlight CatPinned guifg=#E74C3C')
 
 bufferline.setup({
   options = {
@@ -18,7 +15,15 @@ bufferline.setup({
       style = 'underline',
     },
     name_formatter = function(buf)
-      return ((hbac.is_pinned(buf.bufnr) and hbac.autoclose_enabled) and '󰄛 ' or '') .. buf.name
+      buffers[buf.path] = buf.bufnr
+      return buf.name
+    end,
+    get_element_icon = function(element)
+      local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype)
+      if icon ~= nil then
+        return ((hbac.is_pinned(buffers[element.path]) and hbac.autoclose_enabled) and '📍 ' or '') .. icon, hl
+      end
+      return nil
     end,
     offsets = {
       {
