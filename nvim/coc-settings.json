@@ -31,7 +31,6 @@
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": " ",
   "diagnostic.hintSign": "󰌵",
-  "diagnostic.displayByAle": false,
   "diagnostic.virtualText": false,
   "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualTextCurrentLineOnly": false,

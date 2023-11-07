@@ -241,18 +241,18 @@ local plugins = {
   },
   -- lsp
   {
-    'dense-analysis/ale',
-    event = 'VeryLazy',
-    config = function()
-      require('lsp.ale')
-    end,
-  },
-  {
     'neoclide/coc.nvim',
     event = 'VeryLazy',
     branch = 'release',
     config = function()
       require('lsp.coc')
+    end,
+  },
+  {
+    'stevearc/conform.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('lsp.conform')
     end,
   },
   {

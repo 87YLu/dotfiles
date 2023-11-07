@@ -86,8 +86,10 @@ plugin_keys.comment = (function()
   keyset('v', '<C-\\>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
 end)()
 
-plugin_keys.ale = (function()
-  keyset('n', '<leader>f', ':ALEFix<CR>', { desc = 'format code' })
+plugin_keys.conform = (function()
+  keyset('n', '<leader>f', function()
+    require('conform').format()
+  end, { desc = 'format code' })
 end)()
 
 plugin_keys.toggleterm = (function()
