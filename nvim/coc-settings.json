@@ -65,6 +65,7 @@
     "typescript": ["javascript"],
     "typescriptreact": ["javascript", "javascriptreact", "typescript"]
   },
+  "snippets.ultisnips.pythonPrompt": false,
   "cSpell.ignoreWords": ["nvim", "antd"],
   "cSpell.ignorePaths": [
     "node_modules",
