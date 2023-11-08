@@ -41,7 +41,7 @@ local code_runner = terms:new({
   close_on_exit = false,
 })
 
-local current_file = require('utils').current_file
+local current_file = require('utils.current_file')
 
 function _G.code_runner_toggle()
   local filetype = current_file.type()

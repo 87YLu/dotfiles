@@ -25,7 +25,8 @@ vim.opt.signcolumn = 'yes'
 vim.g.coc_snippet_next = '<Tab>'
 vim.g.coc_snippet_prev = '<S-Tab>'
 
-local utils = require('utils')
+local current_file = require('utils.current_file')
+local common_utils = require('utils.common')
 
 -- Autocomplete
 function _G.check_back_space()
@@ -82,7 +83,7 @@ vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}"
 -- https://github.com/yuki-yano/coc-nav/issues/4
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
-    if utils.current_file.is_in_types({ 'sh', 'html' }) then
+    if current_file.is_in_types({ 'sh', 'html' }) then
       vim.cmd("call CocActionAsync('deactivateExtension', 'coc-nav')")
     else
       vim.cmd("call CocActionAsync('activeExtension', 'coc-nav')")
@@ -95,7 +96,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
   pattern = '*.lua',
   once = true,
   callback = function()
-    utils.set_timeout(function()
+    common_utils.set_timeout(function()
       vim.cmd("call CocActionAsync('runCommand', 'sumneko-lua.restart')")
     end, 500)
   end,

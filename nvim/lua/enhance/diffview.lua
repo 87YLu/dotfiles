@@ -8,7 +8,8 @@ end
 
 vim.g.is_diffview_opening = false
 
-local utils = require('utils')
+local file_utils = require('utils.file')
+local current_file_utils = require('utils.current_file')
 
 function Open_file_at_diffview_panel()
   local lib = require('diffview.lib')
@@ -18,7 +19,7 @@ function Open_file_at_diffview_panel()
     return
   end
 
-  if utils.file.is_exist(file.path) then
+  if file_utils.is_exist(file.path) then
     vim.cmd('DiffviewClose')
     vim.cmd(':e ' .. file.path)
   else
@@ -40,7 +41,7 @@ diffview.setup({
       vim.g.is_diffview_opening = false
     end,
     diff_buf_read = function(bufnr)
-      local is_diffview = string.sub(utils.current_file.path(), 1, string.len('diffview://')) == 'diffview://'
+      local is_diffview = string.sub(current_file_utils.path(), 1, string.len('diffview://')) == 'diffview://'
 
       if is_diffview then
         vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)

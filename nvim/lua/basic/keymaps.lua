@@ -1,7 +1,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local utils = require('utils')
+local current_file = require('utils.current_file')
+local common_utils = require('utils.common')
 local global_config_utils = require('utils.global_config')
 
 local keyset = function(mode, lhs, rhs, opts)
@@ -15,12 +16,12 @@ local plugin_keys = {}
 
 -- 窗口分屏
 keyset('n', 'sv', function()
-  if utils.current_file.type() ~= 'neo-tree' then
+  if current_file.type() ~= 'neo-tree' then
     vim.cmd(':vsp')
   end
 end, { desc = 'split vertically' })
 keyset('n', 'sh', function()
-  if utils.current_file.type() ~= 'neo-tree' then
+  if current_file.type() ~= 'neo-tree' then
     vim.cmd(':sp')
   end
 end, { desc = 'split horizontally' })
@@ -63,7 +64,7 @@ keyset('n', 'q', ':q<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
 keyset('n', '<leader><leader>', ':silent! w<CR>', { desc = 'save' })
 keyset('n', 'cp', function()
-  local path = utils.cwd()
+  local path = common_utils.cwd()
   vim.fn.setreg('+', path)
   vim.fn.setreg('"', path)
   vim.notify(string.format('Copied %s to system clipboard!', path))
@@ -121,7 +122,7 @@ plugin_keys.telescope = (function()
     _G.resume_telescope()
   end, { desc = 'global search' })
   keyset('n', '<A-f>', function()
-    _G.resume_telescope({ path = utils.current_file.path() })
+    _G.resume_telescope({ path = current_file.path() })
   end, { desc = 'search in current file' })
   keyset('n', '<leader>l', function()
     require('telescope.builtin').pickers()

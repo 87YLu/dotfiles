@@ -1,9 +1,10 @@
 local lualine = require('lualine')
 local hbac = require('hbac.state')
-local utils = require('utils')
+local common_utils = require('utils.common')
 local input_mode = require('utils.input_mode')
 local system = require('utils.system')
 local color_utils = require('utils.color')
+local current_file = require('utils.current_file')
 
 local get_color = function(color)
   return {
@@ -16,7 +17,7 @@ local empty = function()
 end
 
 local path = function()
-  return utils.file.relative_path(utils.current_file.path())
+  return current_file.relative_path()
 end
 
 local function nav()
@@ -193,7 +194,7 @@ ins_right({
     fg = '#3790E9',
   },
   on_click = function()
-    vim.cmd('!code ' .. utils.cwd() .. ' --goto ' .. utils.current_file.path())
+    vim.cmd('!code ' .. common_utils.cwd() .. ' --goto ' .. current_file.path())
   end,
   padding = { left = 1, right = 2 },
 })

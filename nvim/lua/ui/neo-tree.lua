@@ -1,8 +1,9 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 local neo_tree = require('neo-tree')
 local neo_tree_utils = require('neo-tree.utils')
-local utils = require('utils')
 local global_config_utils = require('utils.global_config')
+local current_file = require('utils.current_file')
+local common_utils = require('utils.common')
 
 function get_path(state)
   local node = state.tree:get_node()
@@ -27,7 +28,7 @@ local current_source = vim.g.neo_tree_source or 'filesystem'
 
 function set_source()
   local all_sources = { 'filesystem', 'git_status', 'buffers' }
-  local filename = utils.current_file.name()
+  local filename = current_file.name()
   for _, source in ipairs(all_sources) do
     if string.find(filename, source) ~= nil then
       current_source = source
@@ -143,13 +144,13 @@ neo_tree.setup({
         local path = get_path(state)
         if path then
           local _path, filename = neo_tree_utils.split_path(path)
-          utils.copy(filename)
+          common_utils.copy(filename)
         end
       end,
       ['Y'] = function(state)
         local path = get_path(state)
         if path then
-          utils.copy(path)
+          common_utils.copy(path)
         end
       end,
       ['o'] = function(state)
@@ -189,7 +190,7 @@ neo_tree.setup({
 })
 
 function _G.toggle_neo_tree()
-  vim.cmd('Neotree toggle ' .. current_source .. (utils.current_file.is_exist() and ' reveal' or ''))
+  vim.cmd('Neotree toggle ' .. current_source .. (current_file.is_exist() and ' reveal' or ''))
 end
 
 local command = require('neo-tree.command')
@@ -209,12 +210,12 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
   callback = function()
     if
-      ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status)
-      and not auto_open_status
-      and position ~= 'float'
+        ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status)
+        and not auto_open_status
+        and position ~= 'float'
     then
       auto_open_status = true
-      utils.set_timeout(function()
+      common_utils.set_timeout(function()
         if current_source ~= 'filesystem' then
           vim.cmd('Neotree show filesystem')
         end

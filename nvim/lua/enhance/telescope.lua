@@ -69,17 +69,18 @@ telescope.load_extension('harpoon')
 
 local telescope_state = require('telescope.state')
 local telescope_builtin = require('telescope.builtin')
-local utils = require('utils')
+local common_utils = require('utils.common')
+local file_utils = require('utils.file')
 local live_grep_prefix = 'live_grep 󰺯 '
 local find_files_prefix = 'find_files 󰱽 '
 
 function _G.resume_telescope(params)
   params = params or {}
-  local path = params.path ~= nil and params.path or utils.cwd()
+  local path = params.path ~= nil and params.path or common_utils.cwd()
   local action = params.action ~= nil and params.action or 'live_grep'
 
   local prompt_prefix = action == 'live_grep' and live_grep_prefix or find_files_prefix
-  local relative_path = utils.file.relative_path(path)
+  local relative_path = file_utils.relative_path(path)
   local cache_index = 0
   local cached_pickers = telescope_state.get_global_key('cached_pickers') or {}
 

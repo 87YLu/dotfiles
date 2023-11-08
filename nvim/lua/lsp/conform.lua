@@ -1,10 +1,10 @@
 -- https://github.com/stevearc/conform.nvim
-local format_config = vim.loop.os_homedir() .. '/.config/nvim/lua/lsp/format-configs/'
+local common_utils = require('utils.common')
+local format_config = common_utils.homedir() .. '/.config/nvim/lua/lsp/format-configs/'
 local global_prettier_config = format_config .. '.prettierrc'
 local stylua_config = format_config .. 'stylua.toml'
-local utils = require('utils')
 
-local package_json = utils.cwd() .. '/package.json'
+local package_json = common_utils.cwd() .. '/package.json'
 
 local success, result = pcall(function()
   for line in io.lines(package_json) do
