@@ -68,7 +68,7 @@ opt.completeopt = 'menu,menuone,noselect,noinsert'
 -- 样式
 opt.termguicolors = true
 -- 不可见字符的显示，这里只把空格显示为一个点
-opt.list = false
+opt.list = true
 opt.listchars = 'space:·'
 -- 补全增强
 opt.wildmenu = true

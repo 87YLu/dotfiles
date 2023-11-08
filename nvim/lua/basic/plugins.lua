@@ -53,10 +53,10 @@ local plugins = {
     lazy = vim.g.colorscheme ~= 'tokyonight' and vim.g.colorscheme ~= 'tokyonight_day',
   },
   {
-    'shellRaining/hlchunk.nvim',
+    'lukas-reineke/indent-blankline.nvim',
     event = 'VeryLazy',
     config = function()
-      require('ui.hlchunk')
+      require('ui.indent-blankline')
     end,
   },
   {
@@ -64,6 +64,14 @@ local plugins = {
     event = 'VeryLazy',
     config = function()
       require('ui.lualine')
+    end,
+  },
+  {
+    'echasnovski/mini.indentscope',
+    event = 'VeryLazy',
+    version = '*',
+    config = function()
+      require('ui.mini-indentscope')
     end,
   },
   {

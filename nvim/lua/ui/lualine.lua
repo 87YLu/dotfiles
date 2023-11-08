@@ -3,11 +3,11 @@ local hbac = require('hbac.state')
 local utils = require('utils')
 local input_mode = require('utils.input_mode')
 local system = require('utils.system')
+local color_utils = require('utils.color')
 
-local function get_color(color)
-  local hl = vim.api.nvim_get_hl_by_name(color, true)
+local get_color = function(color)
   return {
-    fg = hl.foreground and string.format('#%06x', hl.foreground) or nil,
+    fg = color_utils.get_color_fg(color, true),
   }
 end
 

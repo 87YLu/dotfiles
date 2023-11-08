@@ -89,8 +89,9 @@ local colorscheme = {
 }
 
 local change_colorscheme = function(color)
-  colorscheme[color]()
   current_colorscheme = color
+  vim.g.colorscheme = color
+  colorscheme[color]()
 end
 
 change_colorscheme(vim.g.colorscheme)

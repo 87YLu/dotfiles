@@ -32,13 +32,11 @@ diffview.setup({
     view_opened = function()
       vim.cmd('CocDisable')
       vim.cmd('Noice dismiss')
-      vim.cmd('DisableHL')
       vim.g.is_diffview_opening = true
     end,
     view_closed = function()
       vim.cmd('CocEnable')
       vim.cmd('Noice dismiss')
-      vim.cmd('EnableHL')
       vim.g.is_diffview_opening = false
     end,
     diff_buf_read = function(bufnr)
