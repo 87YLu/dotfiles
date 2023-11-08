@@ -1,11 +1,8 @@
 -- https://github.com/akinsho/bufferline.nvim
 local hbac = require('hbac.state')
-
 local buffers = {}
 
-vim.cmd('highlight CatPinned guifg=#E74C3C')
-
-bufferline.setup({
+require('bufferline').setup({
   options = {
     -- from moll/vim-bbye
     close_command = 'Bdelete! %d',
