@@ -56,6 +56,8 @@ treesitter.setup({
   },
 })
 
+vim.treesitter.language.register('html', 'ttml')
+
 -- https://github.com/hiphish/rainbow-delimiters.nvim
 local status_ok, rainbow_delimiters = pcall(require, 'rainbow-delimiters')
 

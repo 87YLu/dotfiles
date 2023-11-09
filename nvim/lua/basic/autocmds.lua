@@ -67,3 +67,5 @@ vim.api.nvim_create_autocmd('InsertLeave', {
     input_mode.to_en()
   end,
 })
+
+vim.api.nvim_command('autocmd BufNewFile,BufRead *.ttml setfiletype ttml')

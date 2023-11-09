@@ -80,5 +80,8 @@
     "**/pnpm-lock.yaml",
     "**/coc-settings.json"
   ],
-  "colors.enable": true
+  "colors.enable": true,
+  "[ttml]": {
+    "diagnostic.enable": false
+  }
 }

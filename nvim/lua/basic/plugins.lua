@@ -198,19 +198,6 @@ local plugins = {
     end,
   },
   {
-    'nvim-treesitter/nvim-treesitter',
-    event = 'BufReadPost',
-    build = ':TSUpdate',
-    dependencies = {
-      'hiphish/rainbow-delimiters.nvim',
-      'JoosepAlviste/nvim-ts-context-commentstring',
-      'windwp/nvim-ts-autotag',
-    },
-    config = function()
-      require('enhance.nvim-treesitter')
-    end,
-  },
-  {
     'ahmedkhalf/project.nvim',
     event = 'VeryLazy',
     config = function()
@@ -261,6 +248,19 @@ local plugins = {
     event = 'VeryLazy',
     config = function()
       require('lsp.conform')
+    end,
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    event = 'BufReadPost',
+    build = ':TSUpdate',
+    dependencies = {
+      'hiphish/rainbow-delimiters.nvim',
+      'JoosepAlviste/nvim-ts-context-commentstring',
+      'windwp/nvim-ts-autotag',
+    },
+    config = function()
+      require('lsp.nvim-treesitter')
     end,
   },
   {
