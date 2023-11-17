@@ -12,6 +12,33 @@ ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ```
 
+### kitty and iTerm2
+
+```sh
+ln -s ~/dotfiles/terminals/kitty ~/.config/kitty
+```
+
+If you want to change the background image regularly
+
+```sh
+touch ~/dotfiles/terminals/backgrounds_path.sh
+```
+
+add this line in file `~/dotfiles/terminals/backgrounds_path.sh`
+
+```sh
+export backgrounds_path="your path"
+```
+
+run `crontab -e` and add
+
+```sh
+# kitty
+*/15 * * * *  /bin/bash $HOME/dotfiles/terminals/kitty/change_background_image.sh
+# iTerm2
+*/15 * * * *  /bin/bash $HOME/dotfiles/terminals/iTerm2/change_background_image.sh
+```
+
 ### tmux
 
 ```sh
@@ -69,14 +96,6 @@ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 
 ```sh
 git clone https://github.com/87YLu/dotfiles-resources.git
-```
-
-### iTerm2
-
-If you want to change the background image regularly，run `crontab -e` and add this line.
-
-```sh
-*/15 * * * *  /bin/bash $HOME/dotfiles-resources/iTerm2/random_background_image.sh
 ```
 
 ### nvim
