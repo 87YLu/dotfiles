@@ -271,6 +271,13 @@ local plugins = {
       require('lsp.tabnine')
     end,
   },
+  {
+    'dmmulroy/tsc.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('lsp.tsc')
+    end,
+  },
 }
 
 local opts = {
