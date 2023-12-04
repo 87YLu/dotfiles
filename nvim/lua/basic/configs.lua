@@ -3,7 +3,7 @@ local g = vim.g
 
 -- neotree
 g.auto_open_explorer = true
-g.neotree_position = 'float'
+g.neotree_position = 'left'
 
 g.colorscheme = g.colorscheme or 'catppuccin'
 g.transparent_background = (g.transparent_background == nil) and true or g.transparent_background
