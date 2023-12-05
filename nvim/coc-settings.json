@@ -1,5 +1,9 @@
 {
   "coc.preferences.extensionUpdateCheck": "daily",
+  "hover.floatConfig": { "border": true, "rounded": true, "focusable": true },
+  "suggest.floatConfig": { "border": true, "rounded": true },
+  "diagnostic.floatConfig": { "border": true, "rounded": true },
+  "signature.floatConfig": { "border": true, "rounded": true },
   "suggest.completionItemKindLabels": {
     "class": "",
     "color": "",
