@@ -46,9 +46,6 @@ treesitter.setup({
       node_decremental = '<BS>',
     },
   },
-  context_commentstring = {
-    enable = true,
-  },
   autotag = {
     enable = true,
     enable_rename = true,
@@ -58,13 +55,10 @@ treesitter.setup({
 
 vim.treesitter.language.register('html', 'ttml')
 
--- https://github.com/hiphish/rainbow-delimiters.nvim
-local status_ok, rainbow_delimiters = pcall(require, 'rainbow-delimiters')
+require('ts_context_commentstring').setup({})
 
-if not status_ok then
-  vim.notify('rainbow_delimiters not found!')
-  return
-end
+-- https://github.com/hiphish/rainbow-delimiters.nvim
+local rainbow_delimiters = require('rainbow-delimiters')
 
 vim.g.rainbow_delimiters = {
   strategy = {
