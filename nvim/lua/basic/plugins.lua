@@ -14,8 +14,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = {
-  -- ui
+local ui = {
   {
     'nvim-tree/nvim-web-devicons',
     lazy = true,
@@ -106,15 +105,9 @@ local plugins = {
       require('ui.scrollbar')
     end,
   },
-  {
-    'folke/todo-comments.nvim',
-    event = 'VeryLazy',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('enhance.todo-comments')
-    end,
-  },
-  -- enhance
+}
+
+local enhance = {
   {
     'numToStr/Comment.nvim',
     event = 'VeryLazy',
@@ -223,6 +216,14 @@ local plugins = {
     end,
   },
   {
+    'folke/todo-comments.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('enhance.todo-comments')
+    end,
+  },
+  {
     'akinsho/toggleterm.nvim',
     event = 'VeryLazy',
     config = function()
@@ -234,7 +235,9 @@ local plugins = {
     event = 'VeryLazy',
     config = true,
   },
-  -- lsp
+}
+
+local lsp = {
   {
     'neoclide/coc.nvim',
     event = 'VeryLazy',
@@ -279,6 +282,14 @@ local plugins = {
     end,
   },
 }
+
+local plugins = {}
+
+for _, i in ipairs({ ui, enhance, lsp }) do
+  for _, plugin in ipairs(i) do
+    table.insert(plugins, plugin)
+  end
+end
 
 local opts = {
   git = {
