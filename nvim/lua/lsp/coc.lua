@@ -13,6 +13,7 @@ vim.g.coc_global_extensions = {
   'coc-nav',
   'coc-translator',
   'coc-highlight',
+  'coc-git',
 }
 
 vim.opt.backup = false

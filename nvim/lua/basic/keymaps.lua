@@ -224,6 +224,11 @@ plugin_keys.coc = (function()
   keyset('n', '<leader>t', function()
     require('telescope').extensions.coc.document_symbols({})
   end, { desc = 'show document symbols' })
+
+  -- coc-git
+  keyset('n', '[c', '<Plug>(coc-git-prevchunk)')
+  keyset('n', ']c', '<Plug>(coc-git-nextchunk)')
+  keyset('n', '<leader>hv', '<Plug>(coc-git-chunkinfo)')
 end)()
 
 plugin_keys.diffview = (function()
@@ -231,40 +236,5 @@ plugin_keys.diffview = (function()
   keyset('n', '<leader>.', '<CMD>lua _G.view_file_history()<CR>', { desc = 'view file history' })
   keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view git history' })
 end)()
-
-plugin_keys.gitsigns = function(map, gs)
-  map('n', '[c', function()
-    if vim.wo.diff then
-      return '[c'
-    end
-    vim.schedule(function()
-      gs.prev_hunk()
-    end)
-    return '<Ignore>'
-  end, { expr = true, desc = 'prev hunk' })
-
-  map('n', ']c', function()
-    if vim.wo.diff then
-      return ']c'
-    end
-    vim.schedule(function()
-      gs.next_hunk()
-    end)
-    return '<Ignore>'
-  end, { expr = true, desc = 'next hunk' })
-  map('n', '<leader>hv', gs.preview_hunk, { desc = 'hunk view' })
-  map('n', '<leader>hs', gs.stage_hunk, { desc = 'hunk stage' })
-  map('n', '<leader>hr', gs.reset_hunk, { desc = 'hunk reset' })
-  map('n', '<leader>hS', gs.stage_buffer, { desc = 'file stage' })
-  map('n', '<leader>hR', gs.reset_buffer, { desc = 'file reset' })
-  -- map('n', '<leader>hu', gs.undo_stage_hunk)
-  -- map('n', '<leader>hb', function() gs.blame_line { full = true } end)
-  -- map('n', '<leader>tb', gs.toggle_current_line_blame)
-  -- map('n', '<leader>hd', gs.diffthis)
-  -- map('n', '<leader>hD', function() gs.diffthis('~') end)
-  -- map('n', '<leader>td', gs.toggle_deleted)
-
-  -- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-end
 
 return plugin_keys

@@ -153,13 +153,6 @@ local enhance = {
     },
   },
   {
-    'lewis6991/gitsigns.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('enhance.gitsigns')
-    end,
-  },
-  {
     'ThePrimeagen/harpoon',
     event = 'VeryLazy',
     dependencies = {
