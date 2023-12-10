@@ -71,7 +71,7 @@ keyset('n', 'yy', function()
 end)
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
-keyset('n', 'q', ':q<CR>', { desc = 'exit' })
+keyset('n', 'q', ':qa<CR>', { desc = 'exit' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
 keyset('n', '<C-w>', ':silent! w<CR>', { desc = 'save' })
 keyset('n', 'cp', function()
@@ -209,6 +209,7 @@ plugin_keys.coc = (function()
       height = 0.4,
     },
   }
+
   keyset('n', '<leader>d', function()
     require('telescope').extensions.coc.diagnostics(require('telescope.themes').get_ivy())
   end, { desc = 'show current file diagnostics' })
@@ -221,9 +222,17 @@ plugin_keys.coc = (function()
   keyset('n', 'gy', function()
     require('telescope').extensions.coc.type_definitions(require('telescope.themes').get_cursor(cursor_layout))
   end, { desc = 'show type definition' })
-  keyset('n', '<leader>t', function()
-    require('telescope').extensions.coc.document_symbols({})
-  end, { desc = 'show document symbols' })
+
+  keyset('n', '<A-M>', function()
+    local winid = vim.fn['coc#window#find']('cocViewId', 'OUTLINE')
+    if winid == -1 then
+      vim.cmd('CocOutline')
+    else
+      vim.fn['coc#window#close'](winid)
+    end
+  end, {
+    desc = 'toggle outline',
+  })
 
   -- coc-git
   keyset('n', '[c', '<Plug>(coc-git-prevchunk)')

@@ -1,3 +1,4 @@
+-- https://github.com/nvim-lualine/lualine.nvim
 local lualine = require('lualine')
 local hbac = require('hbac.state')
 local common_utils = require('utils.common')
@@ -43,12 +44,12 @@ local config = {
     component_separators = '',
     section_separators = '',
     disabled_filetypes = {
-      tabline = { 'alpha', 'neo-tree' },
-      statusline = { 'alpha', 'DiffviewFiles' },
-      winbar = { 'neo-tree', 'alpha', 'DiffviewFiles' },
-      refresh = {
-        statusline = 2000,
-      },
+      tabline = { 'alpha', 'neo-tree', 'coctree' },
+      statusline = { 'alpha', 'DiffviewFiles', 'coctree' },
+      winbar = { 'neo-tree', 'alpha', 'DiffviewFiles', 'coctree' },
+    },
+    refresh = {
+      statusline = 2000,
     },
   },
   winbar = {

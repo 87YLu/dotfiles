@@ -13,5 +13,6 @@ scrollbar.setup({
   },
   excluded_filetypes = {
     'neo-tree',
+    'coctree'
   },
 })

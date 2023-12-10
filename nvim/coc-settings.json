@@ -27,6 +27,8 @@
     "value": "",
     "variable": ""
   },
+  "outline.autoWidth": false,
+  "outline.splitCommand": "botright 40vs",
   "hover.floatConfig": { "border": true, "rounded": true, "focusable": true },
   "suggest.floatConfig": { "border": true, "rounded": true },
   "diagnostic.floatConfig": { "border": true, "rounded": true },
