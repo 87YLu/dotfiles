@@ -189,37 +189,41 @@ neo_tree.setup({
   },
 })
 
+local command = require('neo-tree.command')
+local config_group = vim.api.nvim_create_augroup('neotree_actions', { clear = true })
+
 function _G.toggle_neo_tree()
+  if current_file.type() ~= 'neo-tree' then
+    command.execute({
+      source = current_source,
+      action = 'focus',
+      reveal = true,
+      reveal_force_cwd = true,
+    })
+    return
+  end
   vim.cmd('Neotree toggle ' .. current_source .. (current_file.is_exist() and ' reveal' or ''))
 end
 
-local command = require('neo-tree.command')
-local auto_open_status = false
-local config_group = vim.api.nvim_create_augroup('neotree_actions', { clear = true })
-
-function _G.focus_current_file()
-  command.execute({
-    source = current_source,
-    action = 'focus',
-    reveal = true,
-    reveal_force_cwd = true,
-  })
-end
+local flag = false
 
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = config_group,
+  once = true,
   callback = function()
     if
-        ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status)
-        and not auto_open_status
-        and position ~= 'float'
+      ((vim.g.neo_tree_open_status == nil) and true or vim.g.neo_tree_open_status)
+      and position ~= 'float'
+      and not flag
     then
-      auto_open_status = true
+      flag = true
       common_utils.set_timeout(function()
-        if current_source ~= 'filesystem' then
-          vim.cmd('Neotree show filesystem')
-        end
-        vim.cmd('Neotree show ' .. current_source)
+        command.execute({
+          source = current_source,
+          action = 'show',
+          reveal = true,
+          reveal_force_cwd = true,
+        })
       end, 0)
     end
   end,
