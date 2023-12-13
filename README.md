@@ -12,10 +12,14 @@ ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ```
 
-### kitty and iTerm2
+### terminals
 
 ```sh
 ln -s ~/dotfiles/terminals/kitty ~/.config/kitty
+```
+
+```sh
+ln -s ~/dotfiles/terminals/alacritty ~/.config/alacritty
 ```
 
 If you want to change the background image regularly
