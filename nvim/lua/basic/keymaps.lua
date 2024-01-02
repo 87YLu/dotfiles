@@ -246,4 +246,10 @@ plugin_keys.diffview = (function()
   keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view git history' })
 end)()
 
+plugin_keys.treesj = (function()
+  keyset('n', '.', function()
+    require('treesj').toggle()
+  end)
+end)()
+
 return plugin_keys
