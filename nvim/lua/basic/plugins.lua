@@ -268,6 +268,14 @@ local lsp = {
     end,
   },
   {
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    event = 'VeryLazy',
+    config = function()
+      require('lsp.treesj')
+    end,
+  },
+  {
     'dmmulroy/tsc.nvim',
     event = 'VeryLazy',
     config = function()
