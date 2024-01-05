@@ -13,12 +13,27 @@ local get_color = function(color)
   }
 end
 
-local empty = function()
-  return '%#NonText#' .. '   '
-end
+local path_count = 3
 
 local path = function()
-  return current_file.relative_path()
+  local file_path = current_file.relative_path()
+  local separator = package.config:sub(1, 1)
+  local segments = {}
+
+  for segment in file_path:gmatch('[^' .. separator .. ']+') do
+    table.insert(segments, segment)
+  end
+
+  if #segments <= path_count then
+    return file_path
+  end
+
+  local shortenedSegments = {}
+  for i = #segments - path_count + 1, #segments do
+    table.insert(shortenedSegments, segments[i])
+  end
+
+  return table.concat({ '...', unpack(shortenedSegments) }, separator)
 end
 
 local function nav()
@@ -53,12 +68,13 @@ local config = {
     },
   },
   winbar = {
-    lualine_a = { empty, { path, color = { fg = '#CCCCCC', bg = '#333333' } }, nav },
-    lualine_b = { '%#NonText#' .. '' },
+    lualine_a = {
+      path,
+      { nav, padding = { left = 0 } },
+    },
   },
   inactive_winbar = {
-    lualine_a = { empty, { path, color = get_color('Comment') } },
-    lualine_b = { '%#NonText#' .. '' },
+    lualine_a = { { path, color = get_color('Comment') } },
   },
   extensions = { 'neo-tree', 'toggleterm' },
   sections = {
@@ -102,7 +118,7 @@ ins_left({
   color = function()
     return get_color('@tag')
   end,
-  padding = { left = 3, right = 1 },
+  padding = { left = 2, right = 1 },
 })
 
 if system.is_apple_silicon then
