@@ -68,4 +68,10 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   end,
 })
 
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
 vim.api.nvim_command('autocmd BufNewFile,BufRead *.ttml setfiletype ttml')
