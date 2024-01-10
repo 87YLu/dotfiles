@@ -275,13 +275,6 @@ local lsp = {
       require('lsp.treesj')
     end,
   },
-  {
-    'dmmulroy/tsc.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('lsp.tsc')
-    end,
-  },
 }
 
 local plugins = {}
