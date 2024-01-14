@@ -1,16 +1,6 @@
-local color_utils = require('utils.color')
-
-color_utils.color_scheme_observer(function()
-  vim.cmd(':highlight CursorLineNr gui=italic,bold')
-  vim.cmd(':highlight CocInlayHint guifg=#4c4c4c gui=bold,italic')
-  vim.cmd(':highlight DiagnosticUnderlineInfo cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
-  vim.cmd(':highlight DiagnosticUnderlineHint cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
-  vim.cmd(':highlight DiagnosticUnderlineWarn cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
-  vim.cmd(':highlight DiagnosticUnderlineError cterm=NONE ctermbg=NONE gui=NONE guibg=NONE')
-end, true)
-
+local global_config_utils = require('utils.global_config')
 local transparent_background = vim.g.transparent_background
-local current_colorscheme
+local current_colorscheme = vim.g.colorscheme
 
 -- https://github.com/catppuccin/nvim
 local catppuccin = function()
@@ -21,6 +11,7 @@ local catppuccin = function()
 
   vim.opt.background = 'dark'
   vim.cmd('colorscheme catppuccin')
+  vim.cmd(':highlight LuaLineLspColor guifg=#ffffff')
 end
 
 -- https://github.com/projekt0n/github-nvim-theme
@@ -33,17 +24,7 @@ local github = function()
 
   vim.opt.background = 'dark'
   vim.cmd('colorscheme github_dark')
-end
-
--- https://github.com/rebelot/kanagawa.nvim
-local kanagawa = function()
-  require('kanagawa').setup({
-    transparent = transparent_background,
-    theme = 'wave',
-  })
-
-  vim.opt.background = 'dark'
-  vim.cmd('colorscheme kanagawa')
+  vim.cmd(':highlight LuaLineLspColor guifg=#ffffff')
 end
 
 -- https://github.com/folke/tokyonight.nvim
@@ -68,6 +49,7 @@ local tokyonight = function()
 
   vim.opt.background = 'dark'
   vim.cmd('colorscheme tokyonight')
+  vim.cmd(':highlight LuaLineLspColor guifg=#ffffff')
 end
 
 local tokyonight_day = function()
@@ -78,15 +60,41 @@ local tokyonight_day = function()
 
   vim.opt.background = 'light'
   vim.cmd('colorscheme tokyonight')
+  vim.cmd(':highlight LuaLineLspColor guifg=#000000')
 end
 
 local colorscheme = {
   catppuccin = catppuccin,
   github = github,
-  kanagawa = kanagawa,
   tokyonight = tokyonight,
   tokyonight_day = tokyonight_day,
 }
+
+local extractKeys = function(obj, specificKey)
+  local keys = {}
+  for key, _ in pairs(obj) do
+    table.insert(keys, key)
+  end
+
+  table.sort(keys, function(a, b)
+    return a < b
+  end)
+
+  local specificIndex
+  for i, key in ipairs(keys) do
+    if key == specificKey then
+      specificIndex = i
+      break
+    end
+  end
+
+  if specificIndex then
+    table.remove(keys, specificIndex)
+    table.insert(keys, 1, specificKey)
+  end
+
+  return keys
+end
 
 local change_colorscheme = function(color)
   current_colorscheme = color
@@ -94,127 +102,60 @@ local change_colorscheme = function(color)
   colorscheme[color]()
 end
 
-change_colorscheme(vim.g.colorscheme)
-
-local pickers = require('telescope.pickers')
-local finders = require('telescope.finders')
-local sorters = require('telescope.sorters')
-local actions = require('telescope.actions')
-local state = require('telescope.actions.state')
-local global_config_utils = require('utils.global_config')
-
-local colorschemes = {}
-
-for key, _ in pairs(colorscheme) do
-  table.insert(colorschemes, key)
-end
-
-table.sort(colorschemes, function(a, b)
-  return a < b
-end)
-
-function _G.open_colorscheme_switcher()
-  local default_index = 1
-
-  for i, item in ipairs(colorschemes) do
-    if item == current_colorscheme then
-      default_index = i
-      break
-    end
-  end
-
-  -- 创建新的数组并插入特定项
-  local result = {}
-  table.insert(result, colorschemes[default_index])
-
-  -- 将原数组的其他项插入新数组
-  for i = 1, #colorschemes do
-    if i ~= default_index then
-      table.insert(result, colorschemes[i])
-    end
-  end
-
-  local picker = pickers.new({
-    results_title = 'Change Colorscheme',
-    finder = finders.new_table({
-      results = result,
-    }),
-    sorter = sorters.get_fzy_sorter(),
-    prompt_title = '',
-    prompt_prefix = ' ',
-    layout_config = {
-      height = 0.3,
-      width = 0.3,
-    },
-    attach_mappings = function(prompt_bufnr, map)
-      local down = function()
-        actions.move_selection_next(prompt_bufnr)
-        change_colorscheme(state.get_selected_entry().value)
-      end
-
-      local up = function()
-        actions.move_selection_previous(prompt_bufnr)
-        change_colorscheme(state.get_selected_entry().value)
-      end
-
-      local close = function()
-        actions.close(prompt_bufnr)
-        change_colorscheme(vim.g.colorscheme)
-      end
-
-      local select = function()
-        local value = state.get_selected_entry().value
-        actions.close(prompt_bufnr)
-        global_config_utils.set_global_config('colorscheme', value)
-      end
-
-      map({ 'i', 'n' }, '<CR>', select)
-      map({ 'i', 'n' }, '<Down>', down)
-      map({ 'i', 'n' }, '<Tab>', down)
-      map('i', '<C-n>', down)
-      map({ 'i', 'n' }, '<Tab>', down)
-      map({ 'i', 'n' }, '<Up>', up)
-      map('i', '<C-p>', up)
-      map('n', '<Esc>', close)
-      map('i', '<C-c>', close)
-
-      return true
+local handle_change_colorscheme = function()
+  require('utils.telescope').telescope_select({
+    title = 'Change Colorscheme',
+    prefix = ' ',
+    items = extractKeys(colorscheme, vim.g.colorscheme),
+    handleMove = change_colorscheme,
+    handleClose = function()
+      change_colorscheme(vim.g.colorscheme)
+    end,
+    handleSelect = function(value)
+      global_config_utils.set_global_config('colorscheme', value)
     end,
   })
-
-  picker:find()
 end
 
-function _G.open_transparent_background_switcher()
-  local picker = pickers.new({
-    results_title = 'Transparent Background',
-    finder = finders.new_table({
-      results = {
-        'true',
-        'false',
-      },
-    }),
-    sorter = sorters.get_fzy_sorter(),
-    prompt_title = '',
-    prompt_prefix = '  ',
-    layout_config = {
-      height = 0.15,
-      width = 0.3,
-    },
-    attach_mappings = function(prompt_bufnr, map)
-      map({ 'i', 'n' }, '<CR>', function()
-        local value = state.get_selected_entry().value
-        actions.close(prompt_bufnr)
-        global_config_utils.set_global_config('transparent_background', (value == 'true'))
-        transparent_background = value == 'true'
-        change_colorscheme(current_colorscheme)
-      end)
-      map({ 'i', 'n' }, '<Tab>', function()
-        actions.move_selection_next(prompt_bufnr)
-      end)
-      return true
+local change_transparency = function()
+  require('utils.telescope').telescope_select({
+    title = 'Transparent Background',
+    prefix = '  ',
+    items = { 'true', 'false' },
+    handleSelect = function(value)
+      global_config_utils.set_global_config('transparent_background', (value == 'true'))
+      transparent_background = value == 'true'
+      change_colorscheme(current_colorscheme)
     end,
   })
-
-  picker:find()
 end
+
+local config = function()
+  colorscheme[current_colorscheme]()
+  local keys = require('basic.keymaps').colorscheme
+  vim.g.keyset('n', keys.change_colorscheme, handle_change_colorscheme, { desc = 'change colorscheme' })
+  vim.g.keyset('n', keys.change_transparency, change_transparency, { desc = 'change the background transparency' })
+end
+
+local get_lazy = function(colorscheme)
+  return vim.g.colorscheme ~= colorscheme
+end
+
+return {
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    lazy = get_lazy('catppuccin'),
+    config = config,
+  },
+  {
+    'projekt0n/github-nvim-theme',
+    lazy = get_lazy('github'),
+    config = config,
+  },
+  {
+    'folke/tokyonight.nvim',
+    lazy = get_lazy('tokyonight') and get_lazy('tokyonight_day'),
+    config = config,
+  },
+}

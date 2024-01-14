@@ -1,9 +1,9 @@
 local M = {}
+local is_macos = vim.fn.has('mac') == 1
 local en_input_mode_name = 'ABC'
-local system = require('utils.system')
 
-M.mode = function()
-  if not system.is_macos then
+local get_mode = function()
+  if not is_macos then
     return ''
   end
 
@@ -19,30 +19,18 @@ M.mode = function()
 
   handle:close()
 
-  if input_mode == en_input_mode_name then
-    return 'en'
-  else
-    return 'zh'
-  end
+  return input_mode == en_input_mode_name and 'en' or 'zh'
 end
 
-M.toggle = function()
-  if not system.is_macos then
-    return
-  end
-
-  os.execute('osascript -e \'tell application "System Events" to keystroke space using {control down, option down}\'')
-end
-
-M.to_zh = function()
-  if M.mode() ~= 'zh' then
-    M.toggle()
+local toggle = function()
+  if is_macos then
+    os.execute('osascript -e \'tell application "System Events" to keystroke space using {control down, option down}\'')
   end
 end
 
 M.to_en = function()
-  if M.mode() ~= 'en' then
-    M.toggle()
+  if get_mode() ~= 'en' then
+    toggle()
   end
 end
 

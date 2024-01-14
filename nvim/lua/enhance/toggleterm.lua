@@ -1,59 +1,62 @@
 -- https://github.com/akinsho/toggleterm.nvim
-local status_ok, toggleterm = pcall(require, 'toggleterm')
+return {
+  'akinsho/toggleterm.nvim',
+  event = 'VeryLazy',
+  config = function()
+    local toggleterm = require('toggleterm')
+    local terms = require('toggleterm.terminal').Terminal
+    local file_utils = require('utils.file')
 
-if not status_ok then
-  vim.notify('toggleterm not found!')
-  return
-end
+    toggleterm.setup({
+      float_opts = {
+        border = 'curved',
+        zindex = 1,
+      },
+    })
 
-toggleterm.setup({
-  float_opts = {
-    border = 'curved',
-    zindex = 1,
-  },
-})
+    local lazygit = terms:new({
+      cmd = 'lazygit',
+      dir = 'git_dir',
+      direction = 'tab',
+      hidden = false,
+    })
 
-local terms = require('toggleterm.terminal').Terminal
+    local cmd
+    local code_runner = terms:new({
+      cmd = function()
+        if cmd == nil then
+          vim.notify('no executable programs')
+          return ''
+        end
 
-local lazygit = terms:new({
-  cmd = 'lazygit',
-  dir = 'git_dir',
-  direction = 'tab',
-  hidden = false,
-})
+        return cmd
+      end,
+      direction = 'float',
+      hidden = false,
+      close_on_exit = false,
+    })
 
-function _G.lazygit_toggle()
-  lazygit:toggle()
-end
-
-local cmd
-local code_runner = terms:new({
-  cmd = function()
-    if cmd == nil then
-      vim.notify('no executable programs')
-      return ''
+    local toggle_lazygit = function()
+      lazygit:toggle()
     end
 
-    return cmd
+    local run_code = function()
+      local filetype = file_utils.current_type()
+      local filepath = file_utils.current_path()
+      local filename = file_utils.current_name()
+      local dirpath = file_utils.curent_dir()
+
+      cmd = ({
+        javascript = 'node ' .. filepath,
+        typescript = 'ts-node ' .. filepath,
+        lua = 'lua ' .. filepath,
+        rust = 'cd ' .. dirpath .. '&& rustc ' .. filename .. '&& ' .. dirpath .. '/' .. string.sub(filename, 0, -4),
+      })[filetype]
+      code_runner:toggle()
+    end
+
+    local keys = require('basic.keymaps').toggleterm
+    vim.g.keyset('n', keys.run_code, run_code, { desc = 'run code' })
+    vim.g.keyset('n', keys.toggle_lazy_git, toggle_lazygit, { desc = 'open lazygit' })
   end,
-  direction = 'float',
-  hidden = false,
-  close_on_exit = false,
-})
-
-local current_file = require('utils.current_file')
-
-function _G.code_runner_toggle()
-  local filetype = current_file.type()
-  local filepath = current_file.path()
-  local filename = current_file.name()
-  local dirpath = current_file.dir()
-
-  cmd = ({
-    javascript = 'node ' .. filepath,
-    typescript = 'ts-node ' .. filepath,
-    lua = 'lua ' .. filepath,
-    rust = 'cd ' .. dirpath .. '&& rustc ' .. filename .. '&& ' .. dirpath .. '/' .. string.sub(filename, 0, -4),
-  })[filetype]
-  code_runner:toggle()
-end
+}

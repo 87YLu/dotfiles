@@ -1,9 +1,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local current_file = require('utils.current_file')
+local file_utils = require('utils.file')
 local common_utils = require('utils.common')
-local global_config_utils = require('utils.global_config')
 
 local keyset = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -12,16 +11,16 @@ local keyset = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
-local plugin_keys = {}
+vim.g.keyset = keyset
 
 -- 窗口分屏
 keyset('n', 'sv', function()
-  if current_file.type() ~= 'neo-tree' then
+  if file_utils.current_type() ~= 'neo-tree' then
     vim.cmd(':vsp')
   end
 end, { desc = 'split vertically' })
 keyset('n', 'sh', function()
-  if current_file.type() ~= 'neo-tree' then
+  if file_utils.current_type() ~= 'neo-tree' then
     vim.cmd(':sp')
   end
 end, { desc = 'split horizontally' })
@@ -33,10 +32,6 @@ keyset('n', '<C-h>', '<C-w>h', { desc = 'jump to the left window' })
 keyset('n', '<C-j>', '<C-w>j', { desc = 'jump to the lower window' })
 keyset('n', '<C-k>', '<C-w>k', { desc = 'jump to the upper window' })
 keyset('n', '<C-l>', '<C-w>l', { desc = 'jump to the right window' })
-keyset('t', '<C-h>', [[ <C-\><C-N><C-w>h ]], { desc = 'jump to the left window' })
-keyset('t', '<C-j>', [[ <C-\><C-N><C-w>j ]], { desc = 'jump to the lower window' })
-keyset('t', '<C-k>', [[ <C-\><C-N><C-w>k ]], { desc = 'jump to the upper window' })
-keyset('t', '<C-l>', [[ <C-\><C-N><C-w>l ]], { desc = 'jump to the right window' })
 
 -- 窗口调整大小
 keyset('n', '<A-,>', ':vertical resize -20<CR>', { desc = 'horizontal narrowing window' })
@@ -46,7 +41,6 @@ keyset('n', "<A-'>", ':resize +10<CR>', { desc = 'vertical zoom window' })
 keyset('n', '<A-=>', '<C-w>=', { desc = 'equal all windows' })
 
 -- visual 模式设置
-keyset('v', '<Esc>', '<Esc><Esc>')
 keyset('v', '<', '<gv', { desc = 'indent to the left' })
 keyset('v', '>', '>gv', { desc = 'indent to the right' })
 keyset('v', 'J', ":move '>+1<CR>gv-gv", { desc = 'Move the selected content up' })
@@ -54,6 +48,7 @@ keyset('v', 'K', ":move '<-2<CR>gv-gv", { desc = 'move the selected content down
 keyset('v', 'p', '"_dP') -- 在visual 模式里粘贴不要复制
 keyset('v', 'H', '^')
 keyset('v', 'L', '$')
+keyset('v', 'jk', '<ESC>')
 
 -- normal 模式设置
 keyset('n', 'H', '^')
@@ -61,6 +56,7 @@ keyset('n', 'L', '$')
 keyset('n', 'dH', 'd^')
 keyset('n', 'dL', 'd$')
 keyset('n', 'yy', function()
+  -- 单次按 yy 时不复制空格和换行
   if vim.v.count > 1 then
     vim.cmd('normal! ' .. vim.v.count .. 'yy')
   else
@@ -71,185 +67,188 @@ keyset('n', 'yy', function()
 end)
 keyset('n', '<C-j>', '10j', { desc = 'cursor moves down 10 lines' })
 keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
-keyset('n', 'q', ':qa<CR>', { desc = 'exit' })
+keyset('n', 'q', '', { desc = 'no action' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
 keyset('n', '<C-w>', ':silent! w<CR>', { desc = 'save' })
 keyset('n', 'cp', function()
-  local path = common_utils.cwd()
-  common_utils.copy(path)
+  -- 复制当前 cwd
+  common_utils.copy(common_utils.cwd())
 end, { desc = 'copy project directory path' })
 
 -- insert 模式设置
-keyset('i', '<Esc>', function()
-  vim.cmd('stopinsert')
-end)
+keyset('i', '<Esc>', '<cmd>stopinsert<CR>')
 keyset('i', '<C-a>', '<ESC>I', { desc = 'cursor move to the beginning of the line' })
 keyset('i', '<C-e>', '<ESC>A', { desc = 'cursor move to the ending of the line' })
+keyset('i', 'jk', '<ESC>')
 
-plugin_keys.comment = (function()
-  keyset({ 'i', 'n' }, '<C-\\>', function()
-    require('Comment.api').toggle.linewise.current()
-  end, { desc = 'toggle comment' })
-  keyset({ 'i', 'n' }, '<A-\\>', function()
-    require('Comment.api').toggle.blockwise.current()
-  end, { desc = 'toggle comment' })
-  keyset('v', '<C-\\>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
-end)()
+-- 插件 -------------------------------------------------------
 
-plugin_keys.conform = (function()
-  keyset('n', '<leader>f', function()
-    require('conform').format()
-  end, { desc = 'format code' })
-end)()
+local plugin_keys = {}
 
-plugin_keys.toggleterm = (function()
-  keyset('n', '<C-A-n>', '<CMD>lua _G.code_runner_toggle()<CR>', { desc = 'run code' })
-  keyset('n', '<leader>g', '<CMD>lua _G.lazygit_toggle()<CR>', { desc = 'open lazygit' })
-end)()
+plugin_keys.comment = {
+  -- 单行注释
+  toggle_line = '<C-\\>',
+  -- 块级注释
+  toggle_block = '<A-\\>',
+}
 
-plugin_keys.bufferline = (function()
-  keyset('n', '<A-h>', ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
-  keyset('n', '<A-l>', ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })
-  keyset('n', '<A-w>', ':Bdelete!<CR>', { desc = 'close current tab' })
-  keyset('n', '<A-q>', ':BufferLineCloseOthers<CR>', { desc = 'close other tab' })
-  keyset('n', '<leader>br', ':BufferLineCloseRight<CR>', { desc = 'close the right tab' })
-  keyset('n', '<leader>bl', ':BufferLineCloseLeft<CR>', { desc = 'close the left tab' })
-  keyset('n', '<leader>bp', ':BufferLinePickClose<CR>', { desc = 'pick tab to close' })
-end)()
+plugin_keys.conform = {
+  -- 格式化
+  format = '<leader>f',
+}
 
-plugin_keys.neo_tree = (function()
-  keyset('n', '<A-m>', function()
-    _G.toggle_neo_tree()
-  end, { desc = 'toggle neotree' })
-end)()
+plugin_keys.toggleterm = {
+  -- 运行代码
+  run_code = '<C-A-n>',
+  -- 打开/关闭 lazygit
+  toggle_lazy_git = '<leader>g',
+}
 
-plugin_keys.telescope = (function()
-  keyset('n', '<C-p>', function()
-    _G.resume_telescope({ action = 'find_files' })
-  end, { desc = 'find files' })
-  keyset('n', '<C-f>', function()
-    _G.resume_telescope()
-  end, { desc = 'global search' })
-  keyset('n', '<A-f>', function()
-    _G.resume_telescope({ path = current_file.path() })
-  end, { desc = 'search in current file' })
-  keyset('n', '<leader>l', function()
-    require('telescope.builtin').pickers()
-  end, { desc = 'list telescope pickers' })
-  keyset('n', '<leader>o', function()
-    require('telescope.builtin').oldfiles({ cwd_only = true })
-  end, { desc = 'list recently files' })
-  keyset('n', '<leader>c', function()
-    _G.open_colorscheme_switcher()
-  end, { desc = 'change colorscheme' })
-  keyset('n', '<leader>C', function()
-    _G.open_transparent_background_switcher()
-  end, { desc = 'change the background transparency' })
-end)()
+plugin_keys.bufferline = {
+  -- 移动到左边的 tab
+  prev_tab = '<A-h>',
+  -- 移动到右边的 tab
+  next_tab = '<A-l>',
+  -- 关闭当前 tab
+  close_tab = '<A-w>',
+  -- 关闭其他 tab
+  close_other_tab = '<A-q>',
+  -- 关闭左边的 tab
+  close_left_tab = '<leader>bl',
+  -- 关闭右边的 tab
+  close_right_tab = '<leader>br',
+  -- 选择关闭
+  pick_close = '<leader>bp',
+}
 
-plugin_keys.session_manager = (function()
-  keyset('n', '<leader>p', ':SessionManager load_session<CR>', { desc = 'load session' })
-end)()
+plugin_keys.colorscheme = {
+  -- 主题切换
+  change_colorscheme = '<leader>c',
+  -- 透明度切换
+  change_transparency = '<leader>C',
+}
 
-plugin_keys.harpoon = (function()
-  keyset('n', '<leader>m', function()
-    require('telescope').extensions.harpoon.marks()
-  end, { desc = 'show marks' })
-  keyset('n', '<leader>am', function()
-    require('harpoon.mark').add_file()
-    vim.notify('add mark')
-  end, { desc = 'add mark' })
-  keyset('n', '<leader>rm', function()
-    require('harpoon.mark').rm_file()
-    vim.notify('remove mark')
-  end, { desc = 'remove mark' })
-  keyset('n', '<leader>cm', function()
-    require('harpoon.mark').clear_all()
-    vim.notify('clear all marks')
-  end, { desc = 'clear all marks' })
-end)()
+plugin_keys.neo_tree = {
+  -- 打开/关闭文件树
+  toggle = '<A-m>',
+}
 
-plugin_keys.hbac = (function()
-  keyset('n', '<leader>\\', function()
-    require('hbac').toggle_pin()
-  end, { desc = 'toggle pin' })
-  keyset('n', '<leader>|', function()
-    require('hbac').toggle_autoclose()
-    global_config_utils.set_global_config('hbac_autoclose', require('hbac.state').autoclose_enabled)
-  end, { desc = 'toggle autoclose' })
-end)()
+plugin_keys.telescope = {
+  -- 查找文件
+  find_files = '<C-p>',
+  -- 全局搜索
+  global_search = '<C-f>',
+  -- 搜索当前文件
+  search_in_current_file = '<A-f>',
+  -- 搜索历史
+  list_pickers = '<leader>l',
+  -- 最近文件
+  list_recently_files = '<leader>o',
+  -- 向下选择
+  move_selection_next = '<C-j>',
+  -- 向上选择
+  move_selection_previous = '<C-k>',
+  -- 关闭浮窗
+  close = '<C-c>',
+  -- 预览向上翻
+  preview_scrolling_up = '<C-u>',
+  -- 预览向下翻
+  preview_scrolling_down = '<C-d>',
+  -- 清除输入内容
+  clear = '<C-r>',
+}
 
-plugin_keys.coc = (function()
-  -- tab/cr 选中代码
-  local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
-  keyset('i', '<TAB>', 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-  keyset('i', '<S-TAB>', [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
-  keyset('i', '<cr>', [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
-  keyset('i', '<c-o>', 'coc#refresh()', { desc = 'trigger complement', silent = true, expr = true })
+plugin_keys.harpoon = {
+  -- 浮窗打开书签列表
+  show_marks = '<leader>m',
+  -- 添加书签
+  add_mark = '<leader>am',
+  -- 删除书签
+  remove_mark = '<leader>rm',
+  -- 清空书签
+  clear_marks = '<leader>cm',
+}
 
-  local coc_keyset = function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts.silent = true
-    vim.keymap.set(mode, lhs, rhs, opts)
-  end
+plugin_keys.hbac = {
+  -- 锁定/取消锁定当前 buffer
+  toggle = '<leader>\\',
+  --  开启/禁用自动关闭
+  toggle_autoclose = '<leader>|',
+}
 
-  coc_keyset('n', '[g', '<Plug>(coc-diagnostic-prev)', { desc = 'find the previous question' })
-  coc_keyset('n', ']g', '<Plug>(coc-diagnostic-next)', { desc = 'find the next question' })
-  coc_keyset('n', 'gi', '<Plug>(coc-implementation)', { desc = 'list todos' }) -- 待验证
-  coc_keyset('n', 'gr', '<Plug>(coc-references)', { desc = 'list the references' })
-  coc_keyset('n', 'K', '<CMD>lua _G.show_docs()<CR>', { desc = 'show doc' })
-  coc_keyset('n', '<leader>rn', '<Plug>(coc-rename)', { desc = 'rename' })
-  coc_keyset({ 'n', 'x' }, '<leader>r', '<Plug>(coc-codeaction-refactor-selected)', { desc = 'refactor code actions' })
-  coc_keyset('n', '<leader>ff', '<Plug>(coc-fix-current)', { desc = 'quick fix' })
-  coc_keyset('n', '<leader>t', '<Plug>(coc-translator-p)', { desc = 'translate' })
-  coc_keyset('v', '<leader>t', '<Plug>(coc-translator-pv)', { desc = 'translate' })
-  local cursor_layout = {
-    layout_config = {
-      width = 0.6,
-      height = 0.4,
-    },
-  }
+plugin_keys.diffview = {
+  -- diff 文件
+  file_diff = '<leader>,',
+  -- 文件历史
+  file_history = '<leader>.',
+  -- git 历史
+  git_history = '<leader>/',
+}
 
-  keyset('n', '<leader>d', function()
-    require('telescope').extensions.coc.diagnostics(require('telescope.themes').get_ivy())
-  end, { desc = 'show current file diagnostics' })
-  keyset('n', '<leader>D', function()
-    require('telescope').extensions.coc.workspace_diagnostics(require('telescope.themes').get_ivy())
-  end, { desc = 'show workspace diagnostics' })
-  keyset('n', 'gd', function()
-    require('telescope').extensions.coc.definitions(require('telescope.themes').get_cursor(cursor_layout))
-  end, { desc = 'show definition' })
-  keyset('n', 'gy', function()
-    require('telescope').extensions.coc.type_definitions(require('telescope.themes').get_cursor(cursor_layout))
-  end, { desc = 'show type definition' })
+plugin_keys.treesj = {
+  -- 代码收起/展开
+  toggle = '.',
+}
 
-  keyset('n', '<A-M>', function()
-    local winid = vim.fn['coc#window#find']('cocViewId', 'OUTLINE')
-    if winid == -1 then
-      vim.cmd('CocOutline')
-    else
-      vim.fn['coc#window#close'](winid)
-    end
-  end, {
-    desc = 'toggle outline',
-  })
+plugin_keys.gitsigns = {
+  -- 上个变更
+  prev_hunk = '[c',
+  -- 下个变更
+  next_hunk = ']c',
+  -- 暂存本块更改
+  stage_hunk = '<leader>hs',
+  -- 撤销本块更改
+  undo_hunk = '<leader>hu',
+  -- 预览变更
+  hunk_preview = '<leader>hp',
+}
 
-  -- coc-git
-  keyset('n', '[c', '<Plug>(coc-git-prevchunk)')
-  keyset('n', ']c', '<Plug>(coc-git-nextchunk)')
-  keyset('n', '<leader>hv', '<Plug>(coc-git-chunkinfo)')
-end)()
+plugin_keys.lspsaga = {
+  -- 上个错误
+  diagnostic_jump_prev = '[d',
+  -- 下个错误
+  diagnostic_jump_next = ']d',
+  -- 工作区错误
+  workspace_diagnostics = '<leader>d',
+  -- 大纲
+  outline = '<A-M>',
+  -- 浮窗打开定义
+  peek_definition = 'gd',
+  -- 跳转到定义
+  goto_definition = 'gf',
+  -- 浮窗打开文档
+  hover_doc = 'K',
+  -- 重命名
+  rename = '<leader>rn',
+  -- 代码操作
+  code_action = '<leader>ca',
+}
 
-plugin_keys.diffview = (function()
-  keyset('n', '<leader>,', '<CMD>lua _G.view_file_diff()<CR>', { desc = 'view file diff' })
-  keyset('n', '<leader>.', '<CMD>lua _G.view_file_history()<CR>', { desc = 'view file history' })
-  keyset('n', '<leader>/', '<CMD>lua _G.view_git_history()<CR>', { desc = 'view git history' })
-end)()
+plugin_keys.codeium = {
+  -- 应用建议
+  accept_suggestion = '<C-]>',
+  -- 清除建议
+  clear_suggesstion = '<C-[>',
+  -- 下个建议
+  next_suggestion = '<A-]>',
+  -- 上个建议
+  prev_suggestion = '<A-[>',
+}
 
-plugin_keys.treesj = (function()
-  keyset('n', '.', function()
-    require('treesj').toggle()
-  end)
-end)()
+plugin_keys.typescript_tools = {
+  -- 去除没引用的变量, 排序引用
+  typescript_action = '<leader>t',
+}
+
+plugin_keys.cmp = {
+  -- 下个候选列表
+  c_next = '<C-j>',
+  -- 上个候选列表
+  c_prev = '<C-k>',
+  -- 下个片段参数
+  p_next = '<C-l>',
+  -- 上个片段参数
+  p_prev = '<C-h>',
+}
 
 return plugin_keys

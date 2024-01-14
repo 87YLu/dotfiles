@@ -1,22 +1,18 @@
 -- https://github.com/ahmedkhalf/project.nvim
-local status_ok, project = pcall(require, 'project_nvim')
+return {
+  'ahmedkhalf/project.nvim',
+  event = 'VeryLazy',
+  config = function()
+    require('project_nvim').setup({
+      detection_methods = { 'pattern' },
+      -- 可能是 monorepo，所以不添加 package.json
+      patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'Cargo.toml', '.sln' },
+    })
 
-if not status_ok then
-  vim.notify('project_nvim not found!')
-  return
-end
+    local has_telescope, telescope = pcall(require, 'telescope')
 
-project.setup({
-  detection_methods = { 'pattern' },
-  -- because there may be monorepo, package.json is not added.
-  patterns = { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'Cargo.toml', '.sln' },
-})
-
-local status, telescope = pcall(require, 'telescope')
-
-if not status then
-  vim.notify('telescope not found!')
-  return
-end
-
-pcall(telescope.load_extension, 'projects')
+    if has_telescope then
+      pcall(telescope.load_extension, 'projects')
+    end
+  end,
+}

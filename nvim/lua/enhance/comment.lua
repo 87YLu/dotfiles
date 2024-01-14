@@ -1,11 +1,22 @@
 -- https://github.com/numToStr/Comment.nvim
-local status_ok, Comment = pcall(require, 'Comment')
+return {
+  'numToStr/Comment.nvim',
+  event = 'VeryLazy',
+  config = function()
+    require('Comment').setup({
+      pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      -- 忽略空行
+      ignore = '^$',
+    })
 
-if not status_ok then
-  vim.notify('Comment not found!')
-  return
-end
+    local keys = require('basic.keymaps').comment
 
-Comment.setup({
-  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-})
+    vim.g.keyset({ 'i', 'n' }, keys.toggle_line, function()
+      require('Comment.api').toggle.linewise.current()
+    end, { desc = 'toggle comment' })
+    vim.g.keyset({ 'i', 'n' }, keys.toggle_block, function()
+      require('Comment.api').toggle.blockwise.current()
+    end, { desc = 'toggle comment' })
+    vim.g.keyset('v', keys.toggle_line, '<Plug>(comment_toggle_linewise_visual)', { desc = 'toggle comment' })
+  end,
+}

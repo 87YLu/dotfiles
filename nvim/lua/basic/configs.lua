@@ -10,9 +10,9 @@ g.transparent_background = (g.transparent_background == nil) and true or g.trans
 -- utf8
 opt.encoding = 'UTF-8'
 opt.fileencoding = 'utf-8'
--- jkhl 移动时光标周围保留8行
-opt.scrolloff = 8
-opt.sidescrolloff = 8
+-- 使光标一直在屏幕中间
+opt.scrolloff = 999
+opt.sidescrolloff = 999
 -- 使用相对行号
 opt.number = true
 opt.relativenumber = true
@@ -82,11 +82,8 @@ opt.showmode = false
 -- 系统剪贴板
 opt.clipboard = 'unnamedplus'
 opt.spell = false
--- 开启 Folding 模块
--- opt.foldmethod = 'expr'
--- opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- 折叠
 opt.foldmethod = 'indent'
--- 默认不要折叠
 opt.foldenable = true
 opt.foldlevelstart = 99
 opt.foldlevel = 99
