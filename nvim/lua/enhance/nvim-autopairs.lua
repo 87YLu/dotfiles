@@ -1,23 +1,15 @@
 -- https://github.com/windwp/nvim-autopairs
-local status_ok, npairs = pcall(require, 'nvim-autopairs')
+-- 自动配对引号，括号等
+return {
+  'windwp/nvim-autopairs',
+  event = 'InsertEnter',
+  config = function()
+    require('nvim-autopairs').setup({ map_cr = true })
 
-if not status_ok then
-  vim.notify('nvim-autopairs not found!')
-  return
-end
-
--- https://github.com/windwp/nvim-autopairs/wiki/Completion-plugin
-
-npairs.setup({ map_cr = false })
-
-_G.MUtils = {}
-
-MUtils.completion_confirm = function()
-  if vim.fn['coc#pum#visible']() ~= 0 then
-    return vim.fn['coc#pum#confirm']()
-  else
-    return npairs.autopairs_cr()
-  end
-end
-
-vim.api.nvim_set_keymap('i', '<CR>', 'v:lua.MUtils.completion_confirm()', { expr = true, noremap = true })
+    -- https://github.com/windwp/nvim-autopairs/wiki/Completion-plugin
+    _G.MUtils = {}
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    local cmp = require('cmp')
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+  end,
+}

@@ -1,219 +1,304 @@
 -- https://github.com/nvim-lualine/lualine.nvim
-local lualine = require('lualine')
-local hbac = require('hbac.state')
-local common_utils = require('utils.common')
-local input_mode = require('utils.input_mode')
-local system = require('utils.system')
-local color_utils = require('utils.color')
-local current_file = require('utils.current_file')
+local Lsp_progress = function(refresh)
+  local spinner_symbols = { '⠋ ', '⠙ ', '⠹ ', '⠸ ', '⠼ ', '⠴ ', '⠦ ', '⠧ ', '⠇ ', '⠏ ' }
 
-local get_color = function(color)
-  return {
-    fg = color_utils.get_color_fg(color, true),
+  local function createCounter()
+    local count = 0
+    return function()
+      count = (count % #spinner_symbols) + 1
+      return count
+    end
+  end
+
+  local get_spinner_index = createCounter()
+
+  local separators = {
+    component = '',
+    progress = ' | ',
+    message = { pre = '(', post = ')' },
+    percentage = { pre = '', post = '%% ' },
+    title = { pre = '', post = ' ' },
+    lsp_client_name = { pre = ' [', post = '] ' },
+    spinner = { pre = '', post = '' },
   }
-end
 
-local path_count = 3
+  local clients = {}
 
-local path = function()
-  local file_path = current_file.relative_path()
-  local separator = package.config:sub(1, 1)
-  local segments = {}
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.handlers['$/progress'] = function(...)
+    refresh()
+    local arg = select(4, ...)
+    local msg = type(arg) ~= 'number' and select(2, ...) or select(3, ...)
+    local client_id = type(arg) ~= 'number' and select(3, ...).client_id or arg
 
-  for segment in file_path:gmatch('[^' .. separator .. ']+') do
-    table.insert(segments, segment)
-  end
+    local key = msg.token
+    local val = msg.value
+    local client_name = vim.lsp.get_client_by_id(client_id).name
+    if not key then
+      return
+    end
 
-  if #segments <= path_count then
-    return file_path
-  end
+    if clients[client_name] == nil then
+      clients[client_name] = { progress = {} }
+    end
 
-  local shortenedSegments = {}
-  for i = #segments - path_count + 1, #segments do
-    table.insert(shortenedSegments, segments[i])
-  end
+    local progress_collection = clients[client_name].progress
 
-  return table.concat({ '...', unpack(shortenedSegments) }, separator)
-end
+    if progress_collection[key] == nil then
+      progress_collection[key] = { title = nil, message = nil, percentage = nil }
+    end
 
-local function nav()
-  local items = vim.b.coc_nav or {}
-  local t = { '%#NonText#' .. '' }
-  for k, v in ipairs(items) do
-    t[#t + 1] = ' %#'
-      .. (v.highlight or 'NormalNC')
-      .. '#'
-      .. (type(v.label) == 'string' and v.label .. ' ' or ' ')
-      .. '%#Comment#'
-      .. (v.name or '')
-    if next(items, k) ~= nil then
-      t[#t + 1] = '%#NonText# '
+    local progress = progress_collection[key]
+
+    if val then
+      if val.kind == 'begin' then
+        progress.title = val.title
+        progress.completed = false
+      end
+      if val.kind == 'report' then
+        if val.percentage then
+          progress.percentage = val.percentage
+        end
+        if val.message then
+          progress.message = val.message
+        end
+        progress.completed = false
+      end
+      if val.kind == 'end' then
+        progress.completed = true
+
+        if clients[client_name] then
+          clients[client_name].progress[key] = nil
+        end
+      end
     end
   end
 
-  return table.concat(t)
+  return function()
+    local result = {}
+
+    local progress_message = ''
+
+    local is_all_completed = true
+
+    for client_name, client in pairs(clients) do
+      table.insert(result, separators.lsp_client_name.pre .. client_name .. separators.lsp_client_name.post)
+
+      local p = {}
+      for _, progress in pairs(client.progress or {}) do
+        if not progress.completed then
+          is_all_completed = false
+        end
+        if progress.title then
+          local d = {}
+          for _, i in pairs({ 'title', 'percentage', 'message' }) do
+            if progress[i] and progress[i] ~= '' then
+              table.insert(d, separators[i].pre .. progress[i] .. separators[i].post)
+            end
+          end
+          table.insert(p, table.concat(d, ''))
+        end
+      end
+
+      if not is_all_completed then
+        table.insert(result, spinner_symbols[get_spinner_index()])
+      end
+
+      table.insert(result, table.concat(p, separators.progress))
+    end
+
+    if #result > 0 then
+      progress_message = table.concat(result, separators.component)
+    else
+      progress_message = ''
+    end
+
+    return progress_message
+  end
 end
 
-local config = {
-  options = {
-    component_separators = '',
-    section_separators = '',
-    disabled_filetypes = {
-      tabline = { 'alpha', 'neo-tree', 'coctree' },
-      statusline = { 'alpha', 'DiffviewFiles', 'coctree' },
-      winbar = { 'neo-tree', 'alpha', 'DiffviewFiles', 'coctree' },
-    },
-    refresh = {
-      statusline = 2000,
-    },
+return {
+  'nvim-lualine/lualine.nvim',
+  event = 'VeryLazy',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
   },
-  winbar = {
-    lualine_a = {
-      path,
-      { nav, padding = { left = 0 } },
-    },
-  },
-  inactive_winbar = {
-    lualine_a = { { path, color = get_color('Comment') } },
-  },
-  extensions = { 'neo-tree', 'toggleterm' },
-  sections = {
-    lualine_a = {
-      {
-        'mode',
-        separator = { right = '' },
-        padding = { left = 2, right = 2 },
-        fmt = function(str)
-          return str:sub(1, 1)
-        end,
+  config = function()
+    local lualine = require('lualine')
+    local hbac = require('hbac.state')
+    local common_utils = require('utils.common')
+    local color_utils = require('utils.color')
+    local file_utils = require('utils.file')
+
+    local get_color = function(color)
+      return {
+        fg = color_utils.get_color_fg(color, true),
+      }
+    end
+
+    local refresh = function()
+      require('lualine').refresh({
+        scope = 'tabpage',
+        place = { 'statusline' },
+      })
+    end
+
+    local lsp_progress = Lsp_progress(refresh)
+
+    local lsp_breadcrumb = function()
+      return '     ' .. (require('lspsaga.symbol.winbar').get_bar() or '')
+    end
+
+    local config = {
+      options = {
+        component_separators = '',
+        section_separators = '',
+        disabled_filetypes = {
+          tabline = { 'alpha', 'neo-tree', 'sagaoutline' },
+          statusline = { 'alpha', 'DiffviewFiles', 'sagaoutline' },
+          winbar = { 'neo-tree', 'alpha', 'DiffviewFiles', 'sagaoutline' },
+        },
       },
-    },
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = { 'location' },
-    lualine_c = {},
-    lualine_x = {},
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    lualine_c = {},
-    lualine_x = {},
-  },
+      extensions = { 'neo-tree', 'toggleterm' },
+      sections = {
+        lualine_a = {
+          {
+            'mode',
+            separator = { right = '' },
+            padding = { left = 2, right = 2 },
+            fmt = function(str)
+              return str:sub(1, 1)
+            end,
+          },
+        },
+        lualine_b = {},
+        lualine_c = {
+          {
+            'branch',
+            icon = '',
+            color = function()
+              return get_color('@tag')
+            end,
+            padding = { left = 2, right = 1 },
+          },
+          {
+            'diagnostics',
+            sources = { 'nvim_lsp' },
+            symbols = { error = '󰅚 ', warn = '󰀪 ', info = ' ', hint = '󰌵 ' },
+            padding = { left = 1, right = 1 },
+          },
+          {
+            lsp_progress,
+            color = function()
+              return get_color('LuaLineLspColor')
+            end,
+          },
+        },
+        lualine_x = {
+          {
+            'vim.fn["codeium#GetStatusString"]()',
+            fmt = function(str)
+              return '󰘦 ' .. str:match('^%s*(.-)%s*$')
+            end,
+            color = function()
+              return get_color('@character.special')
+            end,
+          },
+          {
+            function()
+              local msg = '󰢤 None'
+              local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+              local clients = vim.lsp.get_active_clients()
+              if next(clients) == nil then
+                return msg
+              end
+              for _, client in ipairs(clients) do
+                local filetypes = client.config.filetypes
+                if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                  local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(buf_ft)
+                  return icon .. ' ' .. client.name
+                end
+              end
+              return msg
+            end,
+          },
+          {
+            'encoding',
+            fmt = string.upper,
+            color = function()
+              return get_color('@repeat')
+            end,
+          },
+          {
+            'fileformat',
+            symbols = {
+              unix = 'LF',
+              dos = 'CRLF',
+              mac = 'CR',
+            },
+            color = function()
+              return get_color('@annotation')
+            end,
+          },
+          {
+            function()
+              return hbac.autoclose_enabled and '󰱝' or '󰱞'
+            end,
+            color = function()
+              return hbac.autoclose_enabled and get_color('@string.regex') or get_color('Comment')
+            end,
+          },
+          {
+            function()
+              return '󰨞'
+            end,
+            color = {
+              fg = '#3790E9',
+            },
+            on_click = function()
+              vim.cmd('!code ' .. common_utils.cwd() .. ' --goto ' .. file_utils.current_path())
+            end,
+            padding = { left = 1, right = 2 },
+          },
+        },
+        lualine_y = {},
+        lualine_z = { 'location' },
+      },
+      winbar = {
+        lualine_c = {
+          lsp_breadcrumb,
+        },
+        lualine_x = {
+          {
+            'diff',
+            symbols = { added = ' ', modified = ' ', removed = ' ' },
+          },
+        },
+      },
+      inactive_winbar = {
+        lualine_c = {
+          lsp_breadcrumb,
+        },
+        lualine_x = {
+          {
+            'diff',
+            symbols = { added = ' ', modified = ' ', removed = ' ' },
+            diff_color = {
+              added = function()
+                return get_color('diffAdded')
+              end,
+              modified = function()
+                return get_color('diffChanged')
+              end,
+              removed = function()
+                return get_color('diffRemoved')
+              end,
+            },
+          },
+        },
+      },
+    }
+
+    lualine.setup(config)
+  end,
 }
-
-local function ins_left(component)
-  table.insert(config.sections.lualine_c, component)
-end
-
-local function ins_right(component)
-  table.insert(config.sections.lualine_x, component)
-end
-
-ins_left({
-  'branch',
-  icon = '',
-  color = function()
-    return get_color('@tag')
-  end,
-  padding = { left = 2, right = 1 },
-})
-
-if system.is_apple_silicon then
-  ins_left({
-    input_mode.mode,
-    fmt = string.upper,
-    icon = '󰓽',
-    color = function()
-      return get_color('@character')
-    end,
-  })
-end
-
-ins_left({
-  'diagnostics',
-  symbols = { error = ' ', warn = ' ', info = ' ', hint = '󰌵 ' },
-  padding = { left = 1, right = 1 },
-})
-
-ins_left({
-  function()
-    if current_file.is_in_types({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }) then
-      return string.gsub(vim.g.coc_status or '', 'cSpell', '')
-    end
-    return ''
-  end,
-  padding = { left = 0, right = 1 },
-})
-
-ins_right({
-  'diff',
-  symbols = { added = ' ', modified = ' ', removed = ' ' },
-  diff_color = {
-    added = function()
-      return get_color('diffAdded')
-    end,
-    modified = function()
-      return get_color('diffChanged')
-    end,
-    removed = function()
-      return get_color('diffRemoved')
-    end,
-  },
-})
-
-ins_right({
-  'tabnine',
-  fmt = function(str)
-    return str:gsub('tabnine starter', 'tabnine')
-  end,
-  color = function()
-    return get_color('@character.special')
-  end,
-})
-
-ins_right({
-  'encoding',
-  fmt = string.upper,
-  color = function()
-    return get_color('@repeat')
-  end,
-})
-
-ins_right({
-  'fileformat',
-  symbols = {
-    unix = 'LF',
-    dos = 'CRLF',
-    mac = 'CR',
-  },
-  color = function()
-    return get_color('@annotation')
-  end,
-})
-
-ins_right({
-  function()
-    return hbac.autoclose_enabled and '󰱝' or '󰱞'
-  end,
-  color = function()
-    return hbac.autoclose_enabled and get_color('@string.regex') or get_color('Comment')
-  end,
-})
-
-ins_right({
-  function()
-    return '󰨞'
-  end,
-  color = {
-    fg = '#3790E9',
-  },
-  on_click = function()
-    vim.cmd('!code ' .. common_utils.cwd() .. ' --goto ' .. current_file.path())
-  end,
-  padding = { left = 1, right = 2 },
-})
-
-lualine.setup(config)
