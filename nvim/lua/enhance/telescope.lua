@@ -1,128 +1,108 @@
 -- https://github.com/nvim-telescope/telescope.nvim
-local status_ok, telescope = pcall(require, 'telescope')
-
-if not status_ok then
-  vim.notify('telescope not found!')
-  return
-end
-
-local function is_editing_win(winnr)
-  local bufnr = vim.api.nvim_win_get_buf(winnr)
-  local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
-  return buftype == ''
-end
-
-local function get_editing_win()
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if is_editing_win(win) then
-      return win
+return {
+  'nvim-telescope/telescope.nvim',
+  event = 'VeryLazy',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
+  },
+  config = function()
+    local function is_editing_win(winnr)
+      local bufnr = vim.api.nvim_win_get_buf(winnr)
+      local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
+      return buftype == ''
     end
-  end
-  return 0
-end
 
-telescope.setup({
-  defaults = {
-    initial_mode = 'insert',
-    mappings = {
-      i = {
-        ['<Down>'] = 'move_selection_next',
-        ['<Up>'] = 'move_selection_previous',
-        ['<C-c>'] = 'close',
-        ['<C-u>'] = 'preview_scrolling_up',
-        ['<C-d>'] = 'preview_scrolling_down',
-        ['<C-r>'] = function()
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-u>', true, false, true), 'n', true)
-        end,
-      },
-    },
-    cache_picker = {
-      num_pickers = 50,
-    },
-    sorting_strategy = 'ascending',
-    layout_config = {
-      horizontal = {
-        prompt_position = 'top',
-      },
-      height = 0.80,
-      width = 0.75,
-    },
-    -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/958
-    -- https://github.com/nvim-telescope/telescope.nvim/pull/531
-    get_selection_window = function()
-      if not is_editing_win(vim.api.nvim_get_current_win()) then
-        return get_editing_win()
+    local function get_editing_win()
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if is_editing_win(win) then
+          return win
+        end
       end
       return 0
-    end,
-  },
-  extensions = {
-    coc = {
-      prefer_locations = true,
-    },
-  },
-})
-
-telescope.load_extension('ui-select')
-telescope.load_extension('coc')
-telescope.load_extension('harpoon')
-
-local telescope_state = require('telescope.state')
-local telescope_builtin = require('telescope.builtin')
-local common_utils = require('utils.common')
-local file_utils = require('utils.file')
-local live_grep_prefix = 'live_grep 󰺯 '
-local find_files_prefix = 'find_files 󰱽 '
-
-function _G.resume_telescope(params)
-  params = params or {}
-  local path = params.path ~= nil and params.path or common_utils.cwd()
-  local action = params.action ~= nil and params.action or 'live_grep'
-
-  local prompt_prefix = action == 'live_grep' and live_grep_prefix or find_files_prefix
-  local relative_path = file_utils.relative_path(path)
-  local cache_index = 0
-  local cached_pickers = telescope_state.get_global_key('cached_pickers') or {}
-
-  for i, picker in ipairs(cached_pickers) do
-    if picker.prompt_title == relative_path and picker.prompt_prefix == prompt_prefix then
-      cache_index = i
-      break
     end
-  end
 
-  if cache_index ~= 0 then
-    telescope_builtin.resume({ cache_index = cache_index })
-    return
-  end
+    local telescope = require('telescope')
+    local telescope_builtin = require('telescope.builtin')
+    local file_utils = require('utils.file')
 
-  local action_params = {
-    search_dirs = { path },
-    prompt_title = relative_path,
-    prompt_prefix = prompt_prefix,
-  }
+    telescope.setup({
+      defaults = {
+        initial_mode = 'insert',
+        mappings = {
+          i = {
+            ['<Down>'] = 'move_selection_next',
+            ['<Up>'] = 'move_selection_previous',
+            ['<C-c>'] = 'close',
+            ['<C-u>'] = 'preview_scrolling_up',
+            ['<C-d>'] = 'preview_scrolling_down',
+            ['<C-r>'] = function()
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-u>', true, false, true), 'n', true)
+            end,
+          },
+        },
+        cache_picker = {
+          num_pickers = 50,
+        },
+        sorting_strategy = 'ascending',
+        layout_config = {
+          horizontal = {
+            prompt_position = 'top',
+          },
+          height = 0.80,
+          width = 0.75,
+        },
+        -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/958
+        -- https://github.com/nvim-telescope/telescope.nvim/pull/531
+        get_selection_window = function()
+          if not is_editing_win(vim.api.nvim_get_current_win()) then
+            return get_editing_win()
+          end
+          return 0
+        end,
+      },
+    })
 
-  if action == 'live_grep' then
-    telescope_builtin.live_grep(action_params)
-  else
-    telescope_builtin.find_files(action_params)
-  end
-end
+    telescope.load_extension('ui-select')
 
-function clear_cached_pickers()
-  local cached_pickers = telescope_state.get_global_key('cached_pickers') or {}
-  for i, picker in ipairs(cached_pickers) do
-    if picker.prompt_prefix ~= live_grep_prefix and picker.prompt_prefix ~= find_files_prefix then
-      table.remove(cached_pickers, i)
+    local telescope_utils = require('utils.telescope')
+
+    local find_files = function()
+      telescope_utils.telescope_resume({
+        action = 'find_files',
+      })
     end
-  end
-end
 
-vim.api.nvim_create_autocmd('BufLeave', {
-  pattern = '',
-  callback = function()
-    if vim.o.filetype == 'TelescopePrompt' then
-      clear_cached_pickers()
+    local global_search = telescope_utils.telescope_resume
+
+    local search_in_current_file = function()
+      telescope_utils.telescope_resume({
+        path = file_utils.current_path(),
+      })
     end
+
+    local list_pickers = telescope_builtin.pickers
+
+    local list_recently_files = function()
+      telescope_builtin.oldfiles({ cwd_only = true })
+    end
+
+    -- https://github.com/nvim-telescope/telescope.nvim/issues/2027
+    -- https://github.com/Exafunction/codeium.vim/issues/80
+    vim.api.nvim_create_autocmd('WinLeave', {
+      callback = function()
+        if vim.bo.ft == 'TelescopePrompt' and vim.fn.mode() == 'i' then
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'i', false)
+        end
+      end,
+    })
+
+    require('basic.keymaps').telescope(
+      find_files,
+      global_search,
+      search_in_current_file,
+      list_pickers,
+      list_recently_files
+    )
   end,
-})
+}

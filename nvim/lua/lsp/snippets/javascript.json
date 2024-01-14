@@ -1,0 +1,20 @@
+{
+  "comment single": {
+    "prefix": "/*",
+    "body": ["/** ${0} */"],
+    "description": "JSDoc comment single"
+  },
+  "comment": {
+    "prefix": "/**",
+    "body": ["/**", " * ${1:Comment.}$0", " */"],
+    "description": "JSDoc comment."
+  },
+  "console.log": {
+    "prefix": "cl",
+    "body": ["console.log(${1}, '87YLu-log${0}')"]
+  },
+  "console.trace": {
+    "prefix": "cr",
+    "body": ["console.trace('87YLu-log${0}')"]
+  }
+}
