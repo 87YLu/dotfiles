@@ -22,6 +22,10 @@ ln -s ~/dotfiles/terminals/kitty ~/.config/kitty
 ln -s ~/dotfiles/terminals/alacritty ~/.config/alacritty
 ```
 
+```sh
+ln -s ~/dotfiles/terminals/wezterm ~/.config/weztermy
+```
+
 If you want to change the background image regularly
 
 ```sh
