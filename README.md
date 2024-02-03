@@ -100,22 +100,6 @@ ln -s ~/dotfiles/hammerspoon ~/.hammerspoon
 3. Type `hs.ipc.cliInstall("/opt/homebrew"`) and hit return
 4. Type `hs -c 'stackline.config:toggle("appearance.showIcons")'` in the terminal and hit return
 
-## use dotfiles-resources
-
-```sh
-git clone https://github.com/87YLu/dotfiles-resources.git
-```
-
-### nvim
-
-Unzip the files under **nvim/plugins** first
-
-```sh
-ln -s ~/dotfiles-resources/nvim/plugins ~/dotfiles/nvim/plugins
-ln -s ~/dotfiles-resources/nvim/plugins/lazy ~/.local/share/nvim/lazy
-ln -s ~/dotfiles-resources/nvim/plugins/coc ~/.config/coc
-```
-
 ## Prerequisites
 
 ### nerd font
