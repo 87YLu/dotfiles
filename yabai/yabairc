@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+# global settings
+yabai -m config mouse_follows_focus off
+yabai -m config focus_follows_mouse off
+yabai -m config window_origin_display default
+yabai -m config window_placement second_child
+yabai -m config window_topmost off
+yabai -m config window_shadow off
+yabai -m config window_border off
+yabai -m config normal_window_border_color 0x00ffffff
+yabai -m config active_window_border_color 0xffb773f4
+yabai -m config split_ratio 0.50
+yabai -m config auto_balance off
+yabai -m config mouse_modifier fn
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+yabai -m config mouse_drop_action swap
+
+# general space settings
+MAIN_DISPLAY=$(system_profiler SPDisplaysDataType | grep -B 3 'Main Display:' | awk '/Display Type/ {print $3}')
+
+if [[ $MAIN_DISPLAY = "Built-in" ]]; then
+	TOP_GAP=4
+else
+	TOP_GAP=36
+fi
+
+GAP=6
+
+yabai -m config layout bsp
+yabai -m config top_padding $TOP_GAP
+yabai -m config bottom_padding $GAP
+yabai -m config left_padding $GAP
+yabai -m config right_padding $GAP
+yabai -m config window_gap $GAP
+
+IGNORE_APP="^(访达|微信|系统设置|Downie 4|Keka|Mos|Permute 3)$"
+yabai -m rule --add app="$IGNORE_APP" manage=off
+
+echo "yabai configuration loaded.."
