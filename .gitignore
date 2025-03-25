@@ -1,0 +1,13 @@
+.DS_Store
+
+nvim/plugins
+
+nvim/global_config.json
+
+terminals/.last_file
+
+terminals/backgrounds_path.sh
+
+sketchybar/json/weather.json
+
+yabai/tmp/yabai-tiling-floating-toggle
