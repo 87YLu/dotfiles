@@ -34,6 +34,7 @@ local plugins = {
   require('enhance.gitsigns'),
   require('enhance.harpoon'),
   require('enhance.hbac'),
+  require('enhance.markview'),
   require('enhance.nvim-autopairs'),
   require('enhance.nvim-surround'),
   require('enhance.persistence'),
