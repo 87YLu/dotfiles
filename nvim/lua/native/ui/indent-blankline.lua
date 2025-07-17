@@ -3,7 +3,7 @@ return {
   'lukas-reineke/indent-blankline.nvim',
   event = 'VeryLazy',
   config = function()
-    local color_utils = require('utils.color')
+    local color_utils = require('native.utils.color')
 
     local function make_hl_groups(opts)
       local color_groups = {}

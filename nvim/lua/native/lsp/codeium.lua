@@ -15,7 +15,7 @@ return {
       TelescopePrompt = false,
     }
 
-    local keys = require('basic.keymaps').codeium
+    local keys = require('native.basic.keymaps').codeium
 
     vim.g.keyset('i', keys.accept_suggestion, 'codeium#Accept()', { expr = true, silent = true })
     vim.g.keyset('i', keys.clear_suggesstion, 'codeium#Clear()', { expr = true, silent = true })

@@ -10,11 +10,11 @@ return {
   config = function()
     local neo_tree = require('neo-tree')
     local neo_tree_utils = require('neo-tree.utils')
-    local global_config_utils = require('utils.global_config')
-    local file_utils = require('utils.file')
-    local common_utils = require('utils.common')
-    local telescope_utils = require('utils.telescope')
-    local keys = require('basic.keymaps').neo_tree
+    local global_config_utils = require('native.utils.global_config')
+    local file_utils = require('native.utils.file')
+    local common_utils = require('native.utils.common')
+    local telescope_utils = require('native.utils.telescope')
+    local keys = require('native.basic.keymaps').neo_tree
 
     local get_path = function(state)
       local node = state.tree:get_node()

@@ -1,8 +1,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local file_utils = require('utils.file')
-local common_utils = require('utils.common')
+local file_utils = require('native.utils.file')
+local common_utils = require('native.utils.common')
 
 local keyset = function(mode, lhs, rhs, opts)
   opts = opts or {}

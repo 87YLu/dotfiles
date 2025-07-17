@@ -5,7 +5,7 @@ return {
   config = function()
     local toggleterm = require('toggleterm')
     local terms = require('toggleterm.terminal').Terminal
-    local file_utils = require('utils.file')
+    local file_utils = require('native.utils.file')
 
     toggleterm.setup({
       float_opts = {
@@ -55,7 +55,7 @@ return {
       code_runner:toggle()
     end
 
-    local keys = require('basic.keymaps').toggleterm
+    local keys = require('native.basic.keymaps').toggleterm
     vim.g.keyset('n', keys.run_code, run_code, { desc = 'run code' })
     vim.g.keyset('n', keys.toggle_lazy_git, toggle_lazygit, { desc = 'open lazygit' })
   end,

@@ -15,8 +15,8 @@ local sorters = require('telescope.sorters')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 
-local common_utils = require('utils.common')
-local file_utils = require('utils.file')
+local common_utils = require('native.utils.common')
+local file_utils = require('native.utils.file')
 
 local live_grep_prefix = 'live_grep 󰺯 '
 local find_files_prefix = 'find_files 󰱽 '

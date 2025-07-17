@@ -2,7 +2,7 @@
 
 nvim/plugins
 
-nvim/global_config.json
+nvim/lua/native/global_config.json
 
 terminals/.last_file
 

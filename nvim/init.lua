@@ -1,4 +1,4 @@
-local global_config = require('utils.global_config').get_global_config()
+local global_config = require('native.utils.global_config').get_global_config()
 
 if global_config ~= nil then
   for key, value in pairs(global_config) do
@@ -6,7 +6,7 @@ if global_config ~= nil then
   end
 end
 
-require('basic.configs')
-require('basic.plugins')
-require('basic.keymaps')
-require('basic.autocmds')
+require('native.basic.configs')
+require('native.basic.plugins')
+require('native.basic.keymaps')
+require('native.basic.autocmds')

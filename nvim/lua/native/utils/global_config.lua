@@ -2,7 +2,7 @@ local M = {}
 
 local config_dir = vim.fn.stdpath('config')
 
-local global_config_json = config_dir .. '/global_config.json'
+local global_config_json = config_dir .. '/lua/native/global_config.json'
 
 local format_json = function(jsonString)
   local command = string.format("echo '%s' | jq .", jsonString)

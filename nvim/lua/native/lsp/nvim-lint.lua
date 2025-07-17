@@ -1,5 +1,4 @@
 -- https://github.com/mfussenegger/nvim-lint
-local file = require('utils.file')
 return {
   'mfussenegger/nvim-lint',
   event = 'VeryLazy',

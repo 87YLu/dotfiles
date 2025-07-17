@@ -4,8 +4,8 @@ return {
   event = 'VeryLazy',
   config = function()
     local conform = require('conform')
-    local common_utils = require('utils.common')
-    local format_config = common_utils.homedir() .. '/.config/nvim/lua/lsp/format-configs/'
+    local common_utils = require('native.utils.common')
+    local format_config = common_utils.homedir() .. '/.config/nvim/lua/native/lsp/format-configs/'
     local global_prettier_config = format_config .. '.prettierrc'
     local stylua_config = format_config .. 'stylua.toml'
 
@@ -53,7 +53,7 @@ return {
       },
     })
 
-    local keys = require('basic.keymaps').conform
+    local keys = require('native.basic.keymaps').conform
     vim.g.keyset('n', keys.format, conform.format, { desc = 'format code' })
   end,
 }

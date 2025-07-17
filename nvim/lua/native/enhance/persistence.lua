@@ -1,6 +1,6 @@
 -- https://github.com/folke/persistence.nvim
-local common_utils = require('utils.common')
-local file_utils = require('utils.file')
+local common_utils = require('native.utils.common')
+local file_utils = require('native.utils.file')
 
 local cwd = common_utils.cwd()
 local home_dir = common_utils.homedir()

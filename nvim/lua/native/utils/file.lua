@@ -1,4 +1,4 @@
-local common_utils = require('utils.common')
+local common_utils = require('native.utils.common')
 local M = {}
 
 M.is_exist = function(path)

@@ -126,9 +126,9 @@ return {
   config = function()
     local lualine = require('lualine')
     local hbac = require('hbac.state')
-    local common_utils = require('utils.common')
-    local color_utils = require('utils.color')
-    local file_utils = require('utils.file')
+    local common_utils = require('native.utils.common')
+    local color_utils = require('native.utils.color')
+    local file_utils = require('native.utils.file')
 
     local get_color = function(color)
       return {

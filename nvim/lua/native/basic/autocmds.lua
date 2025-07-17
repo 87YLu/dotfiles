@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 vim.api.nvim_create_autocmd('InsertLeave', {
   pattern = '',
   callback = function()
-    require('utils.input_mode').to_en()
+    require('native.utils.input_mode').to_en()
   end,
 })
 

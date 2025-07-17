@@ -1,4 +1,4 @@
-local global_config_utils = require('utils.global_config')
+local global_config_utils = require('native.utils.global_config')
 local transparent_background = vim.g.transparent_background
 local current_colorscheme = vim.g.colorscheme
 
@@ -103,7 +103,7 @@ local change_colorscheme = function(color)
 end
 
 local handle_change_colorscheme = function()
-  require('utils.telescope').telescope_select({
+  require('native.utils.telescope').telescope_select({
     title = 'Change Colorscheme',
     prefix = ' ',
     items = extractKeys(colorscheme, vim.g.colorscheme),
@@ -118,7 +118,7 @@ local handle_change_colorscheme = function()
 end
 
 local change_transparency = function()
-  require('utils.telescope').telescope_select({
+  require('native.utils.telescope').telescope_select({
     title = 'Transparent Background',
     prefix = '  ',
     items = { 'true', 'false' },
@@ -132,7 +132,7 @@ end
 
 local config = function()
   colorscheme[current_colorscheme]()
-  local keys = require('basic.keymaps').colorscheme
+  local keys = require('native.basic.keymaps').colorscheme
   vim.g.keyset('n', keys.change_colorscheme, handle_change_colorscheme, { desc = 'change colorscheme' })
   vim.g.keyset('n', keys.change_transparency, change_transparency, { desc = 'change the background transparency' })
 end

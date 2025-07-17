@@ -24,8 +24,8 @@ return {
 
     local telescope = require('telescope')
     local telescope_builtin = require('telescope.builtin')
-    local file_utils = require('utils.file')
-    local keys = require('basic.keymaps').telescope
+    local file_utils = require('native.utils.file')
+    local keys = require('native.basic.keymaps').telescope
 
     telescope.setup({
       defaults = {
@@ -66,7 +66,7 @@ return {
 
     telescope.load_extension('ui-select')
 
-    local telescope_utils = require('utils.telescope')
+    local telescope_utils = require('native.utils.telescope')
 
     -- https://github.com/nvim-telescope/telescope.nvim/issues/2027
     -- https://github.com/Exafunction/codeium.vim/issues/80

@@ -6,7 +6,7 @@ return {
   config = function()
     local hbac = require('hbac')
     local hbac_state = require('hbac.state')
-    local global_config_utils = require('utils.global_config')
+    local global_config_utils = require('native.utils.global_config')
 
     hbac.setup({
       autoclose = (vim.g.hbac_autoclose == nil) and true or vim.g.hbac_autoclose,
@@ -17,7 +17,7 @@ return {
       close_buffers_with_windows = false,
     })
 
-    local keys = require('basic.keymaps').hbac
+    local keys = require('native.basic.keymaps').hbac
 
     vim.g.keyset('n', keys.toggle, hbac.toggle_pin, { desc = 'toggle pin' })
     vim.g.keyset('n', keys.toggle_autoclose, function()

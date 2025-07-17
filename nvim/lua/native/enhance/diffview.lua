@@ -5,7 +5,7 @@ return {
   config = function()
     local is_diffview_opening = false
     local diffview = require('diffview')
-    local file_utils = require('utils.file')
+    local file_utils = require('native.utils.file')
 
     function Open_file_at_diffview_panel()
       local lib = require('diffview.lib')
@@ -64,7 +64,7 @@ return {
       end
     end
 
-    local keys = require('basic.keymaps').diffview
+    local keys = require('native.basic.keymaps').diffview
 
     vim.g.keyset('n', keys.file_diff, action('DiffviewOpen'), { desc = 'view file diff' })
     vim.g.keyset('n', keys.file_history, action('DiffviewFileHistory %'), { desc = 'view file history' })
