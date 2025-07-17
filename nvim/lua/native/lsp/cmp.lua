@@ -15,7 +15,7 @@ return {
     local cmp = require('cmp')
     local luasnip = require('luasnip')
     local lspkind = require('lspkind')
-    local cmp_keys = require('native.basic.keymaps').cmp
+    local cmp_keys = require('common.basic.keymaps').cmp
 
     local cmp_info_style = cmp.config.window.bordered({
       border = 'rounded',

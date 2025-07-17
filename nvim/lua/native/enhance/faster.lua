@@ -173,18 +173,19 @@ local faster_enabled = function()
   faster.filetype.enable()
 end
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufReadPre' }, {
-  callback = function()
-    local file_name = vim.api.nvim_buf_get_name(0)
-    if vim.loop.fs_stat(file_name) then
-      local file_size = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0)).size
-      if file_size > max_file_size then
-        faster_disabled()
-      else
-        faster_enabled()
+if not vim.g.vscode then
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufReadPre' }, {
+    callback = function()
+      local file_name = vim.api.nvim_buf_get_name(0)
+      if vim.loop.fs_stat(file_name) then
+        local file_size = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0)).size
+        if file_size > max_file_size then
+          faster_disabled()
+        else
+          faster_enabled()
+        end
       end
-    end
-  end,
-})
-
+    end,
+  })
+end
 return {}

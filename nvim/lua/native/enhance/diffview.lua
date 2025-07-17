@@ -64,7 +64,7 @@ return {
       end
     end
 
-    local keys = require('native.basic.keymaps').diffview
+    local keys = require('common.basic.keymaps').diffview
 
     vim.g.keyset('n', keys.file_diff, action('DiffviewOpen'), { desc = 'view file diff' })
     vim.g.keyset('n', keys.file_history, action('DiffviewFileHistory %'), { desc = 'view file history' })

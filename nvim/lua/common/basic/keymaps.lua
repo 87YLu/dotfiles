@@ -1,9 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local file_utils = require('native.utils.file')
-local common_utils = require('native.utils.common')
-
 local keyset = function(mode, lhs, rhs, opts)
   opts = opts or {}
   opts.noremap = opts.noremap ~= false
@@ -13,32 +10,67 @@ end
 
 vim.g.keyset = keyset
 
--- 窗口分屏
-keyset('n', 'sv', function()
-  if file_utils.current_type() ~= 'neo-tree' then
-    vim.cmd(':vsp')
-  end
-end, { desc = 'split vertically' })
-keyset('n', 'sh', function()
-  if file_utils.current_type() ~= 'neo-tree' then
-    vim.cmd(':sp')
-  end
-end, { desc = 'split horizontally' })
-keyset('n', 'cc', '<C-w>c', { desc = 'close current window' })
-keyset('n', 'co', '<C-w>o', { desc = 'close other windows' })
+if not vim.g.vscode then
+  -- 非 vscode
+  local file_utils = require('native.utils.file')
+  local common_utils = require('native.utils.common')
 
--- 窗口跳转
-keyset('n', '<C-h>', '<C-w>h', { desc = 'jump to the left window' })
-keyset('n', '<C-j>', '<C-w>j', { desc = 'jump to the lower window' })
-keyset('n', '<C-k>', '<C-w>k', { desc = 'jump to the upper window' })
-keyset('n', '<C-l>', '<C-w>l', { desc = 'jump to the right window' })
+  -- 窗口分屏
+  keyset('n', 'sv', function()
+    if file_utils.current_type() ~= 'neo-tree' then
+      vim.cmd(':vsp')
+    end
+  end, { desc = 'split vertically' })
+  keyset('n', 'sh', function()
+    if file_utils.current_type() ~= 'neo-tree' then
+      vim.cmd(':sp')
+    end
+  end, { desc = 'split horizontally' })
+  keyset('n', 'cc', '<C-w>c', { desc = 'close current window' })
+  keyset('n', 'co', '<C-w>o', { desc = 'close other windows' })
 
--- 窗口调整大小
-keyset('n', '<A-,>', ':vertical resize -20<CR>', { desc = 'horizontal narrowing window' })
-keyset('n', '<A-.>', ':vertical resize +20<CR>', { desc = 'horizontal zoom window' })
-keyset('n', '<A-;>', ':resize -10<CR>', { desc = 'vertical narrowing window' })
-keyset('n', "<A-'>", ':resize +10<CR>', { desc = 'vertical zoom window' })
-keyset('n', '<A-=>', '<C-w>=', { desc = 'equal all windows' })
+  -- 窗口跳转
+  keyset('n', '<C-h>', '<C-w>h', { desc = 'jump to the left window' })
+  keyset('n', '<C-j>', '<C-w>j', { desc = 'jump to the lower window' })
+  keyset('n', '<C-k>', '<C-w>k', { desc = 'jump to the upper window' })
+  keyset('n', '<C-l>', '<C-w>l', { desc = 'jump to the right window' })
+
+  -- 窗口调整大小
+  keyset('n', '<A-,>', ':vertical resize -20<CR>', { desc = 'horizontal narrowing window' })
+  keyset('n', '<A-.>', ':vertical resize +20<CR>', { desc = 'horizontal zoom window' })
+  keyset('n', '<A-;>', ':resize -10<CR>', { desc = 'vertical narrowing window' })
+  keyset('n', "<A-'>", ':resize +10<CR>', { desc = 'vertical zoom window' })
+  keyset('n', '<A-=>', '<C-w>=', { desc = 'equal all windows' })
+
+  keyset('n', 'cp', function()
+    -- 复制当前 cwd
+    common_utils.copy(common_utils.cwd())
+  end, { desc = 'copy project directory path' })
+else
+  -- vscode
+  local function step_movement()
+    keyset(
+      { 'n', 'x', 's' },
+      'j',
+      'v:count ? "j" : ":call VSCodeNotify(\'cursorDown\')<CR>"',
+      { silent = true, nowait = true, noremap = true, expr = true }
+    )
+
+    keyset(
+      { 'n', 'x', 's' },
+      'k',
+      'v:count ? "k" : ":call VSCodeNotify(\'cursorUp\')<CR>"',
+      { silent = true, nowait = true, noremap = true, expr = true }
+    )
+  end
+
+  vim.api.nvim_create_autocmd({ 'VimEnter', 'BufEnter', 'BufWinEnter' }, {
+    pattern = '*',
+    callback = function()
+      step_movement()
+    end,
+  })
+end
 
 -- visual 模式设置
 keyset('v', '<', '<gv', { desc = 'indent to the left' })
@@ -70,10 +102,6 @@ keyset('n', '<C-k>', '10k', { desc = 'cursor moves up 10 lines' })
 keyset('n', 'q', '', { desc = 'no action' })
 keyset('n', 'q\\', ':q!<CR>', { desc = 'forced exit' })
 keyset('n', '<C-w>', ':silent! w<CR>', { desc = 'save' })
-keyset('n', 'cp', function()
-  -- 复制当前 cwd
-  common_utils.copy(common_utils.cwd())
-end, { desc = 'copy project directory path' })
 
 -- insert 模式设置
 keyset('i', '<Esc>', '<cmd>stopinsert<CR>')

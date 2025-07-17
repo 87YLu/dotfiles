@@ -17,7 +17,7 @@ return {
       close_buffers_with_windows = false,
     })
 
-    local keys = require('native.basic.keymaps').hbac
+    local keys = require('common.basic.keymaps').hbac
 
     vim.g.keyset('n', keys.toggle, hbac.toggle_pin, { desc = 'toggle pin' })
     vim.g.keyset('n', keys.toggle_autoclose, function()

@@ -35,8 +35,8 @@ return {
       })
 
       local file_utils = require('native.utils.file')
-      local typescript_tools_keys = require('native.basic.keymaps').typescript_tools
-      local lsp_keys = require('native.basic.keymaps').lspsaga
+      local typescript_tools_keys = require('common.basic.keymaps').typescript_tools
+      local lsp_keys = require('common.basic.keymaps').lspsaga
 
       vim.g.keyset('n', typescript_tools_keys.typescript_action, function()
         if file_utils.is_current_in_types({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }) then

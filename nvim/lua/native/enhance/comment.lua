@@ -9,7 +9,7 @@ return {
       ignore = '^$',
     })
 
-    local keys = require('native.basic.keymaps').comment
+    local keys = require('common.basic.keymaps').comment
 
     vim.g.keyset({ 'i', 'n' }, keys.toggle_line, function()
       require('Comment.api').toggle.linewise.current()

@@ -3,14 +3,13 @@ return {
   'nvim-treesitter/nvim-treesitter',
   event = 'BufReadPost',
   build = ':TSUpdate',
-  dependencies = {
+  dependencies = vim.g.vscode and {} or {
     'hiphish/rainbow-delimiters.nvim',
     'JoosepAlviste/nvim-ts-context-commentstring',
     'windwp/nvim-ts-autotag',
   },
   config = function()
     local treesitter = require('nvim-treesitter.configs')
-    local rainbow_delimiters = require('rainbow-delimiters')
 
     treesitter.setup({
       -- 安装 language parser
@@ -33,7 +32,7 @@ return {
         'vimdoc',
       },
       -- 启用代码高亮模块
-      highlight = {
+      highlight = vim.g.vscode and { enable = false } or {
         enable = true,
         additional_vim_regex_highlighting = false,
         disable = function(lang, buf)
@@ -64,29 +63,33 @@ return {
       },
     })
 
-    require('ts_context_commentstring').setup({})
+    if not vim.g.vscode then
+      local rainbow_delimiters = require('rainbow-delimiters')
 
-    vim.treesitter.language.register('html', 'ttml')
+      require('ts_context_commentstring').setup({})
 
-    -- https://github.com/hiphish/rainbow-delimiters.nvim
-    vim.g.rainbow_delimiters = {
-      strategy = {
-        [''] = rainbow_delimiters.strategy['global'],
-        vim = rainbow_delimiters.strategy['local'],
-      },
-      query = {
-        [''] = 'rainbow-delimiters',
-        lua = 'rainbow-blocks',
-      },
-      highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-      },
-    }
+      vim.treesitter.language.register('html', 'ttml')
+
+      -- https://github.com/hiphish/rainbow-delimiters.nvim
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [''] = rainbow_delimiters.strategy['global'],
+          vim = rainbow_delimiters.strategy['local'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+          lua = 'rainbow-blocks',
+        },
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
+        },
+      }
+    end
   end,
 }

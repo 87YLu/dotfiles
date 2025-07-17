@@ -14,7 +14,7 @@ return {
     local file_utils = require('native.utils.file')
     local common_utils = require('native.utils.common')
     local telescope_utils = require('native.utils.telescope')
-    local keys = require('native.basic.keymaps').neo_tree
+    local keys = require('common.basic.keymaps').neo_tree
 
     local get_path = function(state)
       local node = state.tree:get_node()

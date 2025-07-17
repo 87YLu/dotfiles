@@ -44,7 +44,7 @@ return {
       },
     })
 
-    local keys = require('native.basic.keymaps').bufferline
+    local keys = require('common.basic.keymaps').bufferline
 
     vim.g.keyset('n', keys.prev_tab, ':BufferLineCyclePrev<CR>', { desc = 'move to the previous tab' })
     vim.g.keyset('n', keys.next_tab, ':BufferLineCycleNext<CR>', { desc = 'move to the next tab' })

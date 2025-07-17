@@ -7,7 +7,7 @@ return {
   event = 'VeryLazy',
   config = function()
     local treesj = require('treesj')
-    local keys = require('native.basic.keymaps').treesj
+    local keys = require('common.basic.keymaps').treesj
 
     treesj.setup({
       use_default_keymaps = false,

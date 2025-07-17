@@ -55,7 +55,7 @@ return {
       code_runner:toggle()
     end
 
-    local keys = require('native.basic.keymaps').toggleterm
+    local keys = require('common.basic.keymaps').toggleterm
     vim.g.keyset('n', keys.run_code, run_code, { desc = 'run code' })
     vim.g.keyset('n', keys.toggle_lazy_git, toggle_lazygit, { desc = 'open lazygit' })
   end,

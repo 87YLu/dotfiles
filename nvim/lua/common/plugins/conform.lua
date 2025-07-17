@@ -53,7 +53,7 @@ return {
       },
     })
 
-    local keys = require('native.basic.keymaps').conform
+    local keys = require('common.basic.keymaps').conform
     vim.g.keyset('n', keys.format, conform.format, { desc = 'format code' })
   end,
 }

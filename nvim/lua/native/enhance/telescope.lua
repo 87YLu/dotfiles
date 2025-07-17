@@ -25,7 +25,7 @@ return {
     local telescope = require('telescope')
     local telescope_builtin = require('telescope.builtin')
     local file_utils = require('native.utils.file')
-    local keys = require('native.basic.keymaps').telescope
+    local keys = require('common.basic.keymaps').telescope
 
     telescope.setup({
       defaults = {

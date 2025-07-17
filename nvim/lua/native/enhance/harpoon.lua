@@ -16,7 +16,7 @@ return {
     end
 
     local mark = require('harpoon.mark')
-    local keys = require('native.basic.keymaps').harpoon
+    local keys = require('common.basic.keymaps').harpoon
 
     vim.g.keyset('n', keys.show_marks, function()
       if has_telescope then

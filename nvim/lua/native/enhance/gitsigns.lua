@@ -17,7 +17,7 @@ return {
           vim.keymap.set(mode, l, r, opts)
         end
 
-        local keys = require('native.basic.keymaps').gitsigns
+        local keys = require('common.basic.keymaps').gitsigns
 
         map('n', keys.prev_hunk, function()
           if vim.wo.diff then

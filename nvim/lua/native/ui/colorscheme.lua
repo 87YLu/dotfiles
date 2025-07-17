@@ -132,7 +132,7 @@ end
 
 local config = function()
   colorscheme[current_colorscheme]()
-  local keys = require('native.basic.keymaps').colorscheme
+  local keys = require('common.basic.keymaps').colorscheme
   vim.g.keyset('n', keys.change_colorscheme, handle_change_colorscheme, { desc = 'change colorscheme' })
   vim.g.keyset('n', keys.change_transparency, change_transparency, { desc = 'change the background transparency' })
 end
