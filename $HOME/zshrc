@@ -113,3 +113,11 @@ alias lg="lazygit"
 alias v="$HOME/nvim-macos/bin/nvim"
 
 alias nvim="$HOME/nvim-macos/bin/nvim"
+
+# fnm
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env`"
+fi
+
+alias t0="tmux attach -t 0"
