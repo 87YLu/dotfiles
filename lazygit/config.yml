@@ -3,4 +3,15 @@ git:
     colorArg: always
     pager: delta --dark --paging=never
 gui:
-  language: 'en'
+  language: "en"
+customCommands:
+  - key: "U"
+    context: "commits"
+    description: "Undo last commit (keep staged)"
+    output: "none"
+    command: >-
+      bash -lc '
+      if [ "{{.SelectedCommit.Sha}}" = "$(git rev-parse HEAD)" ]; then
+        git reset --soft HEAD~1
+      fi
+      '
