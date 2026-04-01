@@ -5,7 +5,7 @@
 ---@field Dashboard table
 ---@field Lualine UtilsLualine
 ---@field Image UtilsImage
----@field Colorscheme? { reset: fun(): nil }
+---@field Colorscheme UtilsColorTheme
 local M = {}
 
 M.Path = require('utils.path')
@@ -14,6 +14,7 @@ M.NvimConfig = require('utils.nvim-config')
 M.Dashboard = require('utils.dashboard')
 M.Lualine = require('utils.lualine')
 M.Image = require('utils.image')
+M.Colorscheme = require('utils.colortheme')
 
 ---@type table<string, boolean>
 local _defaults = {}

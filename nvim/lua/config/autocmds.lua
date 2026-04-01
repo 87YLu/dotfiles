@@ -187,3 +187,20 @@ vim.diagnostic.handlers['unnecessary'] = {
     vim.api.nvim_buf_clear_namespace(bufnr, unnecessary_ns, 0, -1)
   end,
 }
+
+-- Sync colorscheme from nvim-config.json when this instance gains focus.
+-- Enables multi-pane tmux workflow: toggle theme in one nvim, others follow.
+vim.api.nvim_create_autocmd('FocusGained', {
+  group = augroup('sync_theme_on_focus'),
+  callback = function()
+    Utils.NvimConfig.invalidate('darkmode')
+    local disk_dark = Utils.NvimConfig.get('darkmode', true)
+    local current_dark = vim.o.background == 'dark'
+
+    if disk_dark ~= current_dark and Utils.Colorscheme and Utils.Colorscheme.reset then
+      vim.schedule(function()
+        Utils.Colorscheme.reset(disk_dark)
+      end)
+    end
+  end,
+})

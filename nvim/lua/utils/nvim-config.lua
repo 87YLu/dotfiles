@@ -51,4 +51,14 @@ M.set = function(key, value)
   cache[key] = value
 end
 
+--- Clear the in-memory cache so next get() re-reads from disk.
+---@param key? string  If given, only invalidate that key; otherwise flush all.
+M.invalidate = function(key)
+  if key then
+    cache[key] = nil
+  else
+    cache = {}
+  end
+end
+
 return M

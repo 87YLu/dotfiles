@@ -97,8 +97,8 @@ local initSnacks = function()
     end,
     set = function(enabled)
       Utils.NvimConfig.set('darkmode', enabled)
-      vim.o.background = enabled and 'dark' or 'light'
-      Utils.Colorscheme.reset()
+      Utils.Colorscheme.reset(enabled)
+      Utils.SyncTheme.sync(enabled)
     end,
   }):map(uiToggleKeys.darkMode.key)
   Snacks.toggle({
