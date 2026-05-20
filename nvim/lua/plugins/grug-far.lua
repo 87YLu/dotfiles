@@ -41,6 +41,7 @@ return {
     headerMaxWidth = 80,
     engines = {
       ripgrep = {
+        extraArgs = '--no-messages',
         placeholders = {
           enabled = true,
           search = 'e.g. foo   foo([a-z0-9]*)   fun\\(',
