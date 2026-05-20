@@ -6,8 +6,6 @@
 
 ```sh
 git clone https://github.com/87YLu/dotfiles.git
-ln -s ~/dotfiles/\$HOME/npmrc ~/.npmrc
-ln -s ~/dotfiles/\$HOME/zshrc ~/.zshrc
 ln -s ~/dotfiles/nvim ~/.config/nvim
 ln -s ~/dotfiles/lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
 ```
